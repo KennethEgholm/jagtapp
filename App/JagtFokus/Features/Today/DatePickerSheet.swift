@@ -1,0 +1,71 @@
+import SwiftUI
+
+struct DatePickerSheet: View {
+    @Environment(SeasonStore.self) private var store
+    @Environment(\.dismiss) private var dismiss
+    @State private var draft = Date()
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: Spacing.m) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: Spacing.xs) {
+                            ForEach(quickPicks, id: \.title) { pick in
+                                Button(pick.title) {
+                                    store.select(date: pick.date)
+                                    dismiss()
+                                }
+                                .buttonStyle(.bordered)
+                                .buttonBorderShape(.capsule)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+
+                    DatePicker("Dato", selection: $draft, displayedComponents: .date)
+                        .datePickerStyle(.graphical)
+                        .environment(\.locale, Locale(identifier: "da_DK"))
+                        .environment(\.calendar, store.calendar.calendar)
+                        .environment(\.timeZone, store.calendar.calendar.timeZone)
+                        .padding(.horizontal)
+                }
+                .padding(.top, Spacing.xs)
+            }
+            .navigationTitle("Vælg dag")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Annuller") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Vælg") {
+                        store.select(date: draft)
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                }
+            }
+            .onAppear { draft = store.queryDate }
+        }
+        .presentationDetents([.fraction(0.72), .large])
+        .presentationDragIndicator(.visible)
+    }
+
+    /// I dag, I morgen and the coming weekend: the days hunters plan for.
+    private var quickPicks: [(title: String, date: Date)] {
+        let cal = store.calendar.calendar
+        let today = cal.startOfDay(for: store.now)
+        var picks: [(String, Date)] = [("I dag", today)]
+        if let tomorrow = cal.date(byAdding: .day, value: 1, to: today) {
+            picks.append(("I morgen", tomorrow))
+        }
+        for (weekday, name) in [(7, "Lørdag"), (1, "Søndag")] {
+            if let next = cal.nextDate(after: today, matching: DateComponents(weekday: weekday), matchingPolicy: .nextTime),
+               cal.dateComponents([.day], from: today, to: next).day ?? 0 > 1 {
+                picks.append(("\(name) \(store.calendar.danish(store.calendar.monthDay(on: next)))", next))
+            }
+        }
+        return picks.map { (title: $0.0, date: $0.1) }
+    }
+}

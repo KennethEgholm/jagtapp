@@ -1,0 +1,400 @@
+{
+  "photos": {
+    "kronspidshjort": {
+      "file": "File:Cervus elaphus italicus young male.jpg",
+      "artist": "Wanax01",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cervus_elaphus_italicus_young_male.jpg"
+    },
+    "kronhjort": {
+      "file": "File:Cervus elaphus Luc Viatour 6.jpg",
+      "artist": "Lviatour",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cervus_elaphus_Luc_Viatour_6.jpg"
+    },
+    "kronhind": {
+      "file": "File:Red deer (Cervus elaphus) hind.jpg",
+      "artist": "Charles J. Sharp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Red_deer_(Cervus_elaphus)_hind.jpg"
+    },
+    "kronkalv": {
+      "file": "File:Red deer (Cervus elaphus) hind with juvenile.jpg",
+      "artist": "Charles J. Sharp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Red_deer_(Cervus_elaphus)_hind_with_juvenile.jpg"
+    },
+    "daahjort": {
+      "file": "File:Fallow deer in field.jpg",
+      "artist": "Johann-Nikolaus Andreae",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fallow_deer_in_field.jpg"
+    },
+    "daa_og_kalv": {
+      "file": "File:European fallow deer (Dama dama), doe in Leśny Park Niespodzianek, Ustroń, Silesian Voivodeship, Poland, 2004.jpg",
+      "artist": "MichalPL",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:European_fallow_deer_(Dama_dama),_doe_in_Le%C5%9Bny_Park_Niespodzianek,_Ustro%C5%84,_Silesian_Voivodeship,_Poland,_2004.jpg"
+    },
+    "sikahjort": {
+      "file": "File:Cervus nippon 002.jpg",
+      "artist": "Lilly M",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cervus_nippon_002.jpg"
+    },
+    "sikahind_kalv": {
+      "file": "File:Sika hind and fawn - geograph.org.uk - 4083264.jpg",
+      "artist": "sylvia duckworth",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sika_hind_and_fawn_-_geograph.org.uk_-_4083264.jpg"
+    },
+    "raabuk": {
+      "file": "File:Roe deer buck - geograph.org.uk - 7993031.jpg",
+      "artist": "Richard Sutcliffe",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Roe_deer_buck_-_geograph.org.uk_-_7993031.jpg"
+    },
+    "raa_og_lam": {
+      "file": "File:Roe deer (Capreolus capreolus) female Cumnor.jpg",
+      "artist": "Charles J. Sharp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Roe_deer_(Capreolus_capreolus)_female_Cumnor.jpg"
+    },
+    "muflonvaedder": {
+      "file": "File:European mouflon ram, Naturlandia (1) (cropped).jpg",
+      "artist": "Alberto-g-rovi",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:European_mouflon_ram,_Naturlandia_(1)_(cropped).jpg"
+    },
+    "muflonfaar_lam": {
+      "file": "File:Muffellamm mit Mutter.JPG",
+      "artist": "Nyphlo",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Muffellamm_mit_Mutter.JPG"
+    },
+    "vildsvin_orne": {
+      "file": "File:Wildschwein, Nähe Pulverstampftor (cropped).jpg",
+      "artist": "Valentin Panzirsch",
+      "license": "CC BY-SA 3.0 at",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/at/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Wildschwein,_N%C3%A4he_Pulverstampftor_(cropped).jpg"
+    },
+    "vildsvin_so_grise": {
+      "file": "File:Piglets of wild boar in Parambikulam, India.jpg",
+      "artist": "Abhinitha",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Piglets_of_wild_boar_in_Parambikulam,_India.jpg"
+    },
+    "raev": {
+      "file": "File:Portrait of a red fox in Rautas fjällurskog (cropped).jpg",
+      "artist": "ClaudiaTen",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Portrait_of_a_red_fox_in_Rautas_fj%C3%A4llurskog_(cropped).jpg"
+    },
+    "maarhund": {
+      "file": "File:Єнотовидний собака (Nyctereutes procyonoides).jpg",
+      "artist": "Ryzhkov Sergey",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:%D0%84%D0%BD%D0%BE%D1%82%D0%BE%D0%B2%D0%B8%D0%B4%D0%BD%D0%B8%D0%B9_%D1%81%D0%BE%D0%B1%D0%B0%D0%BA%D0%B0_(Nyctereutes_procyonoides).jpg"
+    },
+    "mink": {
+      "file": "File:MinkforWiki.jpg",
+      "artist": "Needsmoreritalin",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:MinkforWiki.jpg"
+    },
+    "vaskebjoern": {
+      "file": "File:Raccoon in Central Park (35264).jpg",
+      "artist": "Rhododendrites",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Raccoon_in_Central_Park_(35264).jpg"
+    },
+    "hare": {
+      "file": "File:European hare ( Lepus europaeus).jpg",
+      "artist": "Nagusb",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:European_hare_(_Lepus_europaeus).jpg"
+    },
+    "vildkanin": {
+      "file": "File:Oryctolagus cuniculus - euqirneto - 419737670 (cropped).jpeg",
+      "artist": "euqirneto",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Oryctolagus_cuniculus_-_euqirneto_-_419737670_(cropped).jpeg"
+    },
+    "bisamrotte": {
+      "file": "File:Muskrat swimming Ottawa.jpg",
+      "artist": "D. Gordon E. Robertson",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Muskrat_swimming_Ottawa.jpg"
+    },
+    "sumpbaever": {
+      "file": "File:Myocastor coypus 02.jpg",
+      "artist": "Petar Milošević",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Myocastor_coypus_02.jpg"
+    },
+    "graaand": {
+      "file": "File:Anas platyrhynchos male female quadrat.jpg",
+      "artist": "Richard Bartz",
+      "license": "CC BY-SA 2.5",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_male_female_quadrat.jpg"
+    },
+    "atlingand": {
+      "file": "File:Garganey, Israel.jpg",
+      "artist": "YedidyaPopper",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Garganey,_Israel.jpg"
+    },
+    "krikand": {
+      "file": "File:Eurasian teal (Anas crecca crecca) male Qingshui.jpg",
+      "artist": "Charles J. Sharp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eurasian_teal_(Anas_crecca_crecca)_male_Qingshui.jpg"
+    },
+    "spidsand": {
+      "file": "File:Northern Pintails (Male & Female) I IMG 0911.jpg",
+      "artist": "J.M.Garg",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Northern_Pintails_(Male_%26_Female)_I_IMG_0911.jpg"
+    },
+    "pibeand": {
+      "file": "File:Eurasian wigeon in Sakai, Osaka, February 2016.jpg",
+      "artist": "Laitche",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eurasian_wigeon_in_Sakai,_Osaka,_February_2016.jpg"
+    },
+    "skeand": {
+      "file": "File:Northern shoveler (Spatula clypeata) male Marken.jpg",
+      "artist": "Charles J. Sharp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Northern_shoveler_(Spatula_clypeata)_male_Marken.jpg"
+    },
+    "knarand": {
+      "file": "File:Gadwall-Anas-strepera.jpg",
+      "artist": "Andreas Trepte",
+      "license": "CC BY-SA 2.5",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Gadwall-Anas-strepera.jpg"
+    },
+    "troldand": {
+      "file": "File:Tufted Duck 09 05 2025 02.jpg",
+      "artist": "Alexis Lours",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tufted_Duck_09_05_2025_02.jpg"
+    },
+    "bjergand": {
+      "file": "File:Drake Greater scaup (Aythya marila) Barnegat Inlet, New Jersey, USA.jpg",
+      "artist": "Chuck Homler d/b/a Focus On Wildlife",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Drake_Greater_scaup_(Aythya_marila)_Barnegat_Inlet,_New_Jersey,_USA.jpg"
+    },
+    "hvinand": {
+      "file": "File:Common Goldeneye (Bucephala clangula).jpg",
+      "artist": "sbern (Flickr)",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Common_Goldeneye_(Bucephala_clangula).jpg"
+    },
+    "sortand": {
+      "file": "File:Männliche Trauerente (Melanitta nigra) - Spiekeroog, Nationalpark Niedersächsisches Wattenmeer.jpg",
+      "artist": "Stephan Sprinz",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:M%C3%A4nnliche_Trauerente_(Melanitta_nigra)_-_Spiekeroog,_Nationalpark_Nieders%C3%A4chsisches_Wattenmeer.jpg"
+    },
+    "edderfugl_han": {
+      "file": "File:Пухівка на Кінбурнській косі.jpg",
+      "artist": "Ryzhkov Sergey",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:%D0%9F%D1%83%D1%85%D1%96%D0%B2%D0%BA%D0%B0_%D0%BD%D0%B0_%D0%9A%D1%96%D0%BD%D0%B1%D1%83%D1%80%D0%BD%D1%81%D1%8C%D0%BA%D1%96%D0%B9_%D0%BA%D0%BE%D1%81%D1%96.jpg"
+    },
+    "graagaas": {
+      "file": "File:Greylag Goose - St James's Park, London - Nov 2006.jpg",
+      "artist": "Diliff",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Greylag_Goose_-_St_James%27s_Park,_London_-_Nov_2006.jpg"
+    },
+    "canadagaas": {
+      "file": "File:Canada goose on Seedskadee NWR (27826185489).jpg",
+      "artist": "USFWS Mountain-Prairie",
+      "license": "Public domain",
+      "license_url": "",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Canada_goose_on_Seedskadee_NWR_(27826185489).jpg"
+    },
+    "blisgaas": {
+      "file": "File:Greater white-fronted goose in flight-1045.jpg",
+      "artist": "Frank Schulenburg",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Greater_white-fronted_goose_in_flight-1045.jpg"
+    },
+    "kortnaebbet_gaas": {
+      "file": "File:2019-03-25 Anser brachyrhynchus, Killingworth Lake, Northumberland 1.jpg",
+      "artist": "MPF",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:2019-03-25_Anser_brachyrhynchus,_Killingworth_Lake,_Northumberland_1.jpg"
+    },
+    "nilgaas": {
+      "file": "File:Egyptian goose (Alopochen aegyptiaca) London.jpg",
+      "artist": "Charles J. Sharp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Egyptian_goose_(Alopochen_aegyptiaca)_London.jpg"
+    },
+    "saedgaas": {
+      "file": "File:Taiga bean goose (54312538416).jpg",
+      "artist": "Andrey Gulivanov",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Taiga_bean_goose_(54312538416).jpg"
+    },
+    "agerhoene": {
+      "file": "File:Nurmkana (cropped).jpg",
+      "artist": "K.Pitk",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Nurmkana_(cropped).jpg"
+    },
+    "fasan": {
+      "file": "File:Phasianus colchicus Oulu 20200524 02.jpg",
+      "artist": "Estormiz",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Phasianus_colchicus_Oulu_20200524_02.jpg"
+    },
+    "ringdue": {
+      "file": "File:Columba palumbus EM1B1397 (27445478998).jpg",
+      "artist": "Bengt Nyman from Vaxholm, Sweden",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Columba_palumbus_EM1B1397_(27445478998).jpg"
+    },
+    "dobbeltbekkasin": {
+      "file": "File:Common snipe (Gallinago gallinago) 2022.jpg",
+      "artist": "TRinaud",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Common_snipe_(Gallinago_gallinago)_2022.jpg"
+    },
+    "skovsneppe": {
+      "file": "File:Woodcock earthworm.jpg",
+      "artist": "Ronald Slabke",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Woodcock_earthworm.jpg"
+    },
+    "husskade": {
+      "file": "File:Eurasian magpie 2024 03 03 02.jpg",
+      "artist": "Alexis Lours",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eurasian_magpie_2024_03_03_02.jpg"
+    },
+    "krage": {
+      "file": "File:Hooded Crow (Corvus cornix) City Park, Skopje, North Macedonia.jpg",
+      "artist": "Chuck Homler d/b/a Focus On Wildlife",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hooded_Crow_(Corvus_cornix)_City_Park,_Skopje,_North_Macedonia.jpg"
+    },
+    "blishoene": {
+      "file": "File:Eurasian Coot 2023 11 25 03.jpg",
+      "artist": "Alexis Lours",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Eurasian_Coot_2023_11_25_03.jpg"
+    },
+    "soelvmage": {
+      "file": "File:European herring gull vocalizing (00170).jpg",
+      "artist": "Rhododendrites",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:European_herring_gull_vocalizing_(00170).jpg"
+    }
+  },
+  "species": {
+    "kronspidshjort": "kronspidshjort",
+    "kronhjort": "kronhjort",
+    "kronhind": "kronhind",
+    "kronkalv": "kronkalv",
+    "daahjort": "daahjort",
+    "daa_og_kalv": "daa_og_kalv",
+    "sikahjort": "sikahjort",
+    "sikahind_kalv": "sikahind_kalv",
+    "raabuk": "raabuk",
+    "raa_og_lam": "raa_og_lam",
+    "muflonvaedder": "muflonvaedder",
+    "muflonfaar_lam": "muflonfaar_lam",
+    "vildsvin_orne": "vildsvin_orne",
+    "vildsvin_so_grise": "vildsvin_so_grise",
+    "raev": "raev",
+    "maarhund": "maarhund",
+    "mink": "mink",
+    "vaskebjoern": "vaskebjoern",
+    "hare": "hare",
+    "vildkanin": "vildkanin",
+    "bisamrotte": "bisamrotte",
+    "sumpbaever": "sumpbaever",
+    "graaand": "graaand",
+    "atlingand": "atlingand",
+    "krikand": "krikand",
+    "spidsand": "spidsand",
+    "pibeand": "pibeand",
+    "skeand": "skeand",
+    "knarand": "knarand",
+    "troldand": "troldand",
+    "bjergand": "bjergand",
+    "hvinand": "hvinand",
+    "sortand": "sortand",
+    "edderfugl_han": "edderfugl_han",
+    "graagaas": "graagaas",
+    "graagaas_omdrift": "graagaas",
+    "canadagaas": "canadagaas",
+    "canadagaas_omdrift": "canadagaas",
+    "blisgaas": "blisgaas",
+    "kortnaebbet_gaas": "kortnaebbet_gaas",
+    "nilgaas": "nilgaas",
+    "saedgaas": "saedgaas",
+    "agerhoene": "agerhoene",
+    "fasan": "fasan",
+    "ringdue": "ringdue",
+    "dobbeltbekkasin": "dobbeltbekkasin",
+    "skovsneppe": "skovsneppe",
+    "husskade": "husskade",
+    "krage": "krage",
+    "blishoene": "blishoene",
+    "soelvmage": "soelvmage"
+  }
+}
