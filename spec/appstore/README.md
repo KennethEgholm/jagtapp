@@ -17,6 +17,7 @@ Klar til at kopiere ind i App Store Connect. Tegngrænser er tjekket.
 | Support-URL | https://kennethegholm.github.io/jagtapp/ |
 | Privatlivs-URL | https://kennethegholm.github.io/jagtapp/privatliv.html |
 | Marketing-URL | (tom) |
+| Kontakt (support- og privatlivsside) | jagtfokus@gmail.com |
 | Copyright | 2026 <dit navn, som det står på udviklerkontoen> |
 
 ## Reklametekst (170)
