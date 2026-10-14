@@ -35,6 +35,7 @@ struct TodayView: View {
                             NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
                                 SpeciesRow(item: item, context: .query)
                             }
+                            .bagSwipeAction(speciesId: item.id)
                         }
                     }
                 }
@@ -59,6 +60,7 @@ struct TodayView: View {
                                 NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
                                     SpeciesRow(item: item, context: .query)
                                 }
+                                .bagSwipeAction(speciesId: item.id)
                             }
                         }
                     } footer: {
@@ -74,10 +76,15 @@ struct TodayView: View {
                 SpeciesDetailView(route: route)
             }
             .sheet(isPresented: $showDate) {
-                DatePickerSheet()
+                DatePickerSheet(initialDate: store.queryDate) { store.select(date: $0) }
             }
             .sheet(isPresented: $showPlace) {
-                PlacePickerView()
+                PlacePickerView(
+                    followHere: store.followHere,
+                    selectedPlaceId: store.pickedPlace.id,
+                    onHere: { store.useHere() },
+                    onSelect: { store.select(place: $0) }
+                )
             }
             .sensoryFeedback(.selection, trigger: store.userSelections)
             .onAppear {

@@ -11,4 +11,7 @@ enum Copy {
     static let notTheLaw = "Appen er ikke loven. Tjek altid bekendtgørelsen og lokale regler."
 
     static let deerNote = "Kron- og dåvildt har store lokale forvaltningsplaner. Appen viser kun de generelle tider."
+
+    static let bagTitle = "Vildtudbytte"
+    static let bagAdd = "Nedlagt"
 }

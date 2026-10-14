@@ -124,7 +124,7 @@ Debug-launch-argumenter (kun DEBUG) til screenshots og manuel test:
 | `-harGodkendtFraskrivelse YES` | Spring velkomst over (`NO` viser den) |
 | `-date 2026-11-15` | Valgt dato |
 | `-place als` | Valgt sted (place id) |
-| `-tab all` / `-tab settings` / `-tab about` | Start-fane |
+| `-tab bag` / `-tab all` / `-tab settings` / `-tab about` | Start-fane |
 | `-udseende dark` / `light` / `system` | Udseende, uanset simulatorens tema |
 | `-species raabuk` | Åbn artsdetalje på Jagtbar |
 | `-sheet date` / `-sheet place` | Åbn vælger |

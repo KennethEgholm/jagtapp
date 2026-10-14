@@ -3,6 +3,8 @@ import SwiftUI
 struct DatePickerSheet: View {
     @Environment(SeasonStore.self) private var store
     @Environment(\.dismiss) private var dismiss
+    var initialDate: Date
+    var onSelect: (Date) -> Void
     @State private var draft = Date()
 
     var body: some View {
@@ -13,7 +15,7 @@ struct DatePickerSheet: View {
                         HStack(spacing: Spacing.xs) {
                             ForEach(quickPicks, id: \.title) { pick in
                                 Button(pick.title) {
-                                    store.select(date: pick.date)
+                                    onSelect(pick.date)
                                     dismiss()
                                 }
                                 .buttonStyle(.bordered)
@@ -40,13 +42,13 @@ struct DatePickerSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Vælg") {
-                        store.select(date: draft)
+                        onSelect(draft)
                         dismiss()
                     }
                     .fontWeight(.semibold)
                 }
             }
-            .onAppear { draft = store.queryDate }
+            .onAppear { draft = initialDate }
         }
         .presentationDetents([.fraction(0.72), .large])
         .presentationDragIndicator(.visible)

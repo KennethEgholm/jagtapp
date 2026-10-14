@@ -145,6 +145,42 @@ public struct SeasonCalendar: Sendable {
         return "\(day.day). \(months[max(0, min(11, day.month - 1))])"
     }
 
+    /// Hunting year containing the date. 1 April starts the year named by that calendar year.
+    public func huntingYear(on date: Date) -> Int {
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        return month >= SeasonTimeline.startMonth ? year : year - 1
+    }
+
+    /// "2026/27"
+    public func huntingYearLabel(_ startYear: Int) -> String {
+        String(format: "%d/%02d", startYear, (startYear + 1) % 100)
+    }
+
+    /// Calendar day in this timezone, `yyyy-MM-dd`.
+    public func dayKey(for date: Date) -> String {
+        let parts = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(format: "%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 1, parts.day ?? 1)
+    }
+
+    public func date(fromDayKey key: String) -> Date? {
+        let parts = key.split(separator: "-").compactMap { Int($0) }
+        guard parts.count == 3 else { return nil }
+        return calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2], hour: 12))
+    }
+
+    /// "oktober 2026", from a day key.
+    public func danishMonthYear(fromDayKey key: String) -> String? {
+        guard let date = date(fromDayKey: key) else { return nil }
+        let months = [
+            "januar", "februar", "marts", "april", "maj", "juni",
+            "juli", "august", "september", "oktober", "november", "december"
+        ]
+        let month = calendar.component(.month, from: date)
+        let year = calendar.component(.year, from: date)
+        return "\(months[max(0, min(11, month - 1))]) \(year)"
+    }
+
     /// Full month names, for VoiceOver.
     public func danishSpokenPeriodText(_ periods: [SeasonPeriod]) -> String {
         guard !periods.isEmpty else { return "Ingen jagttid" }

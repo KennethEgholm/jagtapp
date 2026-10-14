@@ -3,6 +3,10 @@ import SwiftUI
 struct PlacePickerView: View {
     @Environment(SeasonStore.self) private var store
     @Environment(\.dismiss) private var dismiss
+    var followHere: Bool
+    var selectedPlaceId: String
+    var onHere: () -> Void
+    var onSelect: (Place) -> Void
     @State private var query = ""
 
     var body: some View {
@@ -11,7 +15,7 @@ struct PlacePickerView: View {
                 if query.isEmpty {
                     Section {
                         Button {
-                            store.useHere()
+                            onHere()
                             dismiss()
                         } label: {
                             HStack(spacing: Spacing.s) {
@@ -24,7 +28,7 @@ struct PlacePickerView: View {
                                         .foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                if store.followHere {
+                                if followHere {
                                     checkmark
                                 }
                             }
@@ -39,14 +43,14 @@ struct PlacePickerView: View {
                     Section(section.title) {
                         ForEach(section.places) { place in
                             Button {
-                                store.select(place: place)
+                                onSelect(place)
                                 dismiss()
                             } label: {
                                 PlaceRow(
                                     place: place,
                                     parent: store.parentName(of: place),
                                     localCount: store.catalog.localTimeCount(at: place.id),
-                                    isSelected: !store.followHere && store.pickedPlace.id == place.id
+                                    isSelected: !followHere && place.id == selectedPlaceId
                                 )
                             }
                             .tint(.primary)

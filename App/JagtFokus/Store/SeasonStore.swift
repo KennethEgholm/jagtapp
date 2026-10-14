@@ -159,6 +159,11 @@ final class SeasonStore {
         requestLocation()
     }
 
+    /// A fix for the bag sheet. Does not change whether Jagtbar follows here.
+    func locate() {
+        requestLocation()
+    }
+
     /// Call when the app comes to the foreground.
     func refreshNow() {
         now = Date()

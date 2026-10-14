@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SpeciesDetailView: View {
     @Environment(SeasonStore.self) private var store
+    @Environment(BagStore.self) private var bag
     let route: SpeciesRoute
 
     var body: some View {
@@ -35,6 +36,27 @@ struct SpeciesDetailView: View {
                 Section {
                     StatusSummary(status: store.status(of: item))
                 }
+            }
+
+            Section {
+                Button {
+                    bag.recordAndSwitchTab(speciesId: item.id, in: store)
+                } label: {
+                    HStack(spacing: Spacing.s) {
+                        IconTile(systemImage: "plus.circle.fill")
+                        Text("Markér som nedlagt")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(.primary)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.footnote.weight(.semibold))
+                            .foregroundStyle(.tertiary)
+                            .accessibilityHidden(true)
+                    }
+                    .padding(.vertical, 2)
+                    .contentShape(Rectangle())
+                }
+                .tint(.primary)
             }
 
             Section {

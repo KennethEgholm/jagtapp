@@ -72,8 +72,18 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Foto matcher køn/alder i artsnavnet (Kronhind = hind, Vildsvin, so og grise = grise). Grågås/Canadagås på omdriftsarealer deler foto med arten.
 - Tekst i en List-række med klar baggrund skal holde afstand til rækkens afrundede hjørner. Ellers klipper iOS det første bogstav.
 
+### Vildtudbytte (v2, ikke i App Store-v1)
+
+- Fane **Nedlagt** (`plus.circle`) mellem Jagtbar og Alle arter. Jagtbar har ingen knap til det.
+- Swipe til venstre på en artsrække i **Jagtbar** eller **Alle arter** har handlingen **Nedlagt** (`plus.circle`): noterer 1 stykke og skifter til **Nedlagt**-fanen med bekræftelsen klar.
+- Artsdetaljen har en række **Markér som nedlagt** med `IconTile`, der noterer 1 stykke og skifter til **Nedlagt**-fanen.
+- Fanen starter med række “Allerede nedlagt” (årets antal), så Dato og Sted, samme rækker som Jagtbar. Standard: i dag og din position. Et andet valg ændrer ikke Jagtbar, men listen under følger med.
+- Store rækker i `.title2`, ombryder. Senest nedlagt, så jagtbart for den dato og det sted. Søgning er en knap, ikke et åbent felt. Plus-ikonet er ikke jagtbar-grønt.
+- Tryk gemmer ét stykke. Bekræftelse bliver nede: “[Art] noteret”, **Fortryd** og **+1**.
+- Årets liste: jagtår og antal stykker. Tom liste siger “Ingen poster.”, ikke noget om pligt.
+
 ### Indstillinger
-- Fjerde fane (gearshape) mellem Alle arter og Om.
+- Fane (gearshape) mellem Alle arter og Om.
 - Udseende: inline-picker System / Lys / Mørk med symboler. Anvendes via `overrideUserInterfaceStyle` på alle vinduer, så sheets følger med.
 
 ### Om
@@ -107,3 +117,5 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Soltider og Indstillinger flyttet ind i v1 (2026-10-11). Knappen til iOS’ Indstillinger hedder nu “Åbn Indstillinger-appen”, så den ikke forveksles med appens egen fane.
 - Multicolor-symbolerne for solopgang/solnedgang tegner pilen hvid og usynlig i lyst tema. Bruger hierarkisk orange.
 - Position slået fra rydder det sidste GPS-sted. Mislykket opdatering beholder det og siger det. Ny katalog-version matcher stedet igen.
+- Vildtudbytte-sheets (2026-10-14) bruger inline titel som de andre sheets. Årssummen genbruger svar-kortets tal.
+- Nedlagt er en fane (2026-10-14), ikke en knap på Jagtbar. “Allerede nedlagt” er første række på fanen.

@@ -28,6 +28,7 @@ struct AllSpeciesView: View {
                             NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .general)) {
                                 SpeciesRow(item: item, context: .general)
                             }
+                            .bagSwipeAction(speciesId: item.id)
                         }
                     } header: {
                         Text(group.title)

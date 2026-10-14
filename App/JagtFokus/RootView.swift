@@ -3,13 +3,14 @@ import UIKit
 
 struct RootView: View {
     @Environment(SeasonStore.self) private var store
+    @Environment(BagStore.self) private var bag
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage("harGodkendtFraskrivelse") private var acceptedDisclaimer = false
     @AppStorage("udseende") private var appearance: Appearance = .system
     @State private var tab: AppTab = .today
 
     enum AppTab: Hashable {
-        case today, all, settings, about
+        case today, bag, all, settings, about
     }
 
     var body: some View {
@@ -18,6 +19,9 @@ struct RootView: View {
                 TabView(selection: $tab) {
                     Tab("Jagtbar", systemImage: "scope", value: AppTab.today) {
                         TodayView()
+                    }
+                    Tab("Nedlagt", systemImage: "plus.circle", value: AppTab.bag) {
+                        BagTabView()
                     }
                     Tab("Alle arter", systemImage: "list.bullet", value: AppTab.all) {
                         AllSpeciesView()
@@ -46,6 +50,8 @@ struct RootView: View {
             store.refreshNow()
         }
         .onChange(of: appearance) { _, new in new.apply() }
+        .onChange(of: bag.tabRequests) { _, _ in tab = .bag }
+        .sensoryFeedback(.success, trigger: bag.saves)
         .onAppear {
             appearance.apply()
             applyLaunchTab()
@@ -56,6 +62,7 @@ struct RootView: View {
     private func applyLaunchTab() {
         #if DEBUG
         switch UserDefaults.standard.string(forKey: "tab") {
+        case "bag", "nedlagt": tab = .bag
         case "all": tab = .all
         case "settings": tab = .settings
         case "about": tab = .about
