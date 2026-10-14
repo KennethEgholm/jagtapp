@@ -6,7 +6,7 @@ Guidance for AI agents working in this repo.
 
 iPhone-app: **hvad er jagtbart her og nu?** Danske jagttider efter dato og sted.
 
-v1 er frosset i `spec/v1.md`. Design og UX i `spec/design.md`. Backlog i `spec/ideas.md`.
+v1 er frosset i `spec/v1.md`. v2 (Vildtudbytte) er arbejdsspec i `spec/v2.md` på branch `v2/vildtudbytte` og må ikke merges til `main` før App Store-v1 er ude. Design og UX i `spec/design.md`. Backlog i `spec/ideas.md`.
 
 ## Stack
 
@@ -23,6 +23,7 @@ Sprog: dansk. Ingen konto. Ingen tracking.
 
 ```
 spec/v1.md                         # Frosset v1
+spec/v2.md                         # Vildtudbytte. Kun branch v2/vildtudbytte
 spec/design.md                     # Designsystem, skærme, beslutninger
 spec/ideas.md                      # Backlog
 spec/appstore/                     # App Store-tekster, svar, review-noter, screenshots
@@ -185,3 +186,5 @@ Repo: `github.com/KennethEgholm/jagtapp` (offentligt). Remote data: `raw.githubu
 - Redigere `.storage` eller påstå at appen er loven.
 - Bruge glas (Liquid Glass) på indhold. Kun systemets bars og kontroller.
 - Bruge fotos uden kreditering eller med NC/ND-licens.
+- Merge `v2/vildtudbytte` til `main` før v1 er på App Store.
+- Påstå at appen har indberettet vildtudbytte.

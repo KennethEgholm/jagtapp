@@ -1,6 +1,6 @@
 # Ideer (efter v1)
 
-v1 er frosset i `spec/v1.md`. Nedenfor er backlog.
+v1 er frosset i `spec/v1.md`. Vildtudbytte er arbejdsspec i `spec/v2.md` (branch `v2/vildtudbytte`, ikke med i App Store-v1). Nedenfor er resten af backloggen.
 
 ## Med i V1:
 
@@ -13,13 +13,10 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
 ## Senere
 
 - Alarm/vibration 10 minutter før solnedgang
-- Jagt-log
-  - Automatisk indberetning af udbytte
-  - Spørg om API adgang her: https://sgavmst.dk/kontakt
+- Jagt-log (ud over udbytte, som ligger i `spec/v2.md`)
   - Placering (GPS / manuelt)
   - Vejret på dagen
     - Vindretning
-  - Udbytte på dagen
   - Antal skud
 - Hunde-log
   - Antal apporteringer (vildtart, succes eller ej)

@@ -2,7 +2,7 @@
 
 iPhone-app: **hvad må jeg jage i dag, her?** Danske jagttider efter dato og sted.
 
-v1 er frosset i `spec/v1.md`. Design og UX: `spec/design.md`. Agent-guide: `AGENTS.md`.
+v1 er frosset i `spec/v1.md`. v2 (Vildtudbytte) ligger i `spec/v2.md` på branch `v2/vildtudbytte` og er ikke med i App Store-v1. Design og UX: `spec/design.md`. Agent-guide: `AGENTS.md`.
 
 ## Kør appen
 
