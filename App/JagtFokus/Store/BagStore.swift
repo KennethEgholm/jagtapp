@@ -1,10 +1,12 @@
 import Foundation
 import Observation
 
-/// Local bag file. The core stays free of file I/O.
+/// Local bag file with rolling backup and automatic iCloud key-value sync.
 @MainActor
 @Observable
 final class BagStore {
+    static let cloudKey = "vildtudbytte"
+
     private(set) var journal: BagJournal
     /// Entry the confirmation refers to.
     private(set) var pendingId: UUID?
@@ -14,13 +16,25 @@ final class BagStore {
     private(set) var tabRequests = 0
     let draft = BagDraft()
 
-    private let fileURL: URL
+    private let fileStore: BagFileStore
+    private let cloud: BagCloudStore?
     private let calendar = SeasonCalendar()
+    @ObservationIgnored private var cloudObserver: NSObjectProtocol?
 
-    init(fileURL: URL? = nil) {
+    init(fileURL: URL? = nil, cloud: BagCloudStore? = nil) {
         let url = fileURL ?? Self.defaultURL
-        self.fileURL = url
-        journal = Self.load(from: url)
+        let fileStore = BagFileStore(fileURL: url)
+        self.fileStore = fileStore
+        self.cloud = cloud ?? (fileURL == nil ? NSUbiquitousKeyValueStore.default : nil)
+        journal = fileStore.load()
+        syncWithCloud()
+        observeCloudChanges()
+    }
+
+    deinit {
+        if let cloudObserver {
+            NotificationCenter.default.removeObserver(cloudObserver)
+        }
     }
 
     var pending: BagEntry? {
@@ -86,13 +100,50 @@ final class BagStore {
         journal.entries.first { $0.id == id }
     }
 
+    func syncWithCloud() {
+        guard let cloud else { return }
+        cloud.synchronize()
+        if let cloudData = cloud.data(forKey: Self.cloudKey),
+           let cloudJournal = try? BagJournal.decode(from: cloudData) {
+            let merged = journal.merged(with: cloudJournal)
+            if merged != journal {
+                journal = merged
+                try? fileStore.save(journal)
+            }
+            if merged != cloudJournal, let data = try? merged.encoded() {
+                cloud.set(data, forKey: Self.cloudKey)
+                cloud.synchronize()
+            }
+        } else if !journal.entries.isEmpty || !journal.deletedIds.isEmpty,
+                  let data = try? journal.encoded() {
+            cloud.set(data, forKey: Self.cloudKey)
+            cloud.synchronize()
+        }
+    }
+
     private func save() {
-        do {
-            let folder = fileURL.deletingLastPathComponent()
-            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-            try journal.encoded().write(to: fileURL, options: .atomic)
-        } catch {
-            // The in-memory journal still has the entry. Next launch reloads the last good file.
+        if let cloud,
+           let cloudData = cloud.data(forKey: Self.cloudKey),
+           let cloudJournal = try? BagJournal.decode(from: cloudData) {
+            journal = journal.merged(with: cloudJournal)
+        }
+        try? fileStore.save(journal)
+        if let cloud, let data = try? journal.encoded() {
+            cloud.set(data, forKey: Self.cloudKey)
+            cloud.synchronize()
+        }
+    }
+
+    private func observeCloudChanges() {
+        guard let cloud = cloud as? NSUbiquitousKeyValueStore else { return }
+        cloudObserver = NotificationCenter.default.addObserver(
+            forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+            object: cloud,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                self?.syncWithCloud()
+            }
         }
     }
 
@@ -100,12 +151,5 @@ final class BagStore {
         FileManager.default
             .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appending(path: "vildtudbytte.json")
-    }
-
-    private static func load(from url: URL) -> BagJournal {
-        guard let data = try? Data(contentsOf: url),
-              let journal = try? BagJournal.decode(from: data)
-        else { return BagJournal() }
-        return journal
     }
 }
