@@ -20,7 +20,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				JagtFokus.entitlements,
 			);
 			target = 00000000000000000000001F /* JagtFokus */;
 		};

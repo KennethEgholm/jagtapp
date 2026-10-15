@@ -24,8 +24,7 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
   - Jagtetiske regler
   - Praktisk hjælp (plukke fugle, osv.)
   - Jagtrelaterede opskrifter
-- Anskudt vildt
-  - Schweisshunderegister - sted fra GPS eller manuelt
+- Nærmeste schweisshundefører i appen (navn og telefon, sted fra GPS eller manuelt). Venter på tilladelse fra Schweiss-sekretariatet. Ingen scrape. Infosiden er i v1
 
 - Android / Google Play
 - Engelsk

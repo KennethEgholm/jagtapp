@@ -119,6 +119,10 @@ struct SpeciesDetailView: View {
                 }
             }
 
+            if let biology = store.biology(for: item.id) {
+                BiologySection(biology: biology)
+            }
+
             Section {
                 if let url = URL(string: store.catalog.sourceURL) {
                     Link(destination: url) {

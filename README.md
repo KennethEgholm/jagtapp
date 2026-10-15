@@ -1,31 +1,31 @@
 # JagtFokus
 
-iPhone-app: **hvad må jeg jage i dag, her?** Danske jagttider efter dato og sted.
+iPhone app: **hvad må jeg jage i dag, her?** Danish hunting seasons by date and place.
 
-v1, inklusive jagtjournalen, står i `spec/v1.md`. Indberetning er ikke bygget (`spec/v2.md`). Design og UX: `spec/design.md`. Agent-guide: `AGENTS.md`.
+v1, including the hunting journal, is in `spec/v1.md`. The bag report is not built (`spec/v2.md`). Design and UX: `spec/design.md`. Agent guide: `AGENTS.md`.
 
-## Kør appen
+## Run the app
 
-1. Installer Xcode fra App Store.
-2. Åbn `App/JagtFokus.xcodeproj`.
-3. Vælg simulator eller iPhone.
-4. Sæt dit Team under Signing.
+1. Install Xcode from the App Store.
+2. Open `App/JagtFokus.xcodeproj`.
+3. Pick a simulator or an iPhone.
+4. Set your Team under Signing.
 5. Run.
 
-Kræver iOS 18. Bundle id: `dk.jagtfokus.app`.
+Requires iOS 18. Bundle id: `dk.jagtfokus.app`.
 
-## Data og tests
+## Data and tests
 
-Jagttider: `data/jagttider.json` (BEK 470/2024, SGAV-tabel fra 1. juli 2024).
+Seasons: `data/jagttider.json` (BEK 470/2024, SGAV table from 1 July 2024). Biology: `App/JagtFokus/Resources/biologi.json` (DOF and Arter.dk). Biology is not part of the season data.
 
 ```sh
 swift test
 ```
 
-59 tests dækker åben/lukket, årsskifte, næste åbning, sidste dag, jagtårs-tidslinje, lokale tider, GPS-stedmatch, soltider og fotolicenser.
+72 tests cover open/closed, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, and biology.
 
-Remote JSON: GitHub raw. Indtil repo er public, bruger appen den indbyggede fil.
+Remote JSON: GitHub raw. Until the repo is public, the app uses the bundled file.
 
-## Ikke i v1
+## Not in v1
 
-Soltider, log, hunde, opskrifter, Android.
+Sunset alarm, log beyond the journal, dogs, recipes, Android.

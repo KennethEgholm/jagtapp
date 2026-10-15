@@ -6,6 +6,7 @@ struct TodayView: View {
     @State private var path: [SpeciesRoute] = []
     @State private var showDate = false
     @State private var showPlace = false
+    @State private var showSchweiss = false
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -72,6 +73,13 @@ struct TodayView: View {
             .contentMargins(.top, Spacing.xs, for: .scrollContent)
             .refreshable { await store.refresh() }
             .scrollRevealedTitle(Copy.todayTab)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(Copy.schweissToolbar) { showSchweiss = true }
+                        .tint(.primary)
+                        .accessibilityHint("Åbn Schweiss-registret")
+                }
+            }
             .navigationDestination(for: SpeciesRoute.self) { route in
                 SpeciesDetailView(route: route)
             }
@@ -86,6 +94,9 @@ struct TodayView: View {
                     onSelect: { store.select(place: $0) }
                 )
             }
+            .sheet(isPresented: $showSchweiss) {
+                SchweissSheet()
+            }
             .sensoryFeedback(.selection, trigger: store.userSelections)
             .onAppear {
                 store.requestLocationIfNeeded()
@@ -95,7 +106,7 @@ struct TodayView: View {
     }
 
     /// Debug only: `-species raabuk` opens a detail, `-closed YES` expands the closed section,
-    /// `-sheet date|place` opens a picker.
+    /// `-sheet date|place|schweiss` opens a picker or the Schweiss page.
     private func applyLaunchRoute() {
         #if DEBUG
         let defaults = UserDefaults.standard
@@ -106,6 +117,7 @@ struct TodayView: View {
         switch defaults.string(forKey: "sheet") {
         case "date": showDate = true
         case "place": showPlace = true
+        case "schweiss": showSchweiss = true
         default: break
         }
         #endif

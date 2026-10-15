@@ -33,6 +33,8 @@ final class SeasonStore {
     let calendar = SeasonCalendar()
     /// Bundled photo credits. Images are in the asset catalog.
     let photos = SeasonStore.bundlePhotos()
+    /// Bundled life-history notes. Display only.
+    let biology = SeasonStore.bundleBiology()
     private let remoteURL = URL(string: "https://raw.githubusercontent.com/KennethEgholm/jagtapp/main/data/jagttider.json")
     private let location = LocationService()
 
@@ -108,6 +110,10 @@ final class SeasonStore {
 
     func photo(for speciesId: String) -> IdentifiedPhoto? {
         photos?.photo(for: speciesId)
+    }
+
+    func biology(for speciesId: String) -> TaxonBiology? {
+        biology?.biology(for: speciesId)
     }
 
     func group(of speciesId: String) -> SpeciesGroup? {
@@ -237,6 +243,13 @@ final class SeasonStore {
               let data = try? Data(contentsOf: url)
         else { return nil }
         return try? SpeciesPhotos.decode(from: data)
+    }
+
+    private static func bundleBiology() -> BiologyCatalog? {
+        guard let url = Bundle.main.url(forResource: "biologi", withExtension: "json"),
+              let data = try? Data(contentsOf: url)
+        else { return nil }
+        return try? BiologyCatalog.decode(from: data)
     }
 
     private static var cacheURL: URL {

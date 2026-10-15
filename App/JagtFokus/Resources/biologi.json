@@ -1,0 +1,874 @@
+{
+  "version": 1,
+  "updated": "2026-10-15",
+  "taxa": {
+    "cervus_elaphus": {
+      "latin": "Cervus elaphus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i Danmark. Fritlevende bestande findes spredt i Jylland og i dele af Nord- og Vestsjælland."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hinden får 1 kalv om året, sjældent 2. Kalven fødes i maj-juni efter ca. 8 måneders drægtighed."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89903"
+        }
+      ]
+    },
+    "dama_dama": {
+      "latin": "Dama dama",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Indført. Yngler og er almindelig i Danmark."
+        },
+        {
+          "label": "Yngel",
+          "value": "Dåen får sædvanligvis 1 kuld om året med 1-2 kalve i maj-juni, efter næsten 8 måneders drægtighed."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89905"
+        }
+      ]
+    },
+    "cervus_nippon": {
+      "latin": "Cervus nippon",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Indført fra Asien i 1900-tallet. Yngler på få lokaliteter i Nordøstjylland og i Sydvestsjælland."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hinden får oftest én kalv efter ca. 7,5 måneders drægtighed."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89902"
+        }
+      ]
+    },
+    "capreolus_capreolus": {
+      "latin": "Capreolus capreolus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler og er almindelig i hele Danmark."
+        },
+        {
+          "label": "Yngel",
+          "value": "Råen føder 1-2 lam i maj-juni. Parringen er i juli-august, men fosteret udvikles først efter 4-5 måneder."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89906"
+        }
+      ]
+    },
+    "ovis_musimon": {
+      "latin": "Ovis aries subsp. musimon",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Indført til jagt siden 1950'erne. Naturligt hjemmehørende på Korsika og Sardinien."
+        },
+        {
+          "label": "Yngel",
+          "value": "Fåret føder normalt ét lam efter ca. 5½ måneds drægtighed. Brunsten er om efteråret."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk",
+          "url": "https://arter.dk/taxa/97163"
+        },
+        {
+          "name": "Dansk Pattedyratlas",
+          "url": "https://pattedyratlas.lex.dk/Muflon"
+        }
+      ]
+    },
+    "sus_scrofa": {
+      "latin": "Sus scrofa",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Findes kun sporadisk frit. Også sat ud til græsning, blandt andet i Lille Vildmose."
+        },
+        {
+          "label": "Yngel",
+          "value": "Soen føder 4-7 grise efter ca. fire måneders drægtighed."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89900"
+        }
+      ]
+    },
+    "vulpes_vulpes": {
+      "latin": "Vulpes vulpes",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Almindelig i hele Danmark, undtagen Bornholm og enkelte mindre øer."
+        },
+        {
+          "label": "Yngel",
+          "value": "Får om foråret op til 4-8 hvalpe efter ca. 53 dages drægtighed."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89955"
+        }
+      ]
+    },
+    "nyctereutes_procyonoides": {
+      "latin": "Nyctereutes procyonoides",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Invasiv art fra Østasien. Har bredt sig til hele Jylland, med enkelte fund på Fyn. I den nordlige del af udbredelsen sover den vintersøvn."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hunnen føder 5-8 unger pr. kuld. Et kuld kan tælle op til 19."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk",
+          "url": "https://arter.dk/taxa/89956"
+        },
+        {
+          "name": "Lex",
+          "url": "https://lex.dk/mårhund"
+        },
+        {
+          "name": "Regulering af invasive arter",
+          "url": "https://sgavmst.dk/natur-og-jagt/regulering-og-udsaetning-af-vildt/regulering-af-vildt/regulering-af-invasive-arter"
+        }
+      ]
+    },
+    "neogale_vison": {
+      "latin": "Neogale vison",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Invasiv art fra Nordamerika. Etableret i det meste af landet. Sporadisk på Lolland-Falster og enkelte mindre øer."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hunnen kan få et kuld på 4-6 unger i april-juni."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89950"
+        },
+        {
+          "name": "Regulering af invasive arter",
+          "url": "https://sgavmst.dk/natur-og-jagt/regulering-og-udsaetning-af-vildt/regulering-af-vildt/regulering-af-invasive-arter"
+        }
+      ]
+    },
+    "procyon_lotor": {
+      "latin": "Procyon lotor",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Invasiv art fra Nordamerika. Observeres spredt fra Jylland til Sjælland."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hunnen får ét kuld på 2-5 unger om året."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89937"
+        },
+        {
+          "name": "Regulering af invasive arter",
+          "url": "https://sgavmst.dk/natur-og-jagt/regulering-og-udsaetning-af-vildt/regulering-af-vildt/regulering-af-invasive-arter"
+        }
+      ]
+    },
+    "lepus_europaeus": {
+      "latin": "Lepus europaeus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Almindelig i Danmark."
+        },
+        {
+          "label": "Yngel",
+          "value": "Får 3-4 kuld i ynglesæsonen med ca. 2-5 killinger i hvert. Første kuld kommer sidst i februar."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89965"
+        }
+      ]
+    },
+    "oryctolagus_cuniculus": {
+      "latin": "Oryctolagus cuniculus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Stor bestand i Sønderjylland. Findes også på Bornholm, Lolland, Endelave, Fanø og Fyn."
+        },
+        {
+          "label": "Yngel",
+          "value": "Får i gennemsnit 3-4 kuld om året med 2-10 unger."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89964"
+        }
+      ]
+    },
+    "ondatra_zibethicus": {
+      "latin": "Ondatra zibethicus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Invasiv art fra Nordamerika. Indvandrer fra Tyskland. Der er sandsynligvis en bestand i det sydligste Sønderjylland."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hunnen får 2-3 kuld fra april til oktober, hvert på 6-8 unger."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89876"
+        },
+        {
+          "name": "Regulering af invasive arter",
+          "url": "https://sgavmst.dk/natur-og-jagt/regulering-og-udsaetning-af-vildt/regulering-af-vildt/regulering-af-invasive-arter"
+        }
+      ]
+    },
+    "myocastor_coypus": {
+      "latin": "Myocastor coypus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Invasiv art fra Sydamerika. Observeres sporadisk."
+        },
+        {
+          "label": "Yngel",
+          "value": "Hunnen kan få to kuld om året, ofte med 4-6 unger."
+        }
+      ],
+      "sources": [
+        {
+          "name": "Arter.dk (Miljøstyrelsen)",
+          "url": "https://arter.dk/taxa/89877"
+        },
+        {
+          "name": "Regulering af invasive arter",
+          "url": "https://sgavmst.dk/natur-og-jagt/regulering-og-udsaetning-af-vildt/regulering-af-vildt/regulering-af-invasive-arter"
+        }
+      ]
+    },
+    "anas_platyrhynchos": {
+      "latin": "Anas platyrhynchos",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler ved næsten alle vådområder. De fleste danske ynglefugle bliver i landet. Nordiske fugle trækker igennem og overvintrer typisk i Kanalegnene."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 9-13 æg. Ruger i 27-28 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01860"
+        }
+      ]
+    },
+    "spatula_querquedula": {
+      "latin": "Spatula querquedula",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Fåtallig ynglefugl. Trækker længst af de danske ænder. Europæiske fugle overvintrer ved floddeltaer i Vestafrika syd for Sahara."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-11 æg. Ruger i 21-23 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01910"
+        }
+      ]
+    },
+    "anas_crecca": {
+      "latin": "Anas crecca",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Fåtallig ynglefugl. Almindelig træk- og vintergæst. Størstedelen af de skandinaviske fugle overvintrer i Storbritannien, Holland og Frankrig."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-11 æg. Ruger i 21-23 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01840"
+        }
+      ]
+    },
+    "anas_acuta": {
+      "latin": "Anas acuta",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Fåtallig ynglefugl på kyster. Russiske bestande trækker syd om Danmark og overvintrer i Afrika syd for Sahara. En del europæiske fugle overvintrer i Vesteuropa, især på De Britiske Øer og i Frankrig."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 7-9 æg. Ruger i 22-24 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01890"
+        }
+      ]
+    },
+    "mareca_penelope": {
+      "latin": "Mareca penelope",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler ikke fast. Har ynglet sporadisk. Almindelig trækgæst. Europæiske fugle overvintrer i Nordvesteuropa og ved Middelhavet. En del bliver i milde vintre."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-9 æg. Ruger i 24-25 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01790"
+        }
+      ]
+    },
+    "spatula_clypeata": {
+      "latin": "Spatula clypeata",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Fåtallig ynglefugl. De nordvesteuropæiske fugle overvintrer i Kanalegnene og i England. Fåtallig vintergæst her."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 9-11 æg. Ruger i 22-23 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01940"
+        }
+      ]
+    },
+    "mareca_strepera": {
+      "latin": "Mareca strepera",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i det meste af landet, tættest ved Det Sydfynske Øhav, Langeland og Lolland. De danske fugle trækker til Vest- og Sydeuropa."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-12 æg. Ruger i 24-26 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01820"
+        }
+      ]
+    },
+    "aythya_fuligula": {
+      "latin": "Aythya fuligula",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i det meste af landet, hyppigst i Østdanmark. Danmark er et vigtigt overvintringsområde."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-11 æg. Ruger i 25 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/02030"
+        }
+      ]
+    },
+    "aythya_marila": {
+      "latin": "Aythya marila",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i det nordlige Europa, Rusland og Sibirien. Der er enkelte ynglefund i Danmark. Overvintrer i danske farvande, især i Lillebælt og Aalborg Bugt."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-11 æg. Ruger i 26-28 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/02040"
+        }
+      ]
+    },
+    "bucephala_clangula": {
+      "latin": "Bucephala clangula",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler fåtalligt, overvejende i Nordsjælland. Almindelig træk- og vintergæst i farvandene."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-11 æg. Ruger i 29-30 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/02180"
+        }
+      ]
+    },
+    "melanitta_nigra": {
+      "latin": "Melanitta nigra",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler på tundra og fjeldhede fra Skandinavien til Sibirien. I Danmark er den en meget almindelig træk- og vintergæst. Danske farvande er det vigtigste overvintringsområde for den vesteuropæiske bestand."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 6-8 æg. Ruger i 30-31 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/02130"
+        }
+      ]
+    },
+    "somateria_mollissima": {
+      "latin": "Somateria mollissima",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler udbredt i de danske farvande, især i kolonier på holme. Danske farvande er et vigtigt overvintringsområde."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 4-6 æg. Ruger i 25-28 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/02060"
+        }
+      ]
+    },
+    "anser_anser": {
+      "latin": "Anser anser",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i Danmark. De danske fugle overvintrer i Holland, Tyskland, Frankrig og Spanien. Et stigende antal bliver vinteren over."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 4-6 æg. Ruger i 27-28 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01610"
+        }
+      ]
+    },
+    "branta_canadensis": {
+      "latin": "Branta canadensis",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Indført fra Nordamerika. Yngler fåtalligt og spredt. De danske ynglefugle stammer fra udsætninger."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 5-6 æg. Ruger i 28-30 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01660"
+        }
+      ]
+    },
+    "anser_albifrons": {
+      "latin": "Anser albifrons",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i Nordsibirien. Træk- og vintergæst. Fuglene her stammer altovervejende fra den nordsibiriske bestand, som overvintrer i det vestlige Europa."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 5-6 æg. Ruger i 27-28 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01590"
+        }
+      ]
+    },
+    "anser_brachyrhynchus": {
+      "latin": "Anser brachyrhynchus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "De fugle, der ses i Danmark, yngler på Svalbard. De overvintrer i Danmark, Holland og Belgien og ankommer omkring sidste uge af september."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 3-5 æg. Ruger i 26-27 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01580"
+        }
+      ]
+    },
+    "alopochen_aegyptiaca": {
+      "latin": "Alopochen aegyptiaca",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Invasiv art. Indført fra Afrika. Yngler, mest i Jylland. Trækker om vinteren til frostfrie områder og kan overvintre i milde vintre."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-9 æg. Ruger i 28-30 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01700"
+        },
+        {
+          "name": "Regulering af invasive arter",
+          "url": "https://sgavmst.dk/natur-og-jagt/regulering-og-udsaetning-af-vildt/regulering-af-vildt/regulering-af-invasive-arter"
+        }
+      ]
+    },
+    "anser_serrirostris": {
+      "latin": "Anser fabalis og Anser serrirostris",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Jagttabellen samler to arter. Ingen af dem yngler i Danmark. Tajgasædgås yngler i skovmoser i det nordlige Skandinavien og Rusland og er træk- og vintergæst, ofte i Østdanmark og Nordjylland. Tundrasædgås yngler på tundra i det nordlige Rusland og i Norge og er vintergæst, mest i Sydøstdanmark, langs vestkysten og i Nordjylland."
+        },
+        {
+          "label": "Yngel",
+          "value": "Begge lægger 1 kuld på 4-6 æg og ruger i 27-29 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Tajgasædgås",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01571"
+        },
+        {
+          "name": "DOF, Tundrasædgås",
+          "url": "https://dofbasen.dk/danmarksfugle/art/01574"
+        }
+      ]
+    },
+    "perdix_perdix": {
+      "latin": "Perdix perdix",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i det åbne land. Standfugl."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 10-20 æg. Ruger i 23-25 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/03670"
+        }
+      ]
+    },
+    "phasianus_colchicus": {
+      "latin": "Phasianus colchicus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Indført fra Asien. Yngler i hele landet. Standfugl."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 8-15 æg. Ruger i 23-28 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/03940"
+        }
+      ]
+    },
+    "columba_palumbus": {
+      "latin": "Columba palumbus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler almindeligt, hvor der er træer. Omkring halvdelen trækker til Sydvesteuropa. Skandinaviske fugle overvintrer her."
+        },
+        {
+          "label": "Yngel",
+          "value": "2-3 kuld på 2 æg. Ruger i 17 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/06700"
+        }
+      ]
+    },
+    "gallinago_gallinago": {
+      "latin": "Gallinago gallinago",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i våde enge og moser, flest i Vest- og Nordjylland. Almindelig trækgæst. De fleste trækgæster overvintrer i Vesteuropa, nogle i Nordvestafrika."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 4 æg. Ruger i 18-20 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/05190"
+        }
+      ]
+    },
+    "scolopax_rusticola": {
+      "latin": "Scolopax rusticola",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler, mest i Østdanmark og fåtalligt i Vestjylland. En del danske fugle trækker til De Britiske Øer, Frankrig og Den Iberiske Halvø. Skandinaviske og russiske fugle trækker igennem."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 4 æg. Ruger i 22 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/05290"
+        }
+      ]
+    },
+    "pica_pica": {
+      "latin": "Pica pica",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler almindeligt. Udpræget standfugl."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 5-7 æg. Ruger i 17-18 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/15490"
+        }
+      ]
+    },
+    "corvus_cornix": {
+      "latin": "Corvus cornix og Corvus corone",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Gråkragen yngler i hele landet. Sortkragen yngler især i Jylland syd for en linje mellem Ringkøbing Fjord og Kolding, i Det Sydfynske Øhav og på Lolland-Falster. De danske fugle er standfugle. Skandinaviske og russiske gråkrager kommer til om vinteren."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 4-6 æg. Ruger i 19 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/15670"
+        }
+      ]
+    },
+    "fulica_atra": {
+      "latin": "Fulica atra",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler almindeligt. Ungfugle trækker typisk til Holland, Belgien eller Frankrig. De voksne bliver, og fugle fra Østersølandene kommer til om vinteren."
+        },
+        {
+          "label": "Yngel",
+          "value": "2 kuld på 6-10 æg. Ruger i 21-24 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/04290"
+        }
+      ]
+    },
+    "larus_argentatus": {
+      "latin": "Larus argentatus",
+      "facts": [
+        {
+          "label": "I Danmark",
+          "value": "Yngler i kolonier på øer, holme og hustage. Efter yngletiden kommer fugle fra øst og nord til og overvintrer sammen med danske fugle. Andre danske fugle trækker sydpå i Europa."
+        },
+        {
+          "label": "Yngel",
+          "value": "1 kuld på 3 æg. Ruger i 28-30 dage."
+        }
+      ],
+      "sources": [
+        {
+          "name": "DOF, Danmarks Fugle",
+          "url": "https://dofbasen.dk/danmarksfugle/art/05920"
+        }
+      ]
+    }
+  },
+  "species": {
+    "kronspidshjort": "cervus_elaphus",
+    "kronhjort": "cervus_elaphus",
+    "kronhind": "cervus_elaphus",
+    "kronkalv": "cervus_elaphus",
+    "daahjort": "dama_dama",
+    "daa_og_kalv": "dama_dama",
+    "sikahjort": "cervus_nippon",
+    "sikahind_kalv": "cervus_nippon",
+    "raabuk": "capreolus_capreolus",
+    "raa_og_lam": "capreolus_capreolus",
+    "muflonvaedder": "ovis_musimon",
+    "muflonfaar_lam": "ovis_musimon",
+    "vildsvin_orne": "sus_scrofa",
+    "vildsvin_so_grise": "sus_scrofa",
+    "raev": "vulpes_vulpes",
+    "maarhund": "nyctereutes_procyonoides",
+    "mink": "neogale_vison",
+    "vaskebjoern": "procyon_lotor",
+    "hare": "lepus_europaeus",
+    "vildkanin": "oryctolagus_cuniculus",
+    "bisamrotte": "ondatra_zibethicus",
+    "sumpbaever": "myocastor_coypus",
+    "graaand": "anas_platyrhynchos",
+    "atlingand": "spatula_querquedula",
+    "krikand": "anas_crecca",
+    "spidsand": "anas_acuta",
+    "pibeand": "mareca_penelope",
+    "skeand": "spatula_clypeata",
+    "knarand": "mareca_strepera",
+    "troldand": "aythya_fuligula",
+    "bjergand": "aythya_marila",
+    "hvinand": "bucephala_clangula",
+    "sortand": "melanitta_nigra",
+    "edderfugl_han": "somateria_mollissima",
+    "graagaas": "anser_anser",
+    "graagaas_omdrift": "anser_anser",
+    "canadagaas": "branta_canadensis",
+    "canadagaas_omdrift": "branta_canadensis",
+    "blisgaas": "anser_albifrons",
+    "kortnaebbet_gaas": "anser_brachyrhynchus",
+    "nilgaas": "alopochen_aegyptiaca",
+    "saedgaas": "anser_serrirostris",
+    "agerhoene": "perdix_perdix",
+    "fasan": "phasianus_colchicus",
+    "ringdue": "columba_palumbus",
+    "dobbeltbekkasin": "gallinago_gallinago",
+    "skovsneppe": "scolopax_rusticola",
+    "husskade": "pica_pica",
+    "krage": "corvus_cornix",
+    "blishoene": "fulica_atra",
+    "soelvmage": "larus_argentatus"
+  }
+}

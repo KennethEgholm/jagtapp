@@ -51,10 +51,21 @@ struct AboutView: View {
                     Text(Copy.disclaimer)
                     Label(Copy.daylight, systemImage: "sun.horizon")
                     Label(Copy.deerNote, systemImage: "map")
+                    Label(Copy.biologyDisclaimer, systemImage: "leaf")
                 } header: {
                     Text("Ansvar")
                 } footer: {
                     Text(Copy.notTheLaw)
+                }
+
+                Section {
+                    NavigationLink {
+                        SchweissView()
+                    } label: {
+                        Label(Copy.schweissTitle, systemImage: "pawprint.fill")
+                    }
+                } footer: {
+                    Text("Anskudt og påkørt hjortevildt.")
                 }
 
                 Section {

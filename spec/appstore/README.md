@@ -22,12 +22,12 @@ Klar til at kopiere ind i App Store Connect. Tegngrænser er tjekket.
 
 ## Reklametekst (170)
 
-Se på få sekunder, hvad der er jagtbart i dag, der hvor du er. Med lokale jagttider for øer og områder, soltider og alle arter – også uden net.
+Se på få sekunder, hvad der er jagtbart i dag, der hvor du er. Lokale tider, soltider, journal og biologi – også uden net.
 
 ## Nøgleord (100)
 
 ```
-jagt,jagttid,jæger,vildt,råbuk,hjort,ræv,and,gås,fasan,hare,sæson,solnedgang,solopgang,lokale
+jagt,jagttid,jæger,vildt,råbuk,hjort,ræv,and,gås,fasan,hare,solnedgang,solopgang,lokale,journal
 ```
 
 Navn og undertitel tæller med i søgningen, så ord derfra er ikke gentaget.
@@ -46,10 +46,16 @@ SOLOPGANG OG SOLNEDGANG
 Se soltider for den valgte dag og dit sted, beregnet direkte på telefonen.
 
 ALLE ARTER
-Slå de generelle jagttider op for alle arter med en tidslinje over jagtåret. Hver art har en side med jagttid, noter, foto og link til bekendtgørelsen.
+Slå de generelle jagttider op for alle arter med en tidslinje over jagtåret. Hver art har en side med jagttid, biologisk opslag, noter, foto og link til bekendtgørelsen.
+
+BIOLOGI
+Opslaget fortæller det mest almindelige om arten: om den yngler i Danmark, hvor den trækker hen, og hvor mange unger den får. Fugle er fra Dansk Ornitologisk Forening. Pattedyr er fra Miljøstyrelsen. Det er ikke jagtloven.
 
 JAGTJOURNAL
 Notér nedlagt vildt på få sekunder. Journalen gemmes kun på telefonen. Appen indberetter ikke til myndighederne.
+
+SCHWEISS-REGISTRET
+Anskudt hjortevildt: appen åbner schweiss.dk, så du kan finde en hundefører. Påkørt hjortevildt: ring 1812. Appen har ikke selv telefonlisten.
 
 PRIVAT OG OFFLINE
 Ingen konto. Ingen tracking. Ingen reklamer. Din position bliver på telefonen, og appen virker uden net.
@@ -63,15 +69,15 @@ Fotos: Wikimedia Commons (CC0, public domain, CC BY, CC BY-SA). Fotograf og lice
 ## Nyt i denne version
 
 ```
-Første version af JagtFokus.
+Første version. Jagttider efter dato og sted, soltider, jagtjournal, biologisk opslag og Schweiss-registret.
 ```
 
 ## Screenshots (6,9", 1320 × 2868)
 
-I `spec/appstore/screenshots/`, i denne rækkefølge:
+I `spec/appstore/screenshots/`, i denne rækkefølge. Taget 2026-10-15 på iPhone 18 Pro Max, 1320 × 2868, statuslinje 09.41. Biologien ligger under folden på artsdetaljen, så den er ikke med på billedet.
 
-1. `1-jagtbar.png` — Jagtbar i dag, din position, soltider, 44 arter
-2. `2-raabuk-als.png` — Råbuk på Als: lokal jagttid, foto, tidslinje
+1. `1-jagtbar.png` — Jagtbart i dag (15. okt), Midtjylland, soltider, 44 arter
+2. `2-raabuk-als.png` — Råbuk på Als: lokal jagttid, foto, tidslinje, journal
 3. `3-alle-arter.png` — Alle arter med tidslinjer
 4. `4-jagtbar-moerk.png` — Mørkt tema, Endelave 15. nov
 5. `5-velkomst.png` — Velkomst og ansvar
@@ -120,7 +126,11 @@ Outside Denmark the app falls back to the general Danish times ("Danmark"). To s
 
 Journal tab: a local hunting bag only. Nothing is submitted to the authorities, and nothing is synced to iCloud. No account.
 
+Each species page has a short biology note (whether it breeds in Denmark, where it migrates, litter or clutch size). Birds are from the Danish Ornithological Society. Mammals are from the Danish Environmental Protection Agency via arter.dk. Display only. Not hunting law.
+
 The app shows a disclaimer on first launch: it is not the law, and hunters must check the official rules.
+
+Schweiss register: on the Jagtbart tab, tap Anskudt (or Om > Schweiss-registret). Wounded game during a hunt opens schweiss.dk. A traffic collision calls 1812, the Danish animal emergency line. The app does not include the handlers' phone numbers.
 
 Species photos are from Wikimedia Commons under CC0 / public domain / CC BY / CC BY-SA, credited under each photo.
 ```
@@ -134,5 +144,6 @@ Species photos are from Wikimedia Commons under CC0 / public domain / CC BY / CC
 - [ ] TestFlight på egen iPhone: position udendørs, et par steder, lyst og mørkt tema, stor tekst
 - [ ] EU-erhvervsdrivende-status angivet i App Store Connect
 - [ ] Privatliv og aldersgrænse besvaret
+- [x] Screenshots taget om på iPhone 18 Pro Max (Journal, Jagtbart)
 - [ ] Screenshots, tekster og review-noter indsat
 - [ ] Udgivelse: manuel (så du selv vælger dagen)

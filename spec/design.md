@@ -17,7 +17,7 @@ Levende dokument. Gælder alle skærme. Bygger på Apple Human Interface Guideli
 | `AccentColor` (Forest) | `#2F6B47` | `#7FC79A` | Tint, Jagtbar-status, valgt |
 | `Brass` | `#7A5C17` | `#D9B65E` | Lokal jagttid-mærke |
 | `Amber` | `#A35200` | `#FFB547` | Lukker snart |
-| `BrandDeep` | `#0D2A1C` | `#0D2A1C` | Velkomst-baggrund (fra ikonet) |
+| `BrandDeep` | `#0D2A1C` | `#0D2A1C` | Velkomst-baggrund |
 
 Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er systemfarver (`.primary`, `.secondary`, grouped backgrounds).
 
@@ -66,6 +66,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Navn som stor, ombrydende overskrift i indholdet (lange navne som “Grågås på omdriftsarealer” afkortes ellers i en large title). Gruppen står over navnet.
 - Fra Jagtbar: status for valgt dato og sted, SeasonBar med markør, perioder med fulde datoer, lokal tid vs. generel tid, note, kilde.
 - Fra Alle arter: kun generel tid, SeasonBar uden markør, note, kilde. Ingen status.
+- **Biologi** under noten, før jagtkilden. Latinsk navn, “I Danmark” og “Yngel”. Køn og alder deler artens opslag. Kildelink under teksten. Footer: “Biologisk opslag. Ikke jagtloven.” Ingen bestandsestimater. Ingen logik bruger teksten.
 
 ### Artsfoto
 - Under overskriften på artsdetaljen: foto i 3:2, afrundede hjørner (`Radius.xlarge`), kredit under i `caption2`: “Foto: Navn · Licens · Wikimedia Commons”, link til Commons-siden.
@@ -88,6 +89,15 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 
 ### Om
 - Mærke + navn + version. Kilde (navn, opdateret, link, datastatus). Ansvar. Privatliv.
+- Række **Schweiss-registret** åbner infosiden (push).
+
+### Schweiss-registret
+- Ikke en fane. Knappen **Anskudt** på Jagtbart åbner den som sheet. Om skubber den ind.
+- To veje, begge synlige. Ingen omskifter. Anskudt under jagt: link til schweiss.dk. Påkørt hjortevildt: ring 1812.
+- Seks dagtimer er tekst med kilde. Ingen timer. Appen er ikke loven.
+- Sekretariatet er hverdagskontakt, ikke en vagttelefon.
+- Ingen telefonliste. Ingen scrape. Ingen gade eller mail på førere.
+- Når en tilladt fil findes, får samme skærm de nærmeste numre. Ikke i denne udgave.
 
 ### Velkomst (første start)
 - Mørkegrøn brand-baggrund, mærke, tre punkter (dato og sted, lokale tider, offline), fraskrivelse, knap “Forstået”.
@@ -120,3 +130,6 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Vildtudbytte-sheets (2026-10-14) bruger inline titel som de andre sheets. Årssummen genbruger svar-kortets tal.
 - Nedlagt er en fane (2026-10-14), ikke en knap på Jagtbar. “Allerede nedlagt” er første række på fanen.
 - Fanen hedder **Journal**, overskriften **Jagtjournal**, rækken **Nedlagt vildt** og knappen **Tilføj til journal** (2026-10-14). Menuen **Jagtbar** hedder **Jagtbart**. Status “Jagtbar / Ikke jagtbar” er uændret.
+- Biologi (2026-10-15): eget opslag på artsdetaljen, ikke i `jagttider.json`. Fugle fra DOF Danmarks Fugle. Pattedyr fra Arter.dk (Miljøstyrelsen), med Lex eller Dansk Pattedyratlas hvor Arter mangler yngeltekst. “Invasiv” kun for arter styrelsen lister til regulering hele året. Bestandsestimater udelades, fordi de forældes.
+- App-ikonet (2026-10-15): feltet var næsten sort, så fasan og sigtekors forsvandt i lille størrelse. Feltet er nu skovgrøn `#2F6B47`, samme som AccentColor. Velkomst bliver på BrandDeep.
+- Schweiss-registret (2026-10-15): infoside i v1, ikke en fane. Knappen Anskudt på Jagtbart, række på Om. Telefonlisten venter på tilladelse. Ingen scrape. Seks dagtimer er tekst.
