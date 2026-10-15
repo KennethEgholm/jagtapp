@@ -71,7 +71,7 @@ struct TodayView: View {
             .listStyle(.insetGrouped)
             .contentMargins(.top, Spacing.xs, for: .scrollContent)
             .refreshable { await store.refresh() }
-            .scrollRevealedTitle("Jagtbar")
+            .scrollRevealedTitle(Copy.todayTab)
             .navigationDestination(for: SpeciesRoute.self) { route in
                 SpeciesDetailView(route: route)
             }

@@ -44,7 +44,7 @@ struct SpeciesDetailView: View {
                 } label: {
                     HStack(spacing: Spacing.s) {
                         IconTile(systemImage: "plus.circle.fill")
-                        Text("Markér som nedlagt")
+                        Text(Copy.bagRecord)
                             .font(.body.weight(.semibold))
                             .foregroundStyle(.primary)
                         Spacer()

@@ -44,7 +44,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ## Skærme
 
 ### Jagtbar
-- Overskrift i indholdet: “Jagtbart vildt efter tid og sted”. Navigationstitel “Jagtbar” vises først ved scroll.
+- Overskrift i indholdet: “Jagtbart vildt efter tid og sted”. Navigationstitel “Jagtbart” vises først ved scroll.
 - To rækker: **Dato** (I dag · lørdag 11. oktober) og **Sted** (Midtjylland · Din position). Fuld bredde, ingen afkortning. Åbner sheets.
 - Svar-kort: stort tal + “arter er jagtbare” + “3 har sidste dag inden for en uge” (amber), ellers dag og sted.
 - Liste: kun jagtbare arter, grupperet. Trailing: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
@@ -72,12 +72,12 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Foto matcher køn/alder i artsnavnet (Kronhind = hind, Vildsvin, so og grise = grise). Grågås/Canadagås på omdriftsarealer deler foto med arten.
 - Tekst i en List-række med klar baggrund skal holde afstand til rækkens afrundede hjørner. Ellers klipper iOS det første bogstav.
 
-### Vildtudbytte (v2, ikke i App Store-v1)
+### Journal (v1)
 
-- Fane **Nedlagt** (`plus.circle`) mellem Jagtbar og Alle arter. Jagtbar har ingen knap til det.
-- Swipe til venstre på en artsrække i **Jagtbar** eller **Alle arter** har handlingen **Nedlagt** (`plus.circle`): noterer 1 stykke og skifter til **Nedlagt**-fanen med bekræftelsen klar.
-- Artsdetaljen har en række **Markér som nedlagt** med `IconTile`, der noterer 1 stykke og skifter til **Nedlagt**-fanen.
-- Fanen starter med række “Allerede nedlagt” (årets antal), så Dato og Sted, samme rækker som Jagtbar. Standard: i dag og din position. Et andet valg ændrer ikke Jagtbar, men listen under følger med.
+- Fane **Journal** (`plus.circle`) mellem Jagtbart og Alle arter. Overskrift på siden: “Jagtjournal”. Jagtbart har ingen knap til det.
+- Swipe til venstre på en artsrække i **Jagtbart** eller **Alle arter** har handlingen **Journal** (`plus.circle`): noterer 1 stykke og skifter til **Journal**-fanen med bekræftelsen klar.
+- Artsdetaljen har en række **Tilføj til journal** med `IconTile`, der noterer 1 stykke og skifter til **Journal**-fanen.
+- Fanen starter med række “Nedlagt vildt” (årets antal), så Dato og Sted, samme rækker som Jagtbart. Standard: i dag og din position. Et andet valg ændrer ikke Jagtbart, men listen under følger med.
 - Store rækker i `.title2`, ombryder. Senest nedlagt, så jagtbart for den dato og det sted. Søgning er en knap, ikke et åbent felt. Plus-ikonet er ikke jagtbar-grønt.
 - Tryk gemmer ét stykke. Bekræftelse bliver nede: “[Art] noteret”, **Fortryd** og **+1**.
 - Årets liste: jagtår og antal stykker. Tom liste siger “Ingen poster.”, ikke noget om pligt.
@@ -119,3 +119,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Position slået fra rydder det sidste GPS-sted. Mislykket opdatering beholder det og siger det. Ny katalog-version matcher stedet igen.
 - Vildtudbytte-sheets (2026-10-14) bruger inline titel som de andre sheets. Årssummen genbruger svar-kortets tal.
 - Nedlagt er en fane (2026-10-14), ikke en knap på Jagtbar. “Allerede nedlagt” er første række på fanen.
+- Fanen hedder **Journal**, overskriften **Jagtjournal**, rækken **Nedlagt vildt** og knappen **Tilføj til journal** (2026-10-14). Menuen **Jagtbar** hedder **Jagtbart**. Status “Jagtbar / Ikke jagtbar” er uændret.

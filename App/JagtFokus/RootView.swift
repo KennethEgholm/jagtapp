@@ -17,10 +17,10 @@ struct RootView: View {
         Group {
             if acceptedDisclaimer {
                 TabView(selection: $tab) {
-                    Tab("Jagtbar", systemImage: "scope", value: AppTab.today) {
+                    Tab(Copy.todayTab, systemImage: "scope", value: AppTab.today) {
                         TodayView()
                     }
-                    Tab("Nedlagt", systemImage: "plus.circle", value: AppTab.bag) {
+                    Tab(Copy.bagTab, systemImage: "plus.circle", value: AppTab.bag) {
                         BagTabView()
                     }
                     Tab("Alle arter", systemImage: "list.bullet", value: AppTab.all) {

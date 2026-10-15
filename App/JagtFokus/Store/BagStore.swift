@@ -25,7 +25,8 @@ final class BagStore {
         let url = fileURL ?? Self.defaultURL
         let fileStore = BagFileStore(fileURL: url)
         self.fileStore = fileStore
-        self.cloud = cloud ?? (fileURL == nil ? NSUbiquitousKeyValueStore.default : nil)
+        // iCloud key-value needs a paid team. Free Apple IDs cannot sign that entitlement.
+        self.cloud = cloud
         journal = fileStore.load()
         syncWithCloud()
         observeCloudChanges()

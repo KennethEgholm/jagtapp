@@ -12,6 +12,10 @@ enum Copy {
 
     static let deerNote = "Kron- og dåvildt har store lokale forvaltningsplaner. Appen viser kun de generelle tider."
 
+    static let todayTab = "Jagtbart"
+    static let bagTab = "Journal"
+    static let bagHeading = "Jagtjournal"
+    static let bagYearRow = "Nedlagt vildt"
+    static let bagRecord = "Tilføj til journal"
     static let bagTitle = "Vildtudbytte"
-    static let bagAdd = "Nedlagt"
 }

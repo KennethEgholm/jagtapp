@@ -1,6 +1,6 @@
 # Ideer (efter v1)
 
-v1 er frosset i `spec/v1.md`. Vildtudbytte er arbejdsspec i `spec/v2.md` (branch `v2/vildtudbytte`, ikke med i App Store-v1). Nedenfor er resten af backloggen.
+v1 står i `spec/v1.md` og inkluderer jagtjournalen. Indberetning er ikke bygget (`spec/v2.md`). Nedenfor er resten af backloggen.
 
 ## Med i V1:
 
@@ -13,7 +13,7 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
 ## Senere
 
 - Alarm/vibration 10 minutter før solnedgang
-- Jagt-log (ud over udbytte, som ligger i `spec/v2.md`)
+- Jagt-log (ud over journalen i v1)
   - Placering (GPS / manuelt)
   - Vejret på dagen
     - Vindretning

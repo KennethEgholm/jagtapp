@@ -12,7 +12,7 @@ struct AllSpeciesView: View {
                 if query.isEmpty {
                     Section {
                         Label {
-                            Text("Generelle jagttider i Danmark. Lokale tider kan afvige. Se dem under Jagtbar.")
+                            Text("Generelle jagttider i Danmark. Lokale tider kan afvige. Se dem under Jagtbart.")
                         } icon: {
                             Image(systemName: "info.circle")
                                 .foregroundStyle(.tint)

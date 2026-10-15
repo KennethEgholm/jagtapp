@@ -93,7 +93,7 @@ struct BagTabView: View {
         NavigationStack(path: $path) {
             List {
                 Section {
-                    ListHeading(title: Copy.bagAdd)
+                    ListHeading(title: Copy.bagHeading)
                 }
                 .listSectionSpacing(.compact)
 
@@ -133,7 +133,7 @@ struct BagTabView: View {
             }
             .listStyle(.insetGrouped)
             .contentMargins(.top, Spacing.xs, for: .scrollContent)
-            .scrollRevealedTitle(Copy.bagAdd)
+            .scrollRevealedTitle(Copy.bagHeading)
             .navigationDestination(for: BagRoute.self) { route in
                 switch route {
                 case .search:
@@ -189,7 +189,7 @@ struct BagTabView: View {
             } label: {
                 QueryRow(
                     systemImage: "list.bullet.clipboard",
-                    title: "Allerede nedlagt",
+                    title: Copy.bagYearRow,
                     value: value,
                     detail: store.calendar.huntingYearLabel(year)
                 )
@@ -409,7 +409,7 @@ private struct BagSwipeModifier: ViewModifier {
             Button {
                 bag.recordAndSwitchTab(speciesId: speciesId, in: store)
             } label: {
-                Label(Copy.bagAdd, systemImage: "plus.circle")
+                Label(Copy.bagTab, systemImage: "plus.circle")
             }
             .tint(Color.seasonOpen)
         }

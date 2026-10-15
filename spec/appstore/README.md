@@ -48,6 +48,9 @@ Se soltider for den valgte dag og dit sted, beregnet direkte på telefonen.
 ALLE ARTER
 Slå de generelle jagttider op for alle arter med en tidslinje over jagtåret. Hver art har en side med jagttid, noter, foto og link til bekendtgørelsen.
 
+JAGTJOURNAL
+Notér nedlagt vildt på få sekunder. Journalen gemmes kun på telefonen. Appen indberetter ikke til myndighederne.
+
 PRIVAT OG OFFLINE
 Ingen konto. Ingen tracking. Ingen reklamer. Din position bliver på telefonen, og appen virker uden net.
 
@@ -91,6 +94,7 @@ Begrundelse:
 - Ingen konto, analyse, reklamer eller tredjeparts-SDK'er.
 - Position bruges på telefonen. Stednavn hentes via Apples geokodning (CLGeocoder); udvikleren modtager aldrig positionen.
 - Datafilen hentes fra GitHub uden oplysninger om brugeren.
+- Jagtjournalen gemmes kun på telefonen. Udvikleren modtager den ikke. Ingen iCloud-synk i denne udgave.
 - `PrivacyInfo.xcprivacy`: ingen tracking, ingen indsamlede datatyper, UserDefaults med årsag `CA92.1`.
 
 Tjek selv svaret, før du indsender: det er din erklæring over for Apple.
@@ -112,7 +116,9 @@ No login is required.
 
 Location: used only to pick the right local hunting times (islands and areas have their own) and to show sunrise/sunset. The app works fully without location.
 
-Outside Denmark the app falls back to the general Danish times ("Danmark"). To see local times: Jagtbar tab > Sted > choose e.g. "Als" or "Endelave". To change the day: Jagtbar tab > Dato.
+Outside Denmark the app falls back to the general Danish times ("Danmark"). To see local times: Jagtbart tab > Sted > choose e.g. "Als" or "Endelave". To change the day: Jagtbart tab > Dato.
+
+Journal tab: a local hunting bag only. Nothing is submitted to the authorities, and nothing is synced to iCloud. No account.
 
 The app shows a disclaimer on first launch: it is not the law, and hunters must check the official rules.
 
