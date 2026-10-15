@@ -177,6 +177,10 @@ Repo: `github.com/KennethEgholm/jagtapp` (offentligt). Remote data: `raw.githubu
 - Før hver upload: `tools/bump_build.sh` (eller `tools/bump_build.sh 1.1` for ny version). Arkivér i Xcode (Product → Archive) → Distribute App → App Store Connect.
 - Datarettelser kræver ikke ny app-version: ret `data/jagttider.json`, bump `version`, push.
 
+## Når brugeren siger til
+
+iCloud-backup af journalen skal med **med det samme**, den besked den bliver bedt om. Ikke en senere skive. Ikke et spørgsmål om timing. Slå `NSUbiquitousKeyValueStore` til, sæt entitlementet på igen, og ret `spec/v1.md`, `spec/v2.md`, `docs/privatliv.html` og App Store-svarene i samme omgang. Indberetning er stadig ikke iCloud.
+
 ## Do not
 
 - Encode fodnoter som logik.
