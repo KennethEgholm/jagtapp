@@ -179,7 +179,7 @@ Repo: `github.com/KennethEgholm/jagtapp` (offentligt). Remote data: `raw.githubu
 
 ## Når brugeren siger til
 
-iCloud-backup af journalen skal med **med det samme**, den besked den bliver bedt om. Ikke en senere skive. Ikke et spørgsmål om timing. Slå `NSUbiquitousKeyValueStore` til, sæt entitlementet på igen, og ret `spec/v1.md`, `spec/v2.md`, `docs/privatliv.html` og App Store-svarene i samme omgang. Indberetning er stadig ikke iCloud.
+iCloud-backup af journalen skal med **med det samme**, den besked den bliver bedt om. Ikke en senere skive. Ikke et spørgsmål om timing. Slå `NSUbiquitousKeyValueStore` til, sæt entitlementet på igen, og ret `spec/v1.md`, `spec/v2.md`, `docs/privatliv.html` og App Store-svarene i samme omgang. Indberetning er en anden feature og kommer ikke med i v1.
 
 ## Do not
 
