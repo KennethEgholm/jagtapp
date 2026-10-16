@@ -200,6 +200,10 @@ Repo: `github.com/KennethEgholm/jagtapp` (public). Remote data: `raw.githubuserc
 - GitHub Actions upload is prepared in `.github/workflows/appstore.yml` and is off. The Apple developer account is not approved. Do not run it with upload on, and do not add API keys to the repo. Secrets and the later steps are in `spec/appstore/README.md`. The workflow uploads a build only. It does not submit or release. The number in Om’s **Denne app** section is `MARKETING_VERSION` from the Xcode project, the same number the archive uses.
 - Data fixes do not need a new app version: edit `data/jagttider.json`, bump `version`, push.
 
+## Commits
+
+Include `spec/ideas.md` when it has the user's notes. Do not leave those notes uncommitted.
+
 ## When the user says so
 
 iCloud backup of the journal must ship **immediately**, in the message that asks for it. Not a later slice. Not a question about timing. Turn `NSUbiquitousKeyValueStore` on, put the entitlement back, and update `spec/v1.md`, `spec/v2.md`, `docs/privatliv.html`, and the App Store answers in the same change. The official bag report is a different feature and is not part of v1.

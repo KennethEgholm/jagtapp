@@ -26,8 +26,12 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
   - Jagtrelaterede opskrifter
 - Nærmeste schweisshundefører i appen (navn og telefon, sted fra GPS eller manuelt). Venter på tilladelse fra Schweiss-sekretariatet. Ingen scrape. Infosiden er i v1
 
+
 - Android / Google Play
 - Engelsk
+
+- Brande appen for f.eks Huntinglife mod et lille beløb, der kan dække omkostningerne ved at holde det kørende.
+
 
 ## UX-ideer (fra designgennemgang 2026-10-11)
 
