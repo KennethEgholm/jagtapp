@@ -73,10 +73,17 @@ struct AllSpeciesView: View {
             isSearching = true
             query = text
         }
-        if UserDefaults.standard.string(forKey: "groups") == "open" {
+        if Self.launchOpensGroups {
             expanded = Set(groups.map(\.id))
         }
         #endif
+    }
+
+    /// Only the current launch. A leftover UserDefaults value from `-groups open` must not keep groups open.
+    private static var launchOpensGroups: Bool {
+        let args = ProcessInfo.processInfo.arguments
+        guard let index = args.firstIndex(of: "-groups"), index + 1 < args.count else { return false }
+        return args[index + 1] == "open"
     }
 
     private var searching: Bool {

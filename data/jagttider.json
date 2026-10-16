@@ -1,6 +1,6 @@
 {
-  "version": 4,
-  "updated": "2026-10-11",
+  "version": 6,
+  "updated": "2026-10-16",
   "source_name": "BEK nr. 470/2024 om jagttid. SGAV jagttabel gældende fra 1. juli 2024",
   "source_url": "https://www.retsinformation.dk/eli/lta/2024/470",
   "groups": [
@@ -524,25 +524,8 @@
       ]
     },
     {
-      "id": "duefugle",
-      "title": "Duefugle",
-      "species": [
-        {
-          "id": "ringdue",
-          "name": "Ringdue",
-          "periods": [
-            {
-              "from": "11-11",
-              "to": "01-31"
-            }
-          ],
-          "note": null
-        }
-      ]
-    },
-    {
-      "id": "vadefugle",
-      "title": "Vadefugle",
+      "id": "ovrige_fugle",
+      "title": "Øvrige fugle",
       "species": [
         {
           "id": "dobbeltbekkasin",
@@ -565,13 +548,7 @@
             }
           ],
           "note": "Der findes lokale jagttider."
-        }
-      ]
-    },
-    {
-      "id": "kragefugle",
-      "title": "Kragefugle",
-      "species": [
+        },
         {
           "id": "husskade",
           "name": "Husskade",
@@ -593,13 +570,7 @@
             }
           ],
           "note": "Regulering kan være tilladt hele året."
-        }
-      ]
-    },
-    {
-      "id": "ovrige_fugle",
-      "title": "Øvrige fugle",
-      "species": [
+        },
         {
           "id": "blishoene",
           "name": "Blishøne",
@@ -621,6 +592,17 @@
             }
           ],
           "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "ringdue",
+          "name": "Ringdue",
+          "periods": [
+            {
+              "from": "11-11",
+              "to": "01-31"
+            }
+          ],
+          "note": null
         }
       ]
     }

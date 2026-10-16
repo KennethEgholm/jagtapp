@@ -32,9 +32,9 @@ struct SeasonCalendarTests {
     }
 
     @Test func catalogHasGroupedSpecies() {
-        #expect(catalog.groups.count == 10)
+        #expect(catalog.groups.count == 7)
         #expect(catalog.allSpecies.count >= 40)
-        #expect(catalog.version == 4)
+        #expect(catalog.version == 6)
     }
 
     @Test func octoberTenthOpensRoeAndClosesHare() {

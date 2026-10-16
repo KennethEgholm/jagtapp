@@ -129,7 +129,7 @@ struct TodayView: View {
             path = [SpeciesRoute(speciesId: id, context: .query)]
         }
         if defaults.bool(forKey: "closed") { showsClosed = true }
-        if defaults.string(forKey: "groups") == "open" {
+        if Self.launchOpensGroups {
             expanded = Set(openGroups(store.resolvedSections).map(\.id))
         }
         switch defaults.string(forKey: "sheet") {
@@ -178,6 +178,13 @@ struct TodayView: View {
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(group.title), \(group.species.count) arter")
+    }
+
+    /// Only the current launch. A leftover UserDefaults value from `-groups open` must not keep groups open.
+    private static var launchOpensGroups: Bool {
+        let args = ProcessInfo.processInfo.arguments
+        guard let index = args.firstIndex(of: "-groups"), index + 1 < args.count else { return false }
+        return args[index + 1] == "open"
     }
 
     private func openGroups(_ sections: [ResolvedGroup]) -> [ResolvedGroup] {

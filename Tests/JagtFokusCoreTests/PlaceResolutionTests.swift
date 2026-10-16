@@ -33,7 +33,7 @@ struct PlaceResolutionTests {
     }
 
     @Test func catalogHasPlacesAndOverrides() {
-        #expect(catalog.version == 4)
+        #expect(catalog.version == 6)
         #expect(catalog.places.count >= 10)
         #expect(!catalog.overrides.isEmpty)
     }
