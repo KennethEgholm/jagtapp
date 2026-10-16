@@ -147,3 +147,28 @@ Species photos are from Wikimedia Commons under CC0 / public domain / CC BY / CC
 - [x] Screenshots taget om på iPhone 18 Pro Max (Journal, Jagtbart)
 - [ ] Screenshots, tekster og review-noter indsat
 - [ ] Udgivelse: manuel (så du selv vælger dagen)
+- [ ] Udviklerkonto godkendt, før GitHub Actions må uploade
+
+## GitHub Actions (forberedt, ikke aktiv)
+
+Workflowet `.github/workflows/appstore.yml` kan senere uploade et build til App Store Connect. Det kører ikke af sig selv. Input **upload** er fra. Udviklerkontoen er ikke godkendt, så der må ikke uploades endnu.
+
+Et upload lægger kun buildet op. Det indsender ikke til review og udgiver ikke. Udgivelse bliver i App Store Connect, manuelt.
+
+Versionsnummeret i appen er `MARKETING_VERSION` fra Xcode-projektet. Samme tal arkiveres. Det står nederst på **Om**, i sektionen **Denne app**, som “Version 1.0 (1)”. Tæl op med `tools/bump_build.sh` og commit, før workflowet køres. Workflowet ændrer ikke nummeret.
+
+Når kontoen er godkendt:
+
+1. Opret en App Store Connect API-nøgle (Admin eller App Manager). Hent `.p8`-filen én gang.
+2. Læg tre secrets på repoet. Ikke i git.
+
+| Secret | Indhold |
+|---|---|
+| `APP_STORE_CONNECT_KEY_ID` | Nøglens id |
+| `APP_STORE_CONNECT_ISSUER_ID` | Issuer id |
+| `APP_STORE_CONNECT_API_KEY_P8` | Hele `.p8`-filen, inklusive `BEGIN` og `END` |
+
+3. Kør **App Store** under Actions, med upload slået til. Runneren er `xcode-27`.
+4. Tjek buildet i App Store Connect. Udgiv selv, når dagen er valgt.
+
+Indtil da: Product → Archive i Xcode.

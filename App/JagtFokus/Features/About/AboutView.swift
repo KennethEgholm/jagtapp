@@ -15,9 +15,6 @@ struct AboutView: View {
                             Text("Jagttider efter dato og sted")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
-                            Text(versionText)
-                                .font(.footnote)
-                                .foregroundStyle(.tertiary)
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -87,16 +84,22 @@ struct AboutView: View {
                     Label("Din position bliver på telefonen", systemImage: "location")
                     Label("Virker offline", systemImage: "wifi.slash")
                 }
+
+                Section("Denne app") {
+                    LabeledContent("Version", value: "\(appVersion) (\(appBuild))")
+                    LabeledContent("Dataversion", value: "v\(store.catalog.version)")
+                }
             }
             .navigationTitle("Om")
         }
     }
 
-    private var versionText: String {
-        let info = Bundle.main.infoDictionary
-        let version = info?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let build = info?["CFBundleVersion"] as? String ?? "1"
-        return "Version \(version) (\(build)) · data v\(store.catalog.version)"
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+
+    private var appBuild: String {
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
     }
 
     /// "2026-10-11" → "11. oktober 2026"

@@ -67,7 +67,7 @@ assets/                            # Source icons and logo (not bundled directly
 2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed, each with a line sketch. Search expands hits. No date or place. No status.
 3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
 4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter.
-5. **Om** — source, responsibility, photos, privacy, version.
+5. **Om** — source, responsibility, photos, privacy. Bottom section **Denne app**: release version and data version.
 6. **Velkomst** — first launch. Requires “Forstået”. Always dark.
 7. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row on Om. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
 
@@ -196,6 +196,7 @@ Repo: `github.com/KennethEgholm/jagtapp` (public). Remote data: `raw.githubuserc
 - `App/JagtFokus/PrivacyInfo.xcprivacy`: no tracking, no collected data, UserDefaults (`CA92.1`). A new API on Apple's required-reason list needs a reason added.
 - The privacy policy (`docs/privatliv.html`) must match the app. New data collection, a new network call, or a new third-party SDK means update the page, the manifest, and the App Store answers in the same change.
 - Before each upload: `tools/bump_build.sh` (or `tools/bump_build.sh 1.1` for a new version). Archive in Xcode (Product → Archive) → Distribute App → App Store Connect.
+- GitHub Actions upload is prepared in `.github/workflows/appstore.yml` and is off. The Apple developer account is not approved. Do not run it with upload on, and do not add API keys to the repo. Secrets and the later steps are in `spec/appstore/README.md`. The workflow uploads a build only. It does not submit or release. The number in Om’s **Denne app** section is `MARKETING_VERSION` from the Xcode project, the same number the archive uses.
 - Data fixes do not need a new app version: edit `data/jagttider.json`, bump `version`, push.
 
 ## When the user says so

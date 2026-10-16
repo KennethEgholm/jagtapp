@@ -1,0 +1,88 @@
+name: App Store
+
+# Prepared only. The Apple developer account is not approved.
+# This workflow does not run on push. Upload stays off unless someone
+# starts it by hand and turns the input on. Even then it only uploads a
+# build. It does not submit for review and does not release.
+
+on:
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: "Upload et build til App Store Connect. Kun når udviklerkontoen er godkendt og secrets er sat. Udgiver ikke."
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Forbered udgivelse
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show the release version
+        run: |
+          version=$(grep -m1 -o 'MARKETING_VERSION = [0-9.]*' App/JagtFokus.xcodeproj/project.pbxproj | grep -o '[0-9.]*$')
+          build=$(grep -m1 -o 'CURRENT_PROJECT_VERSION = [0-9]*' App/JagtFokus.xcodeproj/project.pbxproj | grep -o '[0-9]*$')
+          echo "Release version $version ($build). Om shows the same number."
+
+      - name: Stop without uploading
+        if: inputs.upload != true
+        run: |
+          echo "Upload is off. The Apple developer account is not approved."
+          echo "When it is: add the secrets in spec/appstore/README.md, then run this workflow with upload on."
+
+      - name: Require App Store Connect secrets
+        if: inputs.upload == true
+        env:
+          KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+        run: |
+          if [ -z "$KEY_ID" ] || [ -z "$ISSUER_ID" ] || [ -z "$KEY_P8" ]; then
+            echo "Missing App Store Connect secrets. See spec/appstore/README.md. Nothing was uploaded."
+            exit 1
+          fi
+
+      - name: Archive and upload the build
+        if: inputs.upload == true
+        env:
+          KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+        run: |
+          set -euo pipefail
+          if [ -d /Applications/Xcode_27.0.app ]; then
+            sudo xcode-select -s /Applications/Xcode_27.0.app
+          elif [ -d /Applications/Xcode_27.app ]; then
+            sudo xcode-select -s /Applications/Xcode_27.app
+          fi
+          xcodebuild -version
+          key_dir="$HOME/.appstoreconnect/private_keys"
+          mkdir -p "$key_dir"
+          printf '%s\n' "$KEY_P8" > "$key_dir/AuthKey_${KEY_ID}.p8"
+          chmod 600 "$key_dir/AuthKey_${KEY_ID}.p8"
+          xcodebuild archive \
+            -project App/JagtFokus.xcodeproj \
+            -scheme JagtFokus \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/JagtFokus.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$key_dir/AuthKey_${KEY_ID}.p8" \
+            -authenticationKeyID "$KEY_ID" \
+            -authenticationKeyIssuerID "$ISSUER_ID"
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/JagtFokus.xcarchive" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -exportOptionsPlist tools/AppStoreExportOptions.plist \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$key_dir/AuthKey_${KEY_ID}.p8" \
+            -authenticationKeyID "$KEY_ID" \
+            -authenticationKeyIssuerID "$ISSUER_ID"
+          xcrun altool --upload-app --type ios \
+            --file "$RUNNER_TEMP/export/JagtFokus.ipa" \
+            --apiKey "$KEY_ID" \
+            --apiIssuer "$ISSUER_ID"

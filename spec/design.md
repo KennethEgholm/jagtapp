@@ -91,7 +91,8 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Lister: **Sammenfold grupper** (standard til). Gælder Jagtbart og Alle arter. Fra: grupperne er altid åbne, uden pil. Stregtegningen bliver. “Ikke jagtbar her” foldes stadig.
 
 ### Om
-- Mærke + navn + version. Kilde (navn, opdateret, link, datastatus). Ansvar. Privatliv.
+- Mærke + navn. Ingen version under mærket.
+- Nederst: sektion **Denne app** med **Version** (`1.0 (1)`, udgivelse og build) og **Dataversion** (`v6`). Samme udgivelsesnummer som App Store-arkivet.
 - Række **Schweiss-registret** åbner infosiden (push).
 
 ### Schweiss-registret
