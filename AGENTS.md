@@ -63,8 +63,8 @@ assets/                            # Source icons and logo (not bundled directly
 
 ## Screens (v1)
 
-1. **Jagtbart** — heading “Jagtbart vildt efter tid og sted”. Date, place, and sun rows. Answer card (count of open species). Open groups start collapsed. Collapsed “Ikke jagtbar her”, sorted by next opening. Default: today + here (GPS).
-2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed. Search expands hits. No date or place. No status.
+1. **Jagtbart** — heading “Jagtbart vildt efter tid og sted”. Date, place, and sun rows. Answer card (count of open species). Open groups start collapsed, each with a line sketch. Collapsed “Ikke jagtbar her”, sorted by next opening. Default: today + here (GPS).
+2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed, each with a line sketch. Search expands hits. No date or place. No status.
 3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
 4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter.
 5. **Om** — source, responsibility, photos, privacy, version.

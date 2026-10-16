@@ -50,7 +50,8 @@ struct TodayView: View {
                             }
                         }
                     } else {
-                        Section(group.title) {
+                        Section {
+                            groupHeader(group, shown: true, chevron: false)
                             openLinks(group)
                         }
                     }
@@ -159,21 +160,25 @@ struct TodayView: View {
         }
     }
 
-    private func groupHeader(_ group: ResolvedGroup, shown: Bool) -> some View {
-        HStack {
+    private func groupHeader(_ group: ResolvedGroup, shown: Bool, chevron: Bool = true) -> some View {
+        HStack(spacing: Spacing.xs) {
+            GroupSketch(groupId: group.id)
             Text(group.title)
                 .font(.body.weight(.semibold))
                 .foregroundStyle(.primary)
+                .layoutPriority(1)
             Spacer(minLength: Spacing.xs)
             Text("\(group.species.count)")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
-            Image(systemName: "chevron.down")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.tertiary)
-                .rotationEffect(.degrees(shown ? 180 : 0))
-                .accessibilityHidden(true)
+            if chevron {
+                Image(systemName: "chevron.down")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+                    .rotationEffect(.degrees(shown ? 180 : 0))
+                    .accessibilityHidden(true)
+            }
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)

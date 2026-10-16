@@ -47,7 +47,8 @@ struct AllSpeciesView: View {
                             }
                         }
                     } else {
-                        Section(group.title) {
+                        Section {
+                            groupHeader(group, shown: true, toggle: false)
                             speciesLinks(group)
                         }
                     }
@@ -99,10 +100,12 @@ struct AllSpeciesView: View {
     }
 
     private func groupHeader(_ group: ResolvedGroup, shown: Bool, toggle: Bool) -> some View {
-        HStack {
+        HStack(spacing: Spacing.xs) {
+            GroupSketch(groupId: group.id)
             Text(group.title)
                 .font(.body.weight(.semibold))
                 .foregroundStyle(.primary)
+                .layoutPriority(1)
             Spacer(minLength: Spacing.xs)
             Text("\(group.species.count)")
                 .font(.subheadline)
