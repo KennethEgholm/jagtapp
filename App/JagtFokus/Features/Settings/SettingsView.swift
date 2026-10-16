@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("udseende") private var appearance: Appearance = .system
+    @AppStorage(Copy.collapseGroupsKey) private var collapseGroups = true
 
     var body: some View {
         NavigationStack {
@@ -19,6 +20,14 @@ struct SettingsView: View {
                     Text("Udseende")
                 } footer: {
                     Text("System følger telefonens indstilling for lys og mørk.")
+                }
+
+                Section {
+                    Toggle(Copy.collapseGroupsTitle, isOn: $collapseGroups)
+                } header: {
+                    Text("Lister")
+                } footer: {
+                    Text(Copy.collapseGroupsFooter)
                 }
             }
             .navigationTitle("Indstillinger")

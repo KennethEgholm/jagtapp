@@ -3,10 +3,13 @@ import SwiftUI
 struct TodayView: View {
     @Environment(SeasonStore.self) private var store
     @State private var showsClosed = false
+    /// Open-group ids the user has opened. Starts empty: every category is collapsed.
+    @State private var expanded: Set<String> = []
     @State private var path: [SpeciesRoute] = []
     @State private var showDate = false
     @State private var showPlace = false
     @State private var showSchweiss = false
+    @AppStorage(Copy.collapseGroupsKey) private var collapseGroups = true
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -31,12 +34,24 @@ struct TodayView: View {
                 }
 
                 ForEach(open) { group in
-                    Section(group.title) {
-                        ForEach(group.species) { item in
-                            NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
-                                SpeciesRow(item: item, context: .query)
+                    if collapseGroups {
+                        Section {
+                            Button {
+                                withAnimation { toggle(group.id) }
+                            } label: {
+                                groupHeader(group, shown: expanded.contains(group.id))
                             }
-                            .bagSwipeAction(speciesId: item.id)
+                            .tint(.primary)
+                            .accessibilityValue(expanded.contains(group.id) ? "Vist" : "Skjult")
+                            .accessibilityHint("Viser arterne i gruppen")
+
+                            if expanded.contains(group.id) {
+                                openLinks(group)
+                            }
+                        }
+                    } else {
+                        Section(group.title) {
+                            openLinks(group)
                         }
                     }
                 }
@@ -106,7 +121,7 @@ struct TodayView: View {
     }
 
     /// Debug only: `-species raabuk` opens a detail, `-closed YES` expands the closed section,
-    /// `-sheet date|place|schweiss` opens a picker or the Schweiss page.
+    /// `-groups open` expands every open group, `-sheet date|place|schweiss` opens a picker or the Schweiss page.
     private func applyLaunchRoute() {
         #if DEBUG
         let defaults = UserDefaults.standard
@@ -114,6 +129,9 @@ struct TodayView: View {
             path = [SpeciesRoute(speciesId: id, context: .query)]
         }
         if defaults.bool(forKey: "closed") { showsClosed = true }
+        if defaults.string(forKey: "groups") == "open" {
+            expanded = Set(openGroups(store.resolvedSections).map(\.id))
+        }
         switch defaults.string(forKey: "sheet") {
         case "date": showDate = true
         case "place": showPlace = true
@@ -121,6 +139,45 @@ struct TodayView: View {
         default: break
         }
         #endif
+    }
+
+    @ViewBuilder
+    private func openLinks(_ group: ResolvedGroup) -> some View {
+        ForEach(group.species) { item in
+            NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
+                SpeciesRow(item: item, context: .query)
+            }
+            .bagSwipeAction(speciesId: item.id)
+        }
+    }
+
+    private func toggle(_ id: String) {
+        if expanded.contains(id) {
+            expanded.remove(id)
+        } else {
+            expanded.insert(id)
+        }
+    }
+
+    private func groupHeader(_ group: ResolvedGroup, shown: Bool) -> some View {
+        HStack {
+            Text(group.title)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(.primary)
+            Spacer(minLength: Spacing.xs)
+            Text("\(group.species.count)")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .monospacedDigit()
+            Image(systemName: "chevron.down")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.tertiary)
+                .rotationEffect(.degrees(shown ? 180 : 0))
+                .accessibilityHidden(true)
+        }
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(group.title), \(group.species.count) arter")
     }
 
     private func openGroups(_ sections: [ResolvedGroup]) -> [ResolvedGroup] {

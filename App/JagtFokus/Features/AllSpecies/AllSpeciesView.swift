@@ -5,6 +5,9 @@ struct AllSpeciesView: View {
     @Environment(SeasonStore.self) private var store
     @State private var query = ""
     @State private var isSearching = false
+    /// Group ids the user has opened. Starts empty: every category is collapsed.
+    @State private var expanded: Set<String> = []
+    @AppStorage(Copy.collapseGroupsKey) private var collapseGroups = true
 
     var body: some View {
         NavigationStack {
@@ -23,15 +26,30 @@ struct AllSpeciesView: View {
                 }
 
                 ForEach(groups) { group in
-                    Section {
-                        ForEach(group.species) { item in
-                            NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .general)) {
-                                SpeciesRow(item: item, context: .general)
+                    if collapseGroups {
+                        Section {
+                            if searching {
+                                groupHeader(group, shown: true, toggle: false)
+                                speciesLinks(group)
+                            } else {
+                                Button {
+                                    withAnimation { toggle(group.id) }
+                                } label: {
+                                    groupHeader(group, shown: expanded.contains(group.id), toggle: true)
+                                }
+                                .tint(.primary)
+                                .accessibilityValue(expanded.contains(group.id) ? "Vist" : "Skjult")
+                                .accessibilityHint("Viser arterne i gruppen")
+
+                                if expanded.contains(group.id) {
+                                    speciesLinks(group)
+                                }
                             }
-                            .bagSwipeAction(speciesId: item.id)
                         }
-                    } header: {
-                        Text(group.title)
+                    } else {
+                        Section(group.title) {
+                            speciesLinks(group)
+                        }
                     }
                 }
 
@@ -48,14 +66,62 @@ struct AllSpeciesView: View {
         }
     }
 
-    /// Debug only: `-search ræv` opens search with that text.
+    /// Debug only: `-search ræv` opens search with that text. `-groups open` expands every group.
     private func applyLaunchSearch() {
         #if DEBUG
         if let text = UserDefaults.standard.string(forKey: "search"), query.isEmpty {
             isSearching = true
             query = text
         }
+        if UserDefaults.standard.string(forKey: "groups") == "open" {
+            expanded = Set(groups.map(\.id))
+        }
         #endif
+    }
+
+    private var searching: Bool {
+        !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    private func toggle(_ id: String) {
+        if expanded.contains(id) {
+            expanded.remove(id)
+        } else {
+            expanded.insert(id)
+        }
+    }
+
+    private func groupHeader(_ group: ResolvedGroup, shown: Bool, toggle: Bool) -> some View {
+        HStack {
+            Text(group.title)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(.primary)
+            Spacer(minLength: Spacing.xs)
+            Text("\(group.species.count)")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .monospacedDigit()
+            if toggle {
+                Image(systemName: "chevron.down")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.tertiary)
+                    .rotationEffect(.degrees(shown ? 180 : 0))
+                    .accessibilityHidden(true)
+            }
+        }
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(group.title), \(group.species.count) arter")
+    }
+
+    @ViewBuilder
+    private func speciesLinks(_ group: ResolvedGroup) -> some View {
+        ForEach(group.species) { item in
+            NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .general)) {
+                SpeciesRow(item: item, context: .general)
+            }
+            .bagSwipeAction(speciesId: item.id)
+        }
     }
 
     /// General periods only: resolved at Danmark, so no override leaks in.

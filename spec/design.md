@@ -47,7 +47,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Overskrift i indholdet: “Jagtbart vildt efter tid og sted”. Navigationstitel “Jagtbart” vises først ved scroll.
 - To rækker: **Dato** (I dag · lørdag 11. oktober) og **Sted** (Midtjylland · Din position). Fuld bredde, ingen afkortning. Åbner sheets.
 - Svar-kort: stort tal + “arter er jagtbare” + “3 har sidste dag inden for en uge” (amber), ellers dag og sted.
-- Liste: kun jagtbare arter, grupperet. Trailing: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
+- Liste: kun jagtbare arter. Hver gruppe er et kort, der starter sammenfoldet. Rækken viser navn, antal og en pil. Svar-kortet står stadig øverst. Trailing i en åben gruppe: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
 - Nederst: sammenfoldet sektion “Ikke jagtbar her (n)” med “Åbner 1. nov”. Holder hovedlisten ren, men svarer på “hvornår må jeg?”.
 - Tom tilstand: svar-kortet viser 0 og næste åbning (“Næste: Canadagås på omdriftsarealer, 1. aug”). “Ikke jagtbar her” foldes ud.
 - Ingen søgning her: skærmen skal være rolig. Søgning bor på Alle arter. Træk for at opdatere (position + data).
@@ -61,6 +61,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ### Alle arter
 - Generelle jagttider, grupperet, søgbar. Hver række har SeasonBar uden markør.
 - Ingen dato, intet sted, ingen åben/lukket.
+- Hver gruppe er et kort, der starter sammenfoldet. Rækken viser navn, antal og en pil. Tryk folder ud. Søgning folder de grupper ud, der har træf, uden et ekstra tryk.
 
 ### Artsdetalje (push)
 - Navn som stor, ombrydende overskrift i indholdet (lange navne som “Grågås på omdriftsarealer” afkortes ellers i en large title). Gruppen står over navnet.
@@ -86,6 +87,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ### Indstillinger
 - Fane (gearshape) mellem Alle arter og Om.
 - Udseende: inline-picker System / Lys / Mørk med symboler. Anvendes via `overrideUserInterfaceStyle` på alle vinduer, så sheets følger med.
+- Lister: **Sammenfold grupper** (standard til). Gælder Jagtbart og Alle arter. Fra: grupperne er altid åbne, uden pil. “Ikke jagtbar her” foldes stadig.
 
 ### Om
 - Mærke + navn + version. Kilde (navn, opdateret, link, datastatus). Ansvar. Privatliv.
@@ -133,3 +135,6 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Biologi (2026-10-15): eget opslag på artsdetaljen, ikke i `jagttider.json`. Fugle fra DOF Danmarks Fugle. Pattedyr fra Arter.dk (Miljøstyrelsen), med Lex eller Dansk Pattedyratlas hvor Arter mangler yngeltekst. “Invasiv” kun for arter styrelsen lister til regulering hele året. Bestandsestimater udelades, fordi de forældes.
 - App-ikonet (2026-10-15): feltet var næsten sort, så fasan og sigtekors forsvandt i lille størrelse. Feltet er nu skovgrøn `#2F6B47`, samme som AccentColor. Velkomst bliver på BrandDeep.
 - Schweiss-registret (2026-10-15): infoside i v1, ikke en fane. Knappen Anskudt på Jagtbart, række på Om. Telefonlisten venter på tilladelse. Ingen scrape. Seks dagtimer er tekst.
+- Alle arter (2026-10-16): grupperne starter sammenfoldet, med antal og pil. Søgning åbner træffene.
+- Jagtbart (2026-10-16): de jagtbare grupper starter også sammenfoldet. Svar-kortet bliver stående. “Ikke jagtbar her” er uændret.
+- Sammenfold grupper (2026-10-16): én kontakt i Indstillinger, standard til. Fra viser grupperne åbne, som før. Gemmes på telefonen. Ingen ny indsamling.

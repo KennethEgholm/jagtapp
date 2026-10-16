@@ -63,10 +63,10 @@ assets/                            # Source icons and logo (not bundled directly
 
 ## Screens (v1)
 
-1. **Jagtbart** — heading “Jagtbart vildt efter tid og sted”. Date, place, and sun rows. Answer card (count of open species). Open species, grouped. Collapsed “Ikke jagtbar her”, sorted by next opening. Default: today + here (GPS).
-2. **Alle arter** — general seasons, searchable, SeasonBar per species. No date or place. No status.
+1. **Jagtbart** — heading “Jagtbart vildt efter tid og sted”. Date, place, and sun rows. Answer card (count of open species). Open groups start collapsed. Collapsed “Ikke jagtbar her”, sorted by next opening. Default: today + here (GPS).
+2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed. Search expands hits. No date or place. No status.
 3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
-4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`).
+4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter.
 5. **Om** — source, responsibility, photos, privacy, version.
 6. **Velkomst** — first launch. Requires “Forstået”. Always dark.
 7. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row on Om. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
@@ -150,6 +150,7 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-sheet date` / `-sheet place` / `-sheet schweiss` | Open a picker, or the Schweiss page from Jagtbart |
 | `-closed YES` | Expand “Ikke jagtbar her” |
 | `-search ræv` | Open search on Alle arter with that text (use with `-tab all`) |
+| `-groups open` | Expand every group on Jagtbart, or on Alle arter with `-tab all` |
 | `-UIPreferredContentSizeCategoryName UICTContentSizeCategoryAccessibilityL` | Large text |
 
 ```sh

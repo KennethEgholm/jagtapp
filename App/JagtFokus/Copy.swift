@@ -42,4 +42,9 @@ enum Copy {
     static let schweissCallSecretariat = "Ring 93 59 70 80"
     static let schweissSecretariatMail = "schweiss@nst.dk"
     static let schweissSecretariatFooter = "Hverdagskontakt. Ikke en vagttelefon."
+
+    /// `@AppStorage` key. On: Jagtbart and Alle arter start with groups collapsed.
+    static let collapseGroupsKey = "sammenfoldGrupper"
+    static let collapseGroupsTitle = "Sammenfold grupper"
+    static let collapseGroupsFooter = "Jagtbart og Alle arter starter med grupperne lukket. Slå fra for at se alle arter med det samme."
 }
