@@ -34,7 +34,11 @@ struct QueryRows: View {
             .accessibilityHint("Vælg et andet sted")
 
             if let sun = store.querySun {
-                SunRow(calendar: store.calendar, times: sun.times, isApproximate: sun.isApproximate)
+                SunRow(
+                    calendar: store.calendar,
+                    times: sun.times,
+                    basis: sunBasis
+                )
             }
         } footer: {
             if store.followHere, let problem = locationProblem {
@@ -49,10 +53,14 @@ struct QueryRows: View {
                         .font(.footnote.weight(.semibold))
                     }
                 }
-            } else if let sun = store.querySun, sun.isApproximate {
-                Text("Soltider for et punkt i \(store.queryPlace.name).")
             }
         }
+    }
+
+    /// Same place and date as the rows above, so the clock times cannot be read as “here”.
+    private var sunBasis: String {
+        let day = store.calendar.danishFull(store.calendar.monthDay(on: store.queryDate))
+        return "\(store.queryPlace.name), den \(day)"
     }
 
     private var placeDetail: String? {
@@ -134,11 +142,12 @@ struct SunRow: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let calendar: SeasonCalendar
     let times: SunTimes
-    let isApproximate: Bool
+    /// What the clock times are for. Always shown, so “here” and a chosen place cannot be confused.
+    let basis: String
 
     var body: some View {
         let stacked = dynamicTypeSize.isAccessibilitySize
-        HStack(spacing: Spacing.s) {
+        HStack(alignment: .top, spacing: Spacing.s) {
             if !stacked {
                 IconTile(systemImage: "sun.horizon.fill", color: .orange)
             }
@@ -155,13 +164,10 @@ struct SunRow: View {
                 }
                 .font(.body.weight(.semibold))
                 .monospacedDigit()
-                if stacked, isApproximate {
-                    approximate
-                }
-            }
-            Spacer(minLength: Spacing.xs)
-            if !stacked, isApproximate {
-                approximate
+                Text(basis)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .padding(.vertical, 2)
@@ -183,19 +189,12 @@ struct SunRow: View {
         }
     }
 
-    private var approximate: some View {
-        Text("ca.")
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
-    }
-
     private func time(_ date: Date?) -> String {
         date.map(calendar.danishTime) ?? "–"
     }
 
     private var spoken: String {
-        let text = "Solopgang \(time(times.sunrise)), solnedgang \(time(times.sunset))"
-        return isApproximate ? text + ", cirka" : text
+        "Solopgang \(time(times.sunrise)), solnedgang \(time(times.sunset)). \(basis)"
     }
 }
 

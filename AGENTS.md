@@ -168,7 +168,7 @@ Source: SGAV hunting table from 1 July 2024, BEK 470/2024.
 
 New local seasons: add `places` and `overrides` in `data/jagttider.json`. Bump `version`.
 
-Every place has `lat`/`lon`: a representative point for sun times (shown as “ca.”). New places must have it; a test enforces that. GPS gives exact sun times.
+Every place has `lat`/`lon`: a representative point for sun times. The sun row repeats the chosen place and date, for example “Sjælland, den 16. oktober”. New places must have coordinates; a test enforces that.
 
 Sun times are calculated on device (NOAA algorithm, `SunTimes.swift`). Tests use reference values from the US Naval Observatory: `https://aa.usno.navy.mil/api/rstt/oneday?date=2026-10-11&coords=56.16,10.20&tz=2`.
 

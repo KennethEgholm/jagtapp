@@ -40,7 +40,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - **ListHeading** + `scrollRevealedTitle` — stor ombrydende overskrift i indholdet, titel i baren ved scroll.
 - **IconTile**, **BrandMark** (`Theme.swift`).
 - **GroupSketch** (`DesignSystem/GroupSketch.swift`) — stregtegning ved gruppenavnet. Kronhjort, ræv, hare, and, gås, fasan, lille fugl. Primær farve, ikke grøn: den er pynt, ikke status. Skjult for VoiceOver. Ukendt gruppe får en ring.
-- **SunRow** (`QueryHeader.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve), “ca.” når tiden er for et repræsentativt punkt. Ikke trykbar.
+- **SunRow** (`QueryHeader.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve). Under tiden: “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Ikke trykbar.
 
 ## Skærme
 
@@ -56,7 +56,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 
 ### Soltider (på Jagtbar)
 - Tredje række under Dato og Sted. Klokkeslæt i dansk format (“07.42”), afrundet til nærmeste minut som almanakker.
-- GPS: præcist. Valgt sted: stedets punkt + “ca.” + footer “Soltider for et punkt i Als.”
+- Under tiden: “[Sted], den [dato]”, samme sted og dato som rækkerne ovenfor. Fx “Sjælland, den 16. oktober”.
 - Kun visning. Listen afgøres stadig af dato og sted.
 
 ### Alle arter
@@ -141,3 +141,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Jagtbart (2026-10-16): de jagtbare grupper starter også sammenfoldet. Svar-kortet bliver stående. “Ikke jagtbar her” er uændret.
 - Sammenfold grupper (2026-10-16): én kontakt i Indstillinger, standard til. Fra viser grupperne åbne, som før. Gemmes på telefonen. Ingen ny indsamling.
 - Gruppetegninger (2026-10-16): enkel stregtegning ved hvert gruppenavn. Pynt, ikke status, derfor ikke grøn. “Ikke jagtbar her” har ingen tegning.
+- Soltider (2026-10-16): under tiden står “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Fx “Sjælland, den 16. oktober”.
