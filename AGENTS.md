@@ -67,9 +67,10 @@ assets/                            # Source icons and logo (not bundled directly
 2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed, each with a line sketch. Search expands hits. No date or place. No status.
 3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
 4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter.
-5. **Om** — source, responsibility, photos, privacy. Bottom section **Denne app**: release version and data version.
-6. **Velkomst** — first launch. Requires “Forstået”. Always dark.
-7. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row on Om. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
+5. **Journal** — local bag. **Artsliste** is species taken at least once, one row each. A journal note adds the species. Deleting a journal row does not remove it.
+6. **Om** — source, responsibility, photos, privacy. Bottom section **Denne app**: release version and data version.
+7. **Velkomst** — first launch. Requires “Forstået”. Always dark.
+8. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row on Om. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
 
 ## Rules
 

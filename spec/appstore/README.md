@@ -100,7 +100,7 @@ Begrundelse:
 - Ingen konto, analyse, reklamer eller tredjeparts-SDK'er.
 - Position bruges på telefonen. Stednavn hentes via Apples geokodning (CLGeocoder); udvikleren modtager aldrig positionen.
 - Datafilen hentes fra GitHub uden oplysninger om brugeren.
-- Jagtjournalen gemmes kun på telefonen. Udvikleren modtager den ikke. Ingen iCloud-synk i denne udgave.
+- Jagtjournalen og artslisten gemmes kun på telefonen. Udvikleren modtager dem ikke. Ingen iCloud-synk i denne udgave.
 - `PrivacyInfo.xcprivacy`: ingen tracking, ingen indsamlede datatyper, UserDefaults med årsag `CA92.1`.
 
 Tjek selv svaret, før du indsender: det er din erklæring over for Apple.

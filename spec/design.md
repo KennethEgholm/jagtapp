@@ -84,6 +84,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Store rækker i `.title2`, ombryder. Senest nedlagt, så jagtbart for den dato og det sted. Søgning er en knap, ikke et åbent felt. Plus-ikonet er ikke jagtbar-grønt.
 - Tryk gemmer ét stykke. Bekræftelse bliver nede: “[Art] noteret”, **Fortryd** og **+1**.
 - Årets liste: jagtår og antal stykker. Tom liste siger “Ingen poster.”, ikke noget om pligt.
+- **Artsliste** under Nedlagt vildt. Arter nedlagt mindst én gang. Én art én gang. Tilføj selv, eller notér i journalen. Sletning i journalen fjerner ikke arten. Swipe fjerner kun fra artslisten. Tom liste siger “Ingen arter.”
 
 ### Indstillinger
 - Fane (gearshape) mellem Alle arter og Om.

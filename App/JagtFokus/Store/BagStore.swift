@@ -8,6 +8,8 @@ final class BagStore {
     static let cloudKey = "vildtudbytte"
 
     private(set) var journal: BagJournal
+    /// Species taken at least once. Independent of individual journal rows.
+    private(set) var speciesList: SpeciesChecklist
     /// Entry the confirmation refers to.
     private(set) var pendingId: UUID?
     /// Bumped on a successful record. Drives haptics.
@@ -17,6 +19,7 @@ final class BagStore {
     let draft = BagDraft()
 
     private let fileStore: BagFileStore
+    private let checklistStore: SpeciesChecklistFileStore
     private let cloud: BagCloudStore?
     private let calendar = SeasonCalendar()
     @ObservationIgnored private var cloudObserver: NSObjectProtocol?
@@ -25,9 +28,20 @@ final class BagStore {
         let url = fileURL ?? Self.defaultURL
         let fileStore = BagFileStore(fileURL: url)
         self.fileStore = fileStore
+        let checklistStore = SpeciesChecklistFileStore(
+            fileURL: url.deletingLastPathComponent().appending(path: "artsliste.json")
+        )
+        self.checklistStore = checklistStore
         // iCloud key-value needs a paid team. Free Apple IDs cannot sign that entitlement.
         self.cloud = cloud
-        journal = fileStore.load()
+        let loaded = fileStore.load()
+        journal = loaded
+        if checklistStore.fileExists {
+            speciesList = checklistStore.load() ?? SpeciesChecklist()
+        } else {
+            speciesList = SpeciesChecklist.seeded(from: loaded)
+            try? checklistStore.save(speciesList)
+        }
         syncWithCloud()
         observeCloudChanges()
     }
@@ -47,9 +61,11 @@ final class BagStore {
     func record(speciesId: String, on date: Date, placeId: String?) -> BagEntry {
         let now = Date()
         let entry = journal.record(speciesId: speciesId, on: date, placeId: placeId, now: now, calendar: calendar)
+        speciesList.add(speciesId)
         pendingId = entry.id
         saves += 1
         save()
+        saveChecklist()
         return entry
     }
 
@@ -91,6 +107,21 @@ final class BagStore {
         save()
     }
 
+    /// Manual mark. A later journal note puts a removed species back.
+    func setSpecies(_ id: String, included: Bool) {
+        if included {
+            speciesList.add(id)
+        } else {
+            speciesList.remove(id)
+        }
+        saveChecklist()
+    }
+
+    func removeSpecies(_ id: String) {
+        speciesList.remove(id)
+        saveChecklist()
+    }
+
     func remove(id: UUID) {
         journal.remove(id: id)
         if pendingId == id { pendingId = nil }
@@ -110,6 +141,10 @@ final class BagStore {
             if merged != journal {
                 journal = merged
                 try? fileStore.save(journal)
+                for id in journal.entries.map(\.speciesId) {
+                    speciesList.add(id)
+                }
+                saveChecklist()
             }
             if merged != cloudJournal, let data = try? merged.encoded() {
                 cloud.set(data, forKey: Self.cloudKey)
@@ -120,6 +155,10 @@ final class BagStore {
             cloud.set(data, forKey: Self.cloudKey)
             cloud.synchronize()
         }
+    }
+
+    private func saveChecklist() {
+        try? checklistStore.save(speciesList)
     }
 
     private func save() {

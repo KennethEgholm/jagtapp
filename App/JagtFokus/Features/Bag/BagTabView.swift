@@ -140,6 +140,8 @@ struct BagTabView: View {
                     BagSearchView(draft: draft) { path.removeAll() }
                 case .list:
                     BagListView()
+                case .speciesList:
+                    SpeciesListView()
                 case .edit(let id):
                     BagEditView(id: id)
                 }
@@ -196,7 +198,28 @@ struct BagTabView: View {
             }
             .tint(.primary)
             .accessibilityHint("Vis årets poster")
+
+            Button {
+                bag.clearPending()
+                path.append(.speciesList)
+            } label: {
+                QueryRow(
+                    systemImage: "checklist",
+                    title: Copy.speciesListTitle,
+                    value: speciesListValue,
+                    detail: nil
+                )
+            }
+            .tint(.primary)
+            .accessibilityHint("Vis arter du har nedlagt")
         }
+    }
+
+    private var speciesListValue: String {
+        let count = bag.speciesList.ids.count
+        if count == 0 { return "Ingen arter" }
+        if count == 1 { return "1 art" }
+        return "\(count) arter"
     }
 
     private var queryRows: some View {
@@ -347,6 +370,7 @@ struct BagTabView: View {
 enum BagRoute: Hashable {
     case search
     case list
+    case speciesList
     case edit(UUID)
 }
 

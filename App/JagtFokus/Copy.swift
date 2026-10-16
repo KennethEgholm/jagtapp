@@ -18,6 +18,10 @@ enum Copy {
     static let bagTab = "Journal"
     static let bagHeading = "Jagtjournal"
     static let bagYearRow = "Nedlagt vildt"
+    static let speciesListTitle = "Artsliste"
+    static let speciesListAdd = "Tilføj"
+    static let speciesListRemove = "Fjern"
+    static let speciesListEmpty = "Ingen arter."
     static let bagRecord = "Tilføj til journal"
     static let bagTitle = "Vildtudbytte"
 
