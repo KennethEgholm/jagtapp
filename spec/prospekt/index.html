@@ -266,7 +266,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 108mm;
+    height: 116mm;
     background: var(--deep);
     color: var(--cream);
     padding: 9mm 14mm 8mm;
@@ -274,18 +274,19 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  .steps {
-    display: flex;
-    gap: 6mm;
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 7mm;
+    row-gap: 5mm;
   }
-  .steps div { width: 54mm; }
-  .steps h2 {
+  .features h2 {
     font-family: "Iowan Old Style", Iowan, Palatino, Georgia, serif;
     font-weight: 400;
     font-size: 13pt;
     margin-bottom: 1.2mm;
   }
-  .steps p {
+  .features p {
     font-size: 9.5pt;
     line-height: 1.35;
     color: var(--sage);
@@ -347,13 +348,17 @@
       <p>Ø før område før region før Danmark. Den mest lokale tid gælder.</p>
     </div>
     <div class="point">
+      <h2>Jagtjournal</h2>
+      <p>Notér nedlagt vildt med ét tryk. Journalen bliver på telefonen.</p>
+    </div>
+    <div class="point">
       <h2>Uden net</h2>
       <p>Ingen konto. Ingen tracking. Ingen reklamer. Positionen bliver på telefonen.</p>
     </div>
   </div>
 
   <figure class="cover-phone">
-    <img src="../appstore/screenshots/1-jagtbar.png" alt="Jagtbar i dag i Midtjylland. 44 arter er jagtbare.">
+    <img src="../appstore/screenshots/1-jagtbart.png" alt="Jagtbart 27. december i Midtjylland. 47 arter er jagtbare, 9 har sidste dag inden for en uge.">
   </figure>
 
   <footer class="cover-foot">
@@ -371,46 +376,59 @@
   <div class="shots">
     <article class="shot">
       <div class="phone">
-        <img src="../appstore/screenshots/2-raabuk-als.png" alt="Råbuk på Als. Ikke jagtbar 11. oktober. Åbner 1. november.">
+        <img src="../appstore/screenshots/2-raabuk-als.png" alt="Råbuk på Als. Ikke jagtbar 15. oktober. Åbner 1. november.">
       </div>
       <h2>Råbuk på Als</h2>
-      <p>Lokal jagttid. Egne perioder, ikke de generelle.</p>
+      <p>Lokal jagttid med egne perioder. Foto, tidslinje og biologi.</p>
     </article>
     <article class="shot">
       <div class="phone">
         <img src="../appstore/screenshots/3-alle-arter.png" alt="Alle arter med tidslinje over jagtåret.">
       </div>
       <h2>Alle arter</h2>
-      <p>Generelle tider i Danmark. Søgbar, med tidslinje.</p>
+      <p>Generelle tider i Danmark. Søgbar, med tidslinje over jagtåret.</p>
     </article>
     <article class="shot">
       <div class="phone">
-        <img src="../appstore/screenshots/4-jagtbar-moerk.png" alt="Jagtbar på Endelave 15. november, mørkt tema.">
+        <img src="journal-moerk.png" alt="Jagtjournal i mørkt tema. 11 stykker nedlagt i jagtåret 2026/27.">
       </div>
-      <h2>Også i mørke</h2>
-      <p>Lys, mørk eller som telefonen. Samme svar.</p>
+      <h2>Jagtjournal</h2>
+      <p>Tryk på en art, så er den noteret. Fortryd eller +1. Her i mørkt tema.</p>
     </article>
   </div>
 
   <footer class="closing">
-    <div class="steps">
+    <div class="features">
       <div>
-        <h2>Åbn</h2>
-        <p>Svaret står øverst. Antal arter, og hvilke.</p>
+        <h2>Svaret først</h2>
+        <p>Antal jagtbare arter øverst. Timeglasset viser, hvad der har sidste dag inden for en uge.</p>
       </div>
       <div>
-        <h2>Skift</h2>
-        <p>En anden dag eller et andet sted, når du planlægger.</p>
+        <h2>Soltider</h2>
+        <p>Solopgang og solnedgang for dagen og stedet. De styrer ikke listen.</p>
       </div>
       <div>
-        <h2>Slå op</h2>
-        <p>Note, foto og link til bekendtgørelsen.</p>
+        <h2>Artsopslag</h2>
+        <p>Foto, note, biologi og link til bekendtgørelsen.</p>
+      </div>
+      <div>
+        <h2>Anskudt vildt</h2>
+        <p>Schweiss-registret er ét tryk væk. Påkørt hjortevildt: ring 1812.</p>
+      </div>
+      <div>
+        <h2>Artsliste</h2>
+        <p>Arterne du har nedlagt mindst én gang. Én linje pr. art.</p>
+      </div>
+      <div>
+        <h2>Dansk og engelsk</h2>
+        <p>Appen findes på begge sprog. Lys, mørk eller som telefonen.</p>
       </div>
     </div>
     <div class="note">
       <h2>Vigtigt</h2>
       <p>JagtFokus viser jagttider ud fra bekendtgørelsen om jagttid (BEK nr. 470 af 24/04/2024). Listen kan være ufuldstændig eller forældet. Særlige regler står i noten og i loven. <strong>Appen er ikke loven.</strong> Du er selv ansvarlig for at jage lovligt.</p>
       <p>Solopgang og solnedgang vises. De styrer ikke listen. Jagt må som hovedregel kun ske mellem solopgang og solnedgang.</p>
+      <p>Jagtjournalen gemmes kun på telefonen. Den er ikke en indberetning af vildtudbytte.</p>
     </div>
     <div class="band">
       <span><strong>jagtfokus@gmail.com</strong></span>

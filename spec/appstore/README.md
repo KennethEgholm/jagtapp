@@ -74,22 +74,40 @@ Første version. Jagttider efter dato og sted, soltider, jagtjournal, biologisk 
 
 ## Screenshots (6,9", 1320 × 2868)
 
-I `spec/appstore/screenshots/`, i denne rækkefølge. Taget 2026-10-15 på iPhone 18 Pro Max, 1320 × 2868, statuslinje 09.41. Biologien ligger under folden på artsdetaljen, så den er ikke med på billedet.
+I `spec/appstore/screenshots/`, i denne rækkefølge. Taget 2026-10-17 på iPhone 18 Pro Max, 1320 × 2868, statuslinje 09.41. Biologien ligger under folden på artsdetaljen, så den er ikke med på billedet.
 
-1. `1-jagtbar.png` — Jagtbart i dag (15. okt), Midtjylland, soltider, 44 arter
-2. `2-raabuk-als.png` — Råbuk på Als: lokal jagttid, foto, tidslinje, journal
-3. `3-alle-arter.png` — Alle arter med tidslinjer
-4. `4-jagtbar-moerk.png` — Mørkt tema, Endelave 15. nov
+1. `1-jagtbart.png` — Jagtbart 27. dec, Midtjylland: 47 arter, 9 med sidste dag inden for en uge, soltider, advarsel på Klovbærende
+2. `2-raabuk-als.png` — Råbuk på Als 15. okt: lokal jagttid, foto, ikke jagtbar, tidslinje, Tilføj til journal
+3. `3-alle-arter.png` — Alle arter med tidslinjer, Klovbærende foldet ud
+4. `4-jagtbart-moerk.png` — Mørkt tema, Endelave 15. nov
 5. `5-velkomst.png` — Velkomst og ansvar
 
-Lav dem igen efter ændringer (iPhone 18 Pro Max-simulatoren, statuslinje 09.41):
+Prospektet (`spec/prospekt/`) bruger 1–3 og `spec/prospekt/journal-moerk.png` (Journal i mørkt tema, iPhone 18 Pro).
+
+Lav dem igen efter ændringer (iPhone 18 Pro Max-simulatoren, statuslinje 09.41). `--time` tager “9:41”, ikke “09:41”; simulatoren viser det som 09.41. `--batteryState discharging` undgår det grønne lyn.
 
 ```sh
-xcrun simctl status_bar booted override --time "09:41" --dataNetwork wifi --wifiMode active \
+xcrun simctl status_bar booted override --time "9:41" --dataNetwork wifi --wifiMode active \
   --wifiBars 3 --cellularMode active --cellularBars 4 --batteryState discharging --batteryLevel 100
 xcrun simctl launch --terminate-running-process booted dk.jagtfokus.app \
-  -harGodkendtFraskrivelse YES -date 2026-10-11 -place als -species raabuk
-xcrun simctl io booted screenshot 2-raabuk-als.png
+  -harGodkendtFraskrivelse YES -AppleLanguages "(da)" -udseende light -date 2026-12-27
+xcrun simctl io booted screenshot 1-jagtbart.png
+```
+
+| Billede | Argumenter |
+|---|---|
+| 1 | `-udseende light -date 2026-12-27` |
+| 2 | `-udseende light -date 2026-10-15 -place als -species raabuk` |
+| 3 | `-udseende light -tab all -groups open` |
+| 4 | `-udseende dark -date 2026-11-15 -place endelave` |
+| 5 | `-harGodkendtFraskrivelse NO` |
+
+Prospektet laves om til PDF med Chrome:
+
+```sh
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --no-pdf-header-footer \
+  --allow-file-access-from-files --print-to-pdf=spec/prospekt/JagtFokus-prospekt.pdf \
+  "file://$PWD/spec/prospekt/index.html"
 ```
 
 ## App-privatliv (spørgeskema)
