@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>JagtFokus — prospekt</title>
+<style>
+  @font-face {
+    font-family: "Iowan";
+    src: url("file:///System/Library/Fonts/Supplemental/Iowan%20Old%20Style.ttc") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Iowan";
+    src: url("file:///System/Library/Fonts/Supplemental/Iowan%20Old%20Style.ttc") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Avenir";
+    src: url("file:///System/Library/Fonts/Avenir%20Next.ttc") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Avenir";
+    src: url("file:///System/Library/Fonts/Avenir%20Next.ttc") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Avenir";
+    src: url("file:///System/Library/Fonts/Avenir%20Next.ttc") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  :root {
+    --deep: #0D2A1C;
+    --deep-2: #143526;
+    --forest: #2F6B47;
+    --sage: #B7C9BC;
+    --cream: #F4F1EA;
+    --ink: #14241C;
+    --muted: #5C675F;
+    --brass: #C6A15B;
+    --brass-deep: #7A5C17;
+    --line: rgba(198, 161, 91, 0.55);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: white; }
+  body {
+    font-family: "Avenir Next", Avenir, "Helvetica Neue", sans-serif;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page { size: A4 portrait; margin: 0; }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  /* ——— Cover ——— */
+  .cover {
+    background:
+      radial-gradient(ellipse 90mm 70mm at 78% 42%, #1a4632 0%, rgba(26, 70, 50, 0) 70%),
+      var(--deep);
+    color: var(--cream);
+  }
+
+  .top {
+    position: absolute;
+    top: 14mm;
+    left: 14mm;
+    right: 14mm;
+    display: flex;
+    align-items: center;
+    gap: 3.5mm;
+  }
+  .top img {
+    width: 11mm;
+    height: 11mm;
+    border-radius: 2.6mm;
+    box-shadow: 0 0 0 0.25mm rgba(198, 161, 91, 0.65);
+  }
+  .brand {
+    font-weight: 600;
+    font-size: 11pt;
+    letter-spacing: 0.01em;
+  }
+  .top .soon {
+    margin-left: auto;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  .headline {
+    position: absolute;
+    top: 34mm;
+    left: 14mm;
+    right: 14mm;
+  }
+  .headline h1 {
+    font-family: "Iowan Old Style", Iowan, Palatino, Georgia, serif;
+    font-weight: 400;
+    font-size: 32pt;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .headline h1 em {
+    font-style: normal;
+    color: var(--brass);
+  }
+  .headline p {
+    margin-top: 4mm;
+    max-width: 96mm;
+    font-size: 12pt;
+    line-height: 1.35;
+    color: var(--sage);
+  }
+
+  .cover-phone {
+    position: absolute;
+    top: 84mm;
+    right: 14mm;
+    width: 78mm;
+    padding: 1.8mm;
+    background: #101412;
+    border-radius: 7.2mm;
+    box-shadow:
+      0 0 0 0.2mm rgba(198, 161, 91, 0.28),
+      0 10mm 22mm rgba(0, 0, 0, 0.38);
+  }
+  .cover-phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 5.6mm;
+  }
+
+  .points {
+    position: absolute;
+    top: 86mm;
+    left: 14mm;
+    width: 92mm;
+  }
+  .point { margin-bottom: 7.5mm; }
+  .point h2 {
+    font-size: 11.5pt;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.8mm;
+  }
+  .point p {
+    font-size: 10pt;
+    line-height: 1.35;
+    color: var(--sage);
+  }
+  .point h2::before {
+    content: "";
+    display: inline-block;
+    width: 4.5mm;
+    height: 0.45mm;
+    background: var(--brass);
+    margin-right: 2.2mm;
+    vertical-align: middle;
+    position: relative;
+    top: -0.4mm;
+  }
+
+  .cover-foot {
+    position: absolute;
+    left: 14mm;
+    right: 14mm;
+    bottom: 12mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 3.5mm;
+    border-top: 0.25mm solid var(--line);
+    font-size: 8.5pt;
+    letter-spacing: 0.02em;
+    color: var(--sage);
+  }
+  .cover-foot strong {
+    color: var(--cream);
+    font-weight: 600;
+  }
+
+  /* ——— Inside ——— */
+  .inside { background: var(--cream); color: var(--ink); }
+
+  .inside-top {
+    position: absolute;
+    top: 12mm;
+    left: 14mm;
+    right: 14mm;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 3mm;
+    border-bottom: 0.25mm solid rgba(122, 92, 23, 0.35);
+  }
+  .inside-top .name {
+    font-weight: 600;
+    font-size: 11pt;
+    color: var(--deep);
+  }
+  .inside-top .kicker {
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-deep);
+  }
+
+  .shots {
+    position: absolute;
+    top: 24mm;
+    left: 12mm;
+    right: 12mm;
+    display: flex;
+    justify-content: space-between;
+    gap: 5mm;
+  }
+  .shot { width: 58mm; text-align: left; }
+  .shot .phone {
+    background: #1a1c1b;
+    padding: 1.4mm;
+    border-radius: 5.2mm;
+  }
+  .shot .phone img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4mm;
+  }
+  .shot h2 {
+    margin-top: 3.2mm;
+    font-size: 10.5pt;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--deep);
+  }
+  .shot p {
+    margin-top: 0.6mm;
+    font-size: 8.5pt;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+
+  .closing {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 108mm;
+    background: var(--deep);
+    color: var(--cream);
+    padding: 9mm 14mm 8mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .steps {
+    display: flex;
+    gap: 6mm;
+  }
+  .steps div { width: 54mm; }
+  .steps h2 {
+    font-family: "Iowan Old Style", Iowan, Palatino, Georgia, serif;
+    font-weight: 400;
+    font-size: 13pt;
+    margin-bottom: 1.2mm;
+  }
+  .steps p {
+    font-size: 9.5pt;
+    line-height: 1.35;
+    color: var(--sage);
+  }
+  .closing .note {
+    border-top: 0.25mm solid var(--line);
+    padding-top: 4mm;
+  }
+  .closing .note h2 {
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 1.6mm;
+  }
+  .closing .note p {
+    font-size: 9pt;
+    line-height: 1.38;
+    color: var(--sage);
+    max-width: 178mm;
+  }
+  .closing .note p + p { margin-top: 1.6mm; }
+  .closing .note strong { color: var(--cream); font-weight: 600; }
+
+  .band {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-top: 0.25mm solid var(--line);
+    padding-top: 3.5mm;
+    font-size: 8.5pt;
+    color: var(--sage);
+  }
+  .band strong { color: var(--cream); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <header class="top">
+    <img src="../../assets/icons/AppIcon-1024-fullbleed.png" alt="">
+    <div class="brand">JagtFokus</div>
+    <div class="soon">Kommer i App Store</div>
+  </header>
+
+  <div class="headline">
+    <h1>Hvad er jagtbart<br><em>i dag, her?</em></h1>
+    <p>Se på få sekunder, hvad der har<br>jagttid på dagen og stedet.</p>
+  </div>
+
+  <div class="points">
+    <div class="point">
+      <h2>I dag og her</h2>
+      <p>Dato og sted afgør listen. Ikke klokkeslættet. Standard er i dag og din position.</p>
+    </div>
+    <div class="point">
+      <h2>Lokale tider</h2>
+      <p>Ø før område før region før Danmark. Den mest lokale tid gælder.</p>
+    </div>
+    <div class="point">
+      <h2>Uden net</h2>
+      <p>Ingen konto. Ingen tracking. Ingen reklamer. Positionen bliver på telefonen.</p>
+    </div>
+  </div>
+
+  <figure class="cover-phone">
+    <img src="../appstore/screenshots/1-jagtbar.png" alt="Jagtbar i dag i Midtjylland. 44 arter er jagtbare.">
+  </figure>
+
+  <footer class="cover-foot">
+    <span><strong>Gratis</strong> til iPhone · kun Danmark</span>
+    <span>Jagttider efter BEK nr. 470/2024</span>
+  </footer>
+</section>
+
+<section class="page inside">
+  <header class="inside-top">
+    <div class="name">JagtFokus</div>
+    <div class="kicker">Sådan ser det ud</div>
+  </header>
+
+  <div class="shots">
+    <article class="shot">
+      <div class="phone">
+        <img src="../appstore/screenshots/2-raabuk-als.png" alt="Råbuk på Als. Ikke jagtbar 11. oktober. Åbner 1. november.">
+      </div>
+      <h2>Råbuk på Als</h2>
+      <p>Lokal jagttid. Egne perioder, ikke de generelle.</p>
+    </article>
+    <article class="shot">
+      <div class="phone">
+        <img src="../appstore/screenshots/3-alle-arter.png" alt="Alle arter med tidslinje over jagtåret.">
+      </div>
+      <h2>Alle arter</h2>
+      <p>Generelle tider i Danmark. Søgbar, med tidslinje.</p>
+    </article>
+    <article class="shot">
+      <div class="phone">
+        <img src="../appstore/screenshots/4-jagtbar-moerk.png" alt="Jagtbar på Endelave 15. november, mørkt tema.">
+      </div>
+      <h2>Også i mørke</h2>
+      <p>Lys, mørk eller som telefonen. Samme svar.</p>
+    </article>
+  </div>
+
+  <footer class="closing">
+    <div class="steps">
+      <div>
+        <h2>Åbn</h2>
+        <p>Svaret står øverst. Antal arter, og hvilke.</p>
+      </div>
+      <div>
+        <h2>Skift</h2>
+        <p>En anden dag eller et andet sted, når du planlægger.</p>
+      </div>
+      <div>
+        <h2>Slå op</h2>
+        <p>Note, foto og link til bekendtgørelsen.</p>
+      </div>
+    </div>
+    <div class="note">
+      <h2>Vigtigt</h2>
+      <p>JagtFokus viser jagttider ud fra bekendtgørelsen om jagttid (BEK nr. 470 af 24/04/2024). Listen kan være ufuldstændig eller forældet. Særlige regler står i noten og i loven. <strong>Appen er ikke loven.</strong> Du er selv ansvarlig for at jage lovligt.</p>
+      <p>Solopgang og solnedgang vises. De styrer ikke listen. Jagt må som hovedregel kun ske mellem solopgang og solnedgang.</p>
+    </div>
+    <div class="band">
+      <span><strong>jagtfokus@gmail.com</strong></span>
+      <span>Kommer i App Store · gratis</span>
+      <span>kennethegholm.github.io/jagtapp</span>
+    </div>
+  </footer>
+</section>
+
+</body>
+</html>
