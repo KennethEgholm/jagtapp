@@ -1370,16 +1370,6 @@
         }
       }
     },
-    "Om" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "About"
-          }
-        }
-      }
-    },
     "Om registret" : {
       "localizations" : {
         "en" : {

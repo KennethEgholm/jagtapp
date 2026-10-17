@@ -130,7 +130,7 @@ Each species page has a short biology note (whether it breeds in Denmark, where 
 
 The app shows a disclaimer on first launch: it is not the law, and hunters must check the official rules.
 
-Schweiss register: on the Jagtbart tab, tap Anskudt (or Om > Schweiss-registret). Wounded game during a hunt opens schweiss.dk. A traffic collision calls 1812, the Danish animal emergency line. The app does not include the handlers' phone numbers.
+Schweiss register: on the Jagtbart tab, tap Anskudt (or Indstillinger > Schweiss-registret). Wounded game during a hunt opens schweiss.dk. A traffic collision calls 1812, the Danish animal emergency line. The app does not include the handlers' phone numbers.
 
 Species photos are from Wikimedia Commons under CC0 / public domain / CC BY / CC BY-SA, credited under each photo.
 ```
@@ -155,7 +155,7 @@ Workflowet `.github/workflows/appstore.yml` kan senere uploade et build til App 
 
 Et upload lægger kun buildet op. Det indsender ikke til review og udgiver ikke. Udgivelse bliver i App Store Connect, manuelt.
 
-Versionsnummeret i appen er `MARKETING_VERSION` fra Xcode-projektet. Samme tal arkiveres. Det står nederst på **Om**, i sektionen **Denne app**, som “Version 1.0 (1)”. Tæl op med `tools/bump_build.sh` og commit, før workflowet køres. Workflowet ændrer ikke nummeret.
+Versionsnummeret i appen er `MARKETING_VERSION` fra Xcode-projektet. Samme tal arkiveres. Det står nederst i **Indstillinger**, i sektionen **Denne app**, som “Version 1.0 (1)”. Tæl op med `tools/bump_build.sh` og commit, før workflowet køres. Workflowet ændrer ikke nummeret.
 
 Når kontoen er godkendt:
 

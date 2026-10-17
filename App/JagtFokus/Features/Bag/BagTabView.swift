@@ -88,11 +88,6 @@ struct BagTabView: View {
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                Section {
-                    ListHeading(title: Copy.bagHeading)
-                }
-                .listSectionSpacing(.compact)
-
                 yearRow
                 DatePlaceRows(
                     date: bagDate,
@@ -134,8 +129,7 @@ struct BagTabView: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .contentMargins(.top, Spacing.xs, for: .scrollContent)
-            .scrollRevealedTitle(Copy.bagHeading)
+            .navigationTitle(Copy.bagHeading)
             .navigationDestination(for: BagRoute.self) { route in
                 switch route {
                 case .search:

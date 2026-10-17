@@ -10,7 +10,7 @@ struct RootView: View {
     @State private var tab: AppTab = .today
 
     enum AppTab: Hashable {
-        case today, bag, all, settings, about
+        case today, bag, all, settings
     }
 
     var body: some View {
@@ -20,7 +20,7 @@ struct RootView: View {
                     Tab(Copy.todayTab, systemImage: "scope", value: AppTab.today) {
                         TodayView()
                     }
-                    Tab(Copy.bagTab, systemImage: "plus.circle", value: AppTab.bag) {
+                    Tab(Copy.bagTab, systemImage: "book.closed", value: AppTab.bag) {
                         BagTabView()
                     }
                     Tab("Alle arter", systemImage: "list.bullet", value: AppTab.all) {
@@ -28,9 +28,6 @@ struct RootView: View {
                     }
                     Tab("Indstillinger", systemImage: "gearshape", value: AppTab.settings) {
                         SettingsView()
-                    }
-                    Tab("Om", systemImage: "info.circle", value: AppTab.about) {
-                        AboutView()
                     }
                 }
                 .transition(.opacity)
@@ -59,14 +56,13 @@ struct RootView: View {
         }
     }
 
-    /// Debug only: `-tab all|settings|about` for screenshots.
+    /// Debug only: `-tab bag|all|settings` for screenshots. `about` is the same tab as settings.
     private func applyLaunchTab() {
         #if DEBUG
         switch UserDefaults.standard.string(forKey: "tab") {
         case "bag", "nedlagt": tab = .bag
         case "all": tab = .all
-        case "settings": tab = .settings
-        case "about": tab = .about
+        case "settings", "about": tab = .settings
         default: break
         }
         #endif

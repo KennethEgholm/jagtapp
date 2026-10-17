@@ -178,7 +178,6 @@ ENGLISH = {
     "Notér %@": "Record %@",
     "Næste: %@, %@": "Next: %@, %@",
     "Offline. Bruger gemt data.": "Offline. Using saved data.",
-    "Om": "About",
     "Om registret": "About the register",
     "Områder": "Areas",
     "Opdateret": "Updated",

@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// The settings, then Om in the same list. One tab for both.
 struct SettingsView: View {
     @AppStorage("udseende") private var appearance: Appearance = .system
     @AppStorage(Copy.collapseGroupsKey) private var collapseGroups = true
@@ -29,6 +30,8 @@ struct SettingsView: View {
                 } footer: {
                     Text(Copy.collapseGroupsFooter)
                 }
+
+                AboutSections()
             }
             .navigationTitle("Indstillinger")
         }
@@ -37,4 +40,5 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
+        .environment(SeasonStore())
 }

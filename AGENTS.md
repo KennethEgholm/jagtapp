@@ -51,8 +51,8 @@ App/JagtFokus/
   Features/Today/                  # Jagtbart, date/place rows, sheets
   Features/Species/                # SpeciesRow, SpeciesDetailView
   Features/AllSpecies/             # Alle arter
-  Features/Settings/               # Indstillinger (appearance)
-  Features/About/                  # Om
+  Features/Settings/               # Indstillinger (appearance, lists), with the Om sections below
+  Features/About/                  # Om sections (AboutSections), shown inside Indstillinger
   Features/Schweiss/               # Schweiss-registret (info, no handler phones)
   Features/Onboarding/             # Welcome + disclaimer
   Resources/species-photos.json    # Photo credits: species → photo, photographer, license
@@ -72,11 +72,11 @@ assets/                            # Source icons and logo (not bundled directly
 1. **Jagtbart** — heading “Jagtbart vildt efter tid og sted”. Date and place rows, then the answer card (count of open species), then the sun card. Open groups start collapsed, each with a line sketch. A group with a species in its last week says so under its name. Collapsed “Ikke jagtbar her”, sorted by next opening. Default: today + here (GPS).
 2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed, each with a line sketch. Search expands hits. No date or place. No status.
 3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
-4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter.
-5. **Journal** — local bag. **Artsliste** is species taken at least once, one row each. A journal note adds the species. Deleting a journal row does not remove it.
-6. **Om** — source, responsibility, photos, privacy. Bottom section **Denne app**: release version and data version.
+4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter. The Om sections follow in the same list. Four tabs: Jagtbart, Journal, Alle arter, Indstillinger.
+5. **Journal** — local bag. Tab icon `book.closed`, system large title “Jagtjournal”. **Artsliste** is species taken at least once, one row each. A journal note adds the species. Deleting a journal row does not remove it.
+6. **Om** — not a tab. Sections under Indstillinger: source, responsibility, Schweiss, photos, privacy. Bottom section **Denne app**: mark, release version and data version.
 7. **Velkomst** — first launch. Requires “Forstået”. Always dark.
-8. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row on Om. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
+8. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row in Indstillinger. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
 
 ## Rules
 
@@ -185,7 +185,7 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-harGodkendtFraskrivelse YES` | Skip welcome (`NO` shows it) |
 | `-date 2026-11-15` | Selected date |
 | `-place als` | Selected place (place id) |
-| `-tab bag` / `-tab all` / `-tab settings` / `-tab about` | Start tab |
+| `-tab bag` / `-tab all` / `-tab settings` | Start tab (`-tab about` is the same as settings) |
 | `-udseende dark` / `light` / `system` | Appearance, regardless of the simulator theme |
 | `-species raabuk` | Open the species page from Jagtbart |
 | `-sheet date` / `-sheet place` / `-sheet schweiss` | Open a picker, or the Schweiss page from Jagtbart |
@@ -237,7 +237,7 @@ Repo: `github.com/KennethEgholm/jagtapp` (public). Remote data: `raw.githubuserc
 - `App/JagtFokus/PrivacyInfo.xcprivacy`: no tracking, no collected data, UserDefaults (`CA92.1`). A new API on Apple's required-reason list needs a reason added.
 - The privacy policy (`docs/privatliv.html`) must match the app. New data collection, a new network call, or a new third-party SDK means update the page, the manifest, and the App Store answers in the same change.
 - Before each upload: `tools/bump_build.sh` (or `tools/bump_build.sh 1.1` for a new version). Archive in Xcode (Product → Archive) → Distribute App → App Store Connect.
-- GitHub Actions upload is prepared in `.github/workflows/appstore.yml` and is off. The Apple developer account is not approved. Do not run it with upload on, and do not add API keys to the repo. Secrets and the later steps are in `spec/appstore/README.md`. The workflow uploads a build only. It does not submit or release. The number in Om’s **Denne app** section is `MARKETING_VERSION` from the Xcode project, the same number the archive uses.
+- GitHub Actions upload is prepared in `.github/workflows/appstore.yml` and is off. The Apple developer account is not approved. Do not run it with upload on, and do not add API keys to the repo. Secrets and the later steps are in `spec/appstore/README.md`. The workflow uploads a build only. It does not submit or release. The number in the **Denne app** section (Indstillinger) is `MARKETING_VERSION` from the Xcode project, the same number the archive uses.
 - Data fixes do not need a new app version: edit `data/jagttider.json`, bump `version`, push.
 
 ## Commits

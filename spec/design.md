@@ -47,7 +47,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - **DatePlaceRows / QueryRow** (`DesignSystem/QueryRow.swift`) — dato- og sted-række (Settings-stil med IconTile), med positionsproblemet i footeren. Jagtbart og Journal giver hver sit valg. Footeren siger, hvad rækken viser: sidst kendte sted eller hele Danmark.
 - **CountCard** (`DesignSystem/CountCard.swift`) — stort tal med en linje ved siden af. **AnswerCard** på Jagtbart og årssummen i journalen bruger det.
 - **GroupHeader / FoldButton / FoldChevron** (`DesignSystem/GroupHeader.swift`) — gruppens række på Jagtbart og Alle arter: tegning, navn, antal, pil. `FoldButton` folder sektionen og giver VoiceOver “Vist / Skjult”. “Ikke jagtbar her” bruger samme knap og pil.
-- **ListHeading** + `scrollRevealedTitle` — stor ombrydende overskrift i indholdet, titel i baren ved scroll.
+- **ListHeading** + `scrollRevealedTitle` — stor ombrydende overskrift i indholdet, titel i baren ved scroll. Kun hvor titlen er lang: Jagtbart, artsdetaljen og Schweiss-registret. Korte titler (Journal, Alle arter, Indstillinger) bruger systemets store titel.
 - **IconTile**, **BrandMark** (`Theme.swift`).
 - **GroupSketch** (`DesignSystem/GroupSketch.swift`) — stregtegning ved gruppenavnet. Kronhjort, ræv, hare, and, gås, fasan, lille fugl. Primær farve, ikke grøn: den er pynt, ikke status. Skjult for VoiceOver. Ukendt gruppe får en ring.
 - **SunRow** (`Features/Today/SunRow.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve). Under tiden: “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Ikke trykbar.
@@ -88,7 +88,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 
 ### Journal (v1)
 
-- Fane **Journal** (`plus.circle`) mellem Jagtbart og Alle arter. Overskrift på siden: “Jagtjournal”. Jagtbart har ingen knap til det.
+- Fane **Journal** (`book.closed`) mellem Jagtbart og Alle arter. Systemets store titel: “Jagtjournal”. Jagtbart har ingen knap til det. Faneikonet viser et sted i appen. Swipe-handlingen beholder `plus.circle`, for den er en handling.
 - Swipe til venstre på en artsrække i **Jagtbart** eller **Alle arter** har handlingen **Journal** (`plus.circle`): noterer 1 stykke og skifter til **Journal**-fanen med bekræftelsen klar.
 - Artsdetaljen har en række **Tilføj til journal** med `IconTile`, der noterer 1 stykke og skifter til **Journal**-fanen. Ingen pil: rækken er en handling, ikke navigation.
 - Fanen starter med række “Nedlagt vildt” (årets antal), så Dato og Sted, samme rækker som Jagtbart. Standard: i dag og din position. Et andet valg ændrer ikke Jagtbart, men listen under følger med.
@@ -98,17 +98,17 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - **Artsliste** under Nedlagt vildt. Arter nedlagt mindst én gang. Én art én gang. Tilføj selv, eller notér i journalen. Sletning i journalen fjerner ikke arten. Swipe fjerner kun fra artslisten. Tom liste siger “Ingen arter.”
 
 ### Indstillinger
-- Fane (gearshape) mellem Alle arter og Om.
+- Sidste fane (gearshape), efter Alle arter. Fire faner i alt. Øverst indstillingerne, så Om i samme liste (se nedenfor).
 - Udseende: inline-picker System / Lys / Mørk med symboler. Anvendes via `overrideUserInterfaceStyle` på alle vinduer, så sheets følger med.
 - Lister: **Sammenfold grupper** (standard til). Gælder Jagtbart og Alle arter. Fra: grupperne er altid åbne, uden pil. Stregtegningen bliver. “Ikke jagtbar her” foldes stadig.
 
-### Om
-- Mærke + navn. Ingen version under mærket.
-- Nederst: sektion **Denne app** med **Version** (`1.0 (1)`, udgivelse og build) og **Dataversion** (`v6`). Samme udgivelsesnummer som App Store-arkivet.
+### Om (i Indstillinger)
+- Ikke en fane. Sektionerne står under indstillingerne i samme liste: Data, Ansvar, Schweiss-registret, Fotos, Privatliv, Denne app. Ikke en push, så kilde og fraskrivelse stadig er ét tryk væk (princip 4).
+- Nederst: sektion **Denne app** med mærke + navn, **Version** (`1.0 (1)`, udgivelse og build) og **Dataversion** (`v6`). Samme udgivelsesnummer som App Store-arkivet.
 - Række **Schweiss-registret** åbner infosiden (push).
 
 ### Schweiss-registret
-- Ikke en fane. Knappen **Anskudt** på Jagtbart åbner den som sheet. Om skubber den ind.
+- Ikke en fane. Knappen **Anskudt** på Jagtbart åbner den som sheet. Indstillinger skubber den ind.
 - To veje, begge synlige. Ingen omskifter. Anskudt under jagt: link til schweiss.dk. Påkørt hjortevildt: ring 1812.
 - Seks dagtimer er tekst med kilde. Ingen timer. Appen er ikke loven.
 - Sekretariatet er hverdagskontakt, ikke en vagttelefon.
@@ -160,3 +160,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Design-gennemgang 1 (2026-10-17): “Dato” og “Sted” stod på dansk i den engelske app, fordi `QueryRow` tager en `String`. Nu `String(localized:)`. Bekræftelsens luk-knap har 44 × 44 pt trykflade. Flertal ligger i String Catalog, også for dansk. Amber-linjen på svar-kortet har timeglas. Solens orange og velkomstens grønne lys er tokens. “Tilføj til journal” har ingen pil.
 - Design-gennemgang 2 (2026-10-17): grupperækken, dato/sted-rækkerne og tal-kortet fandtes i to kopier. Nu én komponent hver i `DesignSystem/`. Journalens positionstekst sagde “Viser sidst kendte sted”, mens rækken viste Danmark. Nu siger footeren, hvad rækken viser. Listerne på Jagtbart (åbne grupper, lukkede arter efter næste åbning, antal der lukker snart), søgning og hjortenoten er flyttet til Core med tests. Søgning ignorerer store bogstaver og accenter ens på alle skærme (“gas” finder “Grågås”). Solen står som sit eget kort.
 - Design-gennemgang 3 (2026-10-17): svaret var gledet ned under overskrift, dato, sted og sol (ca. 60 % nede, under folden ved AX-L). Rækkefølgen er nu Dato og Sted → svar-kort → sol → grupper. Grupperne starter stadig sammenfoldet, men en gruppe med arter der lukker inden for en uge viser det i amber under navnet. Antallet til højre brydes aldrig.
+- Design-gennemgang 4 (2026-10-17): fem faner blev til fire. Indstillinger havde kun to kontroller, så Om står nu under dem i samme fane, som i iOS’ egen Indstillinger. Om er sektioner, ikke en push, så kilde og fraskrivelse er ét tryk væk. Journal har systemets store titel som Alle arter og Indstillinger, så titlen ikke hopper mellem fanerne. Journal-ikonet er `book.closed`: et faneikon viser et sted, ikke en handling.
