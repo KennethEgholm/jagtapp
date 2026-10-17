@@ -59,6 +59,11 @@ enum Copy {
         String(localized: "\(count) arter")
     }
 
+    /// "3 har sidste dag inden for en uge". Jagtbart's answer card and its group rows.
+    static func closingSoon(_ count: Int) -> String {
+        String(localized: "\(count) har sidste dag inden for en uge")
+    }
+
     /// "1 stykke", "11 stykker". A count of animals taken.
     static func pieces(_ count: Int) -> String {
         String(localized: "\(count) stykker")

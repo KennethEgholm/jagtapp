@@ -31,8 +31,7 @@ struct TodayView: View {
                     showPlace: $showPlace
                 )
 
-                QuerySunSection()
-
+                // The answer right under the question. The sun is display only, so it comes after.
                 Section {
                     AnswerCard(
                         openCount: open.reduce(0) { $0 + $1.species.count },
@@ -41,19 +40,21 @@ struct TodayView: View {
                     )
                 }
 
+                QuerySunSection()
+
                 ForEach(open) { group in
                     Section {
                         if collapseGroups {
                             FoldButton(expanded: expanded.contains(group.id), hint: "Viser arterne i gruppen") {
                                 expanded.toggle(group.id)
                             } label: {
-                                GroupHeader(group: group, expanded: expanded.contains(group.id))
+                                GroupHeader(group: group, expanded: expanded.contains(group.id), closingSoon: closingSoon(group))
                             }
                             if expanded.contains(group.id) {
                                 openLinks(group)
                             }
                         } else {
-                            GroupHeader(group: group)
+                            GroupHeader(group: group, closingSoon: closingSoon(group))
                             openLinks(group)
                         }
                     }
@@ -139,6 +140,10 @@ struct TodayView: View {
         #endif
     }
 
+    private func closingSoon(_ group: ResolvedGroup) -> Int {
+        store.calendar.closingSoonCount([group], on: store.queryDate)
+    }
+
     @ViewBuilder
     private func openLinks(_ group: ResolvedGroup) -> some View {
         ForEach(group.species) { item in
@@ -199,7 +204,7 @@ struct AnswerCard: View {
             }
             return String(localized: "Vælg en anden dag eller et andet sted.")
         }
-        if closingSoon > 0 { return String(localized: "\(closingSoon) har sidste dag inden for en uge") }
+        if closingSoon > 0 { return Copy.closingSoon(closingSoon) }
         return store.isQueryToday
             ? String(localized: "i dag, \(store.queryPlace.name)")
             : String(localized: "\(store.calendar.short(store.calendar.monthDay(on: store.queryDate))), \(store.queryPlace.name)")

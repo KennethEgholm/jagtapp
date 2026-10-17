@@ -57,15 +57,16 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ### Jagtbar
 - Overskrift i indholdet: “Jagtbart vildt efter tid og sted”. Navigationstitel “Jagtbart” vises først ved scroll.
 - To rækker: **Dato** (I dag · lørdag 11. oktober) og **Sted** (Midtjylland · Din position). Fuld bredde, ingen afkortning. Åbner sheets.
-- Svar-kort: stort tal + “arter er jagtbare” + “⏳ 3 har sidste dag inden for en uge” (amber, med timeglas), ellers dag og sted.
-- Liste: kun jagtbare arter. Hver gruppe er et kort, der starter sammenfoldet. Rækken viser en stregtegning, navn, antal og en pil. Svar-kortet står stadig øverst. Trailing i en åben gruppe: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
+- Svar-kort lige under Dato og Sted: stort tal + “arter er jagtbare” + “⏳ 3 har sidste dag inden for en uge” (amber, med timeglas), ellers dag og sted. Svaret står over solen, så det kan ses uden at scrolle, også ved AX-størrelser.
+- Sol-kort under svar-kortet (se Soltider).
+- Liste: kun jagtbare arter. Hver gruppe er et kort, der starter sammenfoldet. Rækken viser en stregtegning, navn, antal og en pil. Har gruppen arter med sidste dag inden for en uge, står “⏳ 2 har sidste dag inden for en uge” i amber under navnet, også når gruppen er lukket. Så kan advarslen på svar-kortet findes uden at åbne hver gruppe. Kun på Jagtbart: Alle arter viser ingen status. Trailing i en åben gruppe: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
 - Nederst: sammenfoldet sektion “Ikke jagtbar her (n)” med “Åbner 1. nov”. Holder hovedlisten ren, men svarer på “hvornår må jeg?”.
 - Tom tilstand: svar-kortet viser 0 og næste åbning (“Næste: Canadagås på omdriftsarealer, 1. aug”). “Ikke jagtbar her” foldes ud.
 - Ingen søgning her: skærmen skal være rolig. Søgning bor på Alle arter. Træk for at opdatere (position + data).
 - Position nægtet: inline-besked med “Åbn Indstillinger”.
 
 ### Soltider (på Jagtbar)
-- Tredje række under Dato og Sted. Klokkeslæt i dansk format (“07.42”), afrundet til nærmeste minut som almanakker.
+- Eget kort under svar-kortet, ikke en række under Dato og Sted. Klokkeslæt i dansk format (“07.42”), afrundet til nærmeste minut som almanakker.
 - Under tiden: “[Sted], den [dato]”, samme sted og dato som rækkerne ovenfor. Fx “Sjælland, den 16. oktober”.
 - Kun visning. Listen afgøres stadig af dato og sted.
 
@@ -158,3 +159,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - App-ikonet (2026-10-16): flad PNG erstattet af Icon Composer, `App/JagtFokus/AppIcon.icon`. To lag med Liquid Glass: sigtekors bagved, fasan foran. Feltet er stadig `#2F6B47`. Mørk tilstand er dybere skovgrøn `#1E4D34`, ikke næsten sort, så fasanen kan læses i lille størrelse. Farvet tilstand bruger en grå fasan og et hvidt sigtekors. Ringen er et PNG-lag, ikke SVG: den ældre renderer fyldte cirklen ud. Xcode laver flade ikoner til iOS 18–25 ud fra samme fil. BrandMark i Velkomst og Om bliver den flade tegning. Ingen glas på indhold.
 - Design-gennemgang 1 (2026-10-17): “Dato” og “Sted” stod på dansk i den engelske app, fordi `QueryRow` tager en `String`. Nu `String(localized:)`. Bekræftelsens luk-knap har 44 × 44 pt trykflade. Flertal ligger i String Catalog, også for dansk. Amber-linjen på svar-kortet har timeglas. Solens orange og velkomstens grønne lys er tokens. “Tilføj til journal” har ingen pil.
 - Design-gennemgang 2 (2026-10-17): grupperækken, dato/sted-rækkerne og tal-kortet fandtes i to kopier. Nu én komponent hver i `DesignSystem/`. Journalens positionstekst sagde “Viser sidst kendte sted”, mens rækken viste Danmark. Nu siger footeren, hvad rækken viser. Listerne på Jagtbart (åbne grupper, lukkede arter efter næste åbning, antal der lukker snart), søgning og hjortenoten er flyttet til Core med tests. Søgning ignorerer store bogstaver og accenter ens på alle skærme (“gas” finder “Grågås”). Solen står som sit eget kort.
+- Design-gennemgang 3 (2026-10-17): svaret var gledet ned under overskrift, dato, sted og sol (ca. 60 % nede, under folden ved AX-L). Rækkefølgen er nu Dato og Sted → svar-kort → sol → grupper. Grupperne starter stadig sammenfoldet, men en gruppe med arter der lukker inden for en uge viser det i amber under navnet. Antallet til højre brydes aldrig.

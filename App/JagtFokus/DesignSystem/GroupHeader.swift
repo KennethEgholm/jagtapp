@@ -5,30 +5,50 @@ struct GroupHeader: View {
     let group: ResolvedGroup
     /// Nil when the group does not fold.
     var expanded: Bool?
+    /// Open species with their last day within a week. Jagtbart only: Alle arter shows no status.
+    var closingSoon = 0
 
     var body: some View {
         HStack(spacing: Spacing.xs) {
             GroupSketch(groupId: group.id)
-            Text(title)
-                .font(.body.weight(.semibold))
-                .foregroundStyle(.primary)
-                .layoutPriority(1)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(.primary)
+                // Visible while the group is shut, so the warning on the answer card can be found.
+                if closingSoon > 0 {
+                    Text("\(Image(systemName: "hourglass")) \(Copy.closingSoon(closingSoon))")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.seasonClosingSoon)
+                }
+            }
+            .layoutPriority(1)
             Spacer(minLength: Spacing.xs)
             Text("\(group.species.count)")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
+                // The name and the warning wrap. The count never splits.
+                .fixedSize()
             if let expanded {
                 FoldChevron(expanded: expanded)
             }
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel([title, Copy.speciesCount(group.species.count)].joined(separator: ", "))
+        .accessibilityLabel(spoken)
     }
 
     private var title: String {
         Copy.groupTitle(id: group.id, fromData: group.title)
+    }
+
+    private var spoken: String {
+        var parts = [title, Copy.speciesCount(group.species.count)]
+        if closingSoon > 0 {
+            parts.append(Copy.closingSoon(closingSoon))
+        }
+        return parts.joined(separator: ", ")
     }
 }
 
