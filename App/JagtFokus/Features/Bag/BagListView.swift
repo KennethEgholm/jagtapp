@@ -26,7 +26,7 @@ struct BagListView: View {
             grouped[key, default: []].append(entry)
         }
         return order.map { key in
-            let title = store.calendar.danishMonthYear(fromDayKey: grouped[key]?.first?.date ?? "") ?? key
+            let title = store.calendar.monthYear(fromDayKey: grouped[key]?.first?.date ?? "") ?? key
             return (key, title.capitalizedFirst, grouped[key] ?? [])
         }
     }
@@ -41,7 +41,7 @@ struct BagListView: View {
                         .foregroundStyle(summary.pieces > 0 ? Color.seasonOpen : Color.secondary)
                         .frame(minWidth: 44)
                     VStack(alignment: .leading, spacing: Spacing.xxs) {
-                        Text(summary.pieces == 1 ? "stykke" : "stykker")
+                        Text(summary.pieces == 1 ? String(localized: "stykke") : String(localized: "stykker"))
                             .font(.headline)
                         Text("Jagtåret \(store.calendar.huntingYearLabel(year))")
                             .font(.subheadline)
@@ -97,7 +97,7 @@ struct BagEntryRow: View {
 
     private var dateText: String {
         guard let date = store.calendar.date(fromDayKey: entry.date) else { return entry.date }
-        return store.calendar.danishDate(date)
+        return store.calendar.shortWithYear(date)
     }
 
     var body: some View {
@@ -154,7 +154,6 @@ struct BagEditView: View {
                     .foregroundStyle(.secondary)
             } else {
                 DatePicker("Dato", selection: $date, displayedComponents: .date)
-                    .environment(\.locale, Locale(identifier: "da_DK"))
                     .environment(\.calendar, store.calendar.calendar)
                     .environment(\.timeZone, store.calendar.calendar.timeZone)
 

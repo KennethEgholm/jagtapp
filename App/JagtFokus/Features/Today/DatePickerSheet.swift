@@ -27,7 +27,6 @@ struct DatePickerSheet: View {
 
                     DatePicker("Dato", selection: $draft, displayedComponents: .date)
                         .datePickerStyle(.graphical)
-                        .environment(\.locale, Locale(identifier: "da_DK"))
                         .environment(\.calendar, store.calendar.calendar)
                         .environment(\.timeZone, store.calendar.calendar.timeZone)
                         .padding(.horizontal)
@@ -58,14 +57,15 @@ struct DatePickerSheet: View {
     private var quickPicks: [(title: String, date: Date)] {
         let cal = store.calendar.calendar
         let today = cal.startOfDay(for: store.now)
-        var picks: [(String, Date)] = [("I dag", today)]
+        var picks: [(String, Date)] = [(String(localized: "I dag"), today)]
         if let tomorrow = cal.date(byAdding: .day, value: 1, to: today) {
-            picks.append(("I morgen", tomorrow))
+            picks.append((String(localized: "I morgen"), tomorrow))
         }
-        for (weekday, name) in [(7, "Lørdag"), (1, "Søndag")] {
+        for (weekday, name) in [(7, String(localized: "Lørdag")), (1, String(localized: "Søndag"))] {
             if let next = cal.nextDate(after: today, matching: DateComponents(weekday: weekday), matchingPolicy: .nextTime),
                cal.dateComponents([.day], from: today, to: next).day ?? 0 > 1 {
-                picks.append(("\(name) \(store.calendar.danish(store.calendar.monthDay(on: next)))", next))
+                let day = store.calendar.short(store.calendar.monthDay(on: next))
+                picks.append((String(localized: "\(name) \(day)"), next))
             }
         }
         return picks.map { (title: $0.0, date: $0.1) }

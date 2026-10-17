@@ -52,6 +52,7 @@ struct RootView: View {
         .onChange(of: appearance) { _, new in new.apply() }
         .onChange(of: bag.tabRequests) { _, _ in tab = .bag }
         .sensoryFeedback(.success, trigger: bag.saves)
+        .environment(\.locale, AppLanguage.locale)
         .onAppear {
             appearance.apply()
             applyLaunchTab()

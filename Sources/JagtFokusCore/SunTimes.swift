@@ -34,11 +34,10 @@ public extension SeasonCalendar {
         return SunTimes(sunrise: at(rise), sunset: at(set))
     }
 
-    /// "07.42" in Danish time, rounded to the nearest minute like almanacs do.
-    func danishTime(_ date: Date) -> String {
+    /// "07.42" in Danish, "07:42" in English. Rounded to the nearest minute like almanacs do.
+    func clockTime(_ date: Date) -> String {
         let rounded = Date(timeIntervalSinceReferenceDate: (date.timeIntervalSinceReferenceDate / 60).rounded() * 60)
-        let parts = calendar.dateComponents([.hour, .minute], from: rounded)
-        return String(format: "%02d.%02d", parts.hour ?? 0, parts.minute ?? 0)
+        return rounded.formatted(.dateTime.hour().minute().locale(locale))
     }
 }
 

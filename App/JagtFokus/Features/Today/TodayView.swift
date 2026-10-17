@@ -42,7 +42,7 @@ struct TodayView: View {
                                 groupHeader(group, shown: expanded.contains(group.id))
                             }
                             .tint(.primary)
-                            .accessibilityValue(expanded.contains(group.id) ? "Vist" : "Skjult")
+                            .accessibilityValue(Copy.showState(expanded.contains(group.id)))
                             .accessibilityHint("Viser arterne i gruppen")
 
                             if expanded.contains(group.id) {
@@ -68,7 +68,7 @@ struct TodayView: View {
                                 closedHeader(count: closed.count, chevron: showsClosed)
                             }
                             .tint(.primary)
-                            .accessibilityValue(showsClosed ? "Vist" : "Skjult")
+                            .accessibilityValue(Copy.showState(showsClosed))
                             .accessibilityHint("Viser arter uden jagttid lige nu, sorteret efter næste åbning")
                         }
 
@@ -163,7 +163,7 @@ struct TodayView: View {
     private func groupHeader(_ group: ResolvedGroup, shown: Bool, chevron: Bool = true) -> some View {
         HStack(spacing: Spacing.xs) {
             GroupSketch(groupId: group.id)
-            Text(group.title)
+            Text(Copy.groupTitle(id: group.id, fromData: group.title))
                 .font(.body.weight(.semibold))
                 .foregroundStyle(.primary)
                 .layoutPriority(1)
@@ -182,7 +182,7 @@ struct TodayView: View {
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(group.title), \(group.species.count) arter")
+        .accessibilityLabel("\(Copy.groupTitle(id: group.id, fromData: group.title)), \(group.species.count) arter")
     }
 
     /// Only the current launch. A leftover UserDefaults value from `-groups open` must not keep groups open.
@@ -251,7 +251,7 @@ struct AnswerCard: View {
                 .contentTransition(.numericText())
                 .frame(minWidth: 44)
             VStack(alignment: .leading, spacing: 2) {
-                Text(openCount == 1 ? "art er jagtbar" : "arter er jagtbare")
+                Text(openCount == 1 ? String(localized: "art er jagtbar") : String(localized: "arter er jagtbare"))
                     .font(.headline)
                 Text(subtitle)
                     .font(.subheadline)
@@ -268,12 +268,14 @@ struct AnswerCard: View {
     private var subtitle: String {
         if openCount == 0 {
             if let nextOpening, let date = store.status(of: nextOpening).nextOpening {
-                return "Næste: \(nextOpening.name), \(store.calendar.danish(store.calendar.monthDay(on: date)))"
+                return String(localized: "Næste: \(nextOpening.name), \(store.calendar.short(store.calendar.monthDay(on: date)))")
             }
-            return "Vælg en anden dag eller et andet sted."
+            return String(localized: "Vælg en anden dag eller et andet sted.")
         }
-        if closingSoon == 1 { return "1 har sidste dag inden for en uge" }
-        if closingSoon > 1 { return "\(closingSoon) har sidste dag inden for en uge" }
-        return store.isQueryToday ? "i dag, \(store.queryPlace.name)" : "\(store.calendar.danish(store.calendar.monthDay(on: store.queryDate))), \(store.queryPlace.name)"
+        if closingSoon == 1 { return String(localized: "1 har sidste dag inden for en uge") }
+        if closingSoon > 1 { return String(localized: "\(closingSoon) har sidste dag inden for en uge") }
+        return store.isQueryToday
+            ? String(localized: "i dag, \(store.queryPlace.name)")
+            : String(localized: "\(store.calendar.short(store.calendar.monthDay(on: store.queryDate))), \(store.queryPlace.name)")
     }
 }

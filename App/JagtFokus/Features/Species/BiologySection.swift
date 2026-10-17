@@ -6,7 +6,7 @@ struct BiologySection: View {
 
     var body: some View {
         Section {
-            fact(label: "Latinsk navn", value: biology.latin, italic: true)
+            fact(label: String(localized: "Latinsk navn"), value: biology.latin, italic: true)
             ForEach(biology.facts) { item in
                 fact(label: item.label, value: item.value, italic: false)
             }

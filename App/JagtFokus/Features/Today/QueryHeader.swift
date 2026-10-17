@@ -14,8 +14,8 @@ struct QueryRows: View {
                 QueryRow(
                     systemImage: "calendar",
                     title: "Dato",
-                    value: store.calendar.danishLongDate(store.queryDate).capitalizedFirst,
-                    detail: store.isQueryToday ? "I dag" : nil
+                    value: store.calendar.longDate(store.queryDate).capitalizedFirst,
+                    detail: store.isQueryToday ? String(localized: "I dag") : nil
                 )
             }
             .tint(.primary)
@@ -59,27 +59,27 @@ struct QueryRows: View {
 
     /// Same place and date as the rows above, so the clock times cannot be read as “here”.
     private var sunBasis: String {
-        let day = store.calendar.danishFull(store.calendar.monthDay(on: store.queryDate))
-        return "\(store.queryPlace.name), den \(day)"
+        let day = store.calendar.full(store.calendar.monthDay(on: store.queryDate))
+        return String(localized: "\(store.queryPlace.name), den \(day)")
     }
 
     private var placeDetail: String? {
         guard store.followHere else { return nil }
         switch store.locationState {
-        case .locating: return "Finder position…"
-        case .found: return "Din position"
+        case .locating: return String(localized: "Finder position…")
+        case .found: return String(localized: "Din position")
         case .denied, .unavailable, .idle: return nil
         }
     }
 
     private var locationProblem: String? {
         switch store.locationState {
-        case .denied: "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til."
+        case .denied: String(localized: "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til.")
         case .unavailable:
             if let last = store.gpsPlace {
-                "Kunne ikke opdatere din position. Viser sidst kendte sted: \(last.name)."
+                String(localized: "Kunne ikke opdatere din position. Viser sidst kendte sted: \(last.name).")
             } else {
-                "Kunne ikke finde din position. Listen viser hele Danmark. Vælg sted."
+                String(localized: "Kunne ikke finde din position. Listen viser hele Danmark. Vælg sted.")
             }
         default: nil
         }
@@ -190,11 +190,11 @@ struct SunRow: View {
     }
 
     private func time(_ date: Date?) -> String {
-        date.map(calendar.danishTime) ?? "–"
+        date.map(calendar.clockTime) ?? "–"
     }
 
     private var spoken: String {
-        "Solopgang \(time(times.sunrise)), solnedgang \(time(times.sunset)). \(basis)"
+        String(localized: "Solopgang \(time(times.sunrise)), solnedgang \(time(times.sunset)). \(basis)")
     }
 }
 

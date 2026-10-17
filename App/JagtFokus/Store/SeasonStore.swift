@@ -30,7 +30,7 @@ final class SeasonStore {
     /// Counts the user's own date/place choices. Drives haptics, so GPS updates stay silent.
     private(set) var userSelections = 0
 
-    let calendar = SeasonCalendar()
+    let calendar = SeasonCalendar(locale: AppLanguage.locale)
     /// Bundled photo credits. Images are in the asset catalog.
     let photos = SeasonStore.bundlePhotos()
     /// Bundled life-history notes. Display only.
@@ -41,8 +41,8 @@ final class SeasonStore {
     init() {
         var loaded = Self.bundleCatalog() ?? HuntingCatalog(
             version: 0,
-            updated: "ukendt",
-            sourceName: "Mangler data",
+            updated: String(localized: "ukendt"),
+            sourceName: String(localized: "Mangler data"),
             sourceURL: "",
             groups: []
         )
@@ -203,7 +203,7 @@ final class SeasonStore {
         do {
             let (data, response) = try await URLSession.shared.data(from: remoteURL)
             if let http = response as? HTTPURLResponse, http.statusCode != 200 {
-                remoteStatus = "Bruger indbygget data"
+                remoteStatus = String(localized: "Bruger indbygget data")
                 return
             }
             let remote = try HuntingCatalog.decode(from: data)
@@ -215,12 +215,12 @@ final class SeasonStore {
                     gpsPlace = catalog.matchPlace(names: gpsNames)
                 }
                 try Self.saveCache(data)
-                remoteStatus = "Opdateret fra net"
+                remoteStatus = String(localized: "Opdateret fra net")
             } else {
-                remoteStatus = "Indbygget data er nyere"
+                remoteStatus = String(localized: "Indbygget data er nyere")
             }
         } catch {
-            remoteStatus = "Offline. Bruger gemt data."
+            remoteStatus = String(localized: "Offline. Bruger gemt data.")
         }
     }
 

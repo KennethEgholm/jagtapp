@@ -39,7 +39,4 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
 - Filter Pattedyr / Fugle på Jagtbar
 - Widget: “N arter jagtbare i dag her” (WidgetKit, samme `SeasonStatus`)
 - Påmindelse når en valgt art åbner (lokal notifikation, ingen konto)
-- Icon Composer-ikon (lag + Liquid Glass) i stedet for flad PNG
-- String Catalog (`Localizable.xcstrings`) før engelsk
 - UI-tests med launch-argumenterne fra AGENTS.md (screenshots til App Store)
-

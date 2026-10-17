@@ -1,0 +1,2228 @@
+{
+  "sourceLanguage" : "da",
+  "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ %@"
+          }
+        }
+      },
+      "comment" : "Weekday and date on a day button, e.g. “Saturday 24 Oct”."
+    },
+    "%@ noteret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ recorded"
+          }
+        }
+      }
+    },
+    "%@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@"
+          }
+        }
+      },
+      "comment" : "A date and a place, separated by a middle dot."
+    },
+    "%@ – %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ – %@"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@"
+          }
+        }
+      },
+      "comment" : "A place, then a date, e.g. “Zealand, 16 October”."
+    },
+    "%@, %lld arter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld species"
+          }
+        }
+      },
+      "comment" : "A group heading and how many species it holds."
+    },
+    "%@, den %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@"
+          }
+        }
+      },
+      "comment" : "The place and date the sun times belong to, e.g. “Zealand, 16 October”."
+    },
+    "%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      },
+      "comment" : "A count on its own, shown in a large font."
+    },
+    "%lld arter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld species"
+          }
+        }
+      }
+    },
+    "%lld har sidste dag inden for en uge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld have their last day within a week"
+          }
+        }
+      }
+    },
+    "%lld lokale tider" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld local seasons"
+          }
+        }
+      }
+    },
+    "%lld stykker" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld animals"
+          }
+        }
+      }
+    },
+    "+1" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+1"
+          }
+        }
+      }
+    },
+    "1 art" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 species"
+          }
+        }
+      }
+    },
+    "1 har sidste dag inden for en uge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 has its last day within a week"
+          }
+        }
+      }
+    },
+    "1 lokal tid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 local season"
+          }
+        }
+      }
+    },
+    "1 stykke" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 animal"
+          }
+        }
+      },
+      "comment" : "How many animals were taken. The app never says which sex or age."
+    },
+    "Alle arter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All species"
+          }
+        }
+      }
+    },
+    "Andefugle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ducks"
+          }
+        }
+      }
+    },
+    "Annuller" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Anskudt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wounded"
+          }
+        }
+      }
+    },
+    "Anskudt og påkørt hjortevildt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wounded and vehicle-hit deer."
+          }
+        }
+      }
+    },
+    "Anskudt under jagt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wounded during a hunt"
+          }
+        }
+      }
+    },
+    "Ansvar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responsibility"
+          }
+        }
+      }
+    },
+    "Antal %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Count %lld"
+          }
+        }
+      }
+    },
+    "Appen er ikke loven. Tjek altid bekendtgørelsen og lokale regler." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app is not the law. Always check the regulations and local rules."
+          }
+        }
+      }
+    },
+    "Art" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Species"
+          }
+        }
+      }
+    },
+    "Arten findes ikke" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Species not found"
+          }
+        }
+      }
+    },
+    "Artsfotos fra Wikimedia Commons" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Species photos from Wikimedia Commons"
+          }
+        }
+      }
+    },
+    "Artsliste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Species list"
+          }
+        }
+      }
+    },
+    "Biologi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biology"
+          }
+        }
+      }
+    },
+    "Biologisk opslag. Ikke jagtloven. Kilden står under teksten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biology reference. Not the hunting regulations. The source is shown below the text."
+          }
+        }
+      }
+    },
+    "Brug GPS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use GPS"
+          }
+        }
+      }
+    },
+    "Bruger indbygget data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Using built-in data"
+          }
+        }
+      }
+    },
+    "Data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
+          }
+        }
+      },
+      "comment" : "A section about where the season data comes from."
+    },
+    "Dataversion" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data version"
+          }
+        }
+      }
+    },
+    "Dato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "Dato og sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date and place"
+          }
+        }
+      }
+    },
+    "Den du ringer til, skal sikre at eftersøgningen bliver løst. Det er ikke sikkert, det er den person, der kommer." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whoever you call must make sure the search is carried out. Someone else may be the one who turns up."
+          }
+        }
+      }
+    },
+    "Denne app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app"
+          }
+        }
+      }
+    },
+    "Derefter spørger JagtFokus om din position." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JagtFokus then asks for your location."
+          }
+        }
+      }
+    },
+    "Din position" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your location"
+          }
+        }
+      }
+    },
+    "Din position bliver på telefonen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your location stays on your phone"
+          }
+        }
+      }
+    },
+    "Er der tegn på anskydning af hjortevildt, og dyret ikke er fundet, skal du senest efter seks dagtimer tilkalde en hundefører fra Schweiss-registret." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If there are signs that deer has been wounded and the animal has not been found, you must call a handler from the Schweiss register no later than six daylight hours afterwards."
+          }
+        }
+      }
+    },
+    "Find hundefører på schweiss.dk" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find a handler at schweiss.dk"
+          }
+        }
+      }
+    },
+    "Finder position…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finding your location…"
+          }
+        }
+      }
+    },
+    "Fjern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
+    },
+    "Forstået" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Understood"
+          }
+        }
+      }
+    },
+    "Fortryd" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        }
+      }
+    },
+    "Foto af %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo of %@"
+          }
+        }
+      }
+    },
+    "Foto: %@ · %@ · Wikimedia Commons" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo: %@ · %@ · Wikimedia Commons"
+          }
+        }
+      }
+    },
+    "Fotokredit: %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo credit: %@, %@"
+          }
+        }
+      }
+    },
+    "Fotos" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photos"
+          }
+        }
+      }
+    },
+    "Færdig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Generel jagttid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General season"
+          }
+        }
+      }
+    },
+    "Generelle jagttider" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General seasons"
+          }
+        }
+      }
+    },
+    "Generelle jagttider i Danmark. Lokale tider kan afvige. Se dem under Jagtbart." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General seasons in Denmark. Local seasons may differ. See them under Huntable."
+          }
+        }
+      }
+    },
+    "Gælder for" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applies to"
+          }
+        }
+      }
+    },
+    "Gæs" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geese"
+          }
+        }
+      }
+    },
+    "Hele landet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All of Denmark"
+          }
+        }
+      }
+    },
+    "Hvad kan jeg forvente?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What can I expect?"
+          }
+        }
+      }
+    },
+    "Hverdagskontakt. Ikke en vagttelefon." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekday contact. Not an emergency line."
+          }
+        }
+      }
+    },
+    "Hønsefugle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game birds"
+          }
+        }
+      }
+    },
+    "I dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "I morgen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow"
+          }
+        }
+      }
+    },
+    "Ifølge Naturstyrelsen. Appen er ikke loven. Siden kræver net." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From the Danish Nature Agency. The app is not the law. The page needs a connection."
+          }
+        }
+      }
+    },
+    "Ikke jagtbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not huntable"
+          }
+        }
+      }
+    },
+    "Ikke jagtbar her" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not huntable here"
+          }
+        }
+      }
+    },
+    "Ikke jagtbar, åbner %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not huntable, opens %@"
+          }
+        }
+      }
+    },
+    "Ikke markeret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not selected"
+          }
+        }
+      }
+    },
+    "Indbygget data er nyere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built-in data is newer"
+          }
+        }
+      }
+    },
+    "Indstillinger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Ingen arter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No species"
+          }
+        }
+      }
+    },
+    "Ingen arter." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No species."
+          }
+        }
+      }
+    },
+    "Ingen generel jagttid." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No general season."
+          }
+        }
+      }
+    },
+    "Ingen jagttid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No season"
+          }
+        }
+      }
+    },
+    "Ingen jagttid her i jagtåret." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No season here in the hunting year."
+          }
+        }
+      }
+    },
+    "Ingen jagttid her." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No season here."
+          }
+        }
+      }
+    },
+    "Ingen konto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No account"
+          }
+        }
+      }
+    },
+    "Ingen konto. Ingen tracking. Din position bliver på telefonen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No account. No tracking. Your location stays on your phone."
+          }
+        }
+      }
+    },
+    "Ingen poster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No entries"
+          }
+        }
+      }
+    },
+    "Ingen poster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No entries."
+          }
+        }
+      }
+    },
+    "Ingen tracking" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No tracking"
+          }
+        }
+      }
+    },
+    "Intet jagtbart i dag." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing huntable today."
+          }
+        }
+      }
+    },
+    "Intet jagtbart." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing huntable."
+          }
+        }
+      }
+    },
+    "Intet sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No place"
+          }
+        }
+      }
+    },
+    "Jagt må som hovedregel kun ske mellem solopgang og solnedgang. Appen viser soltider, men tjekker ikke klokkeslæt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As a rule you may hunt only between sunrise and sunset. The app shows sun times, but does not check the clock."
+          }
+        }
+      }
+    },
+    "JagtFokus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JagtFokus"
+          }
+        }
+      }
+    },
+    "JagtFokus viser jagttider ud fra bekendtgørelsen, valgt dato og sted. Listen kan være ufuldstændig eller forældet. Særlige regler (område, køn, kvote, jagtform) står i noten og i loven. Du er selv ansvarlig for at jage lovligt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JagtFokus shows open seasons from the hunting regulations, the date and the place you pick. The list may be incomplete or out of date. Special rules (area, sex, quota, hunting method) are in the note and in the law. You are responsible for hunting legally."
+          }
+        }
+      }
+    },
+    "Jagtbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable"
+          }
+        }
+      }
+    },
+    "Jagtbar, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable, %@"
+          }
+        }
+      }
+    },
+    "Jagtbar, sidste dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable, last day"
+          }
+        }
+      }
+    },
+    "Jagtbart" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable"
+          }
+        }
+      },
+      "comment" : "The first tab, and the word for a species with an open season."
+    },
+    "Jagtbart i dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable today"
+          }
+        }
+      }
+    },
+    "Jagtbart og Alle arter starter med grupperne lukket. Slå fra for at se alle arter med det samme." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable and All species start with the groups closed. Turn off to see every species at once."
+          }
+        }
+      }
+    },
+    "Jagtbart vildt efter tid og sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huntable game by date and place"
+          }
+        }
+      }
+    },
+    "Jagtjournal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hunting journal"
+          }
+        }
+      }
+    },
+    "Jagttid i %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Season in %@"
+          }
+        }
+      }
+    },
+    "Jagttider efter dato og sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seasons by date and place"
+          }
+        }
+      }
+    },
+    "Jagtåret %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hunting year %@"
+          }
+        }
+      }
+    },
+    "Jagtåret vist fra 1. april til 31. marts." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The hunting year is shown from 1 April to 31 March."
+          }
+        }
+      }
+    },
+    "Journal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Journal"
+          }
+        }
+      }
+    },
+    "Kilde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
+          }
+        }
+      }
+    },
+    "Kilde hos Naturstyrelsen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source at the Danish Nature Agency"
+          }
+        }
+      }
+    },
+    "Klovbærende" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cloven-hoofed game"
+          }
+        }
+      }
+    },
+    "Kron- og dåvildt har store lokale forvaltningsplaner. Appen viser kun de generelle tider." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red deer and fallow deer have large local management plans. The app shows the general seasons only."
+          }
+        }
+      }
+    },
+    "Kunne ikke finde din position. Listen viser hele Danmark. Vælg sted." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find your location. The list shows all of Denmark. Pick a place."
+          }
+        }
+      }
+    },
+    "Kunne ikke finde position" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find your location"
+          }
+        }
+      }
+    },
+    "Kunne ikke opdatere din position. Viser sidst kendte sted." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not update your location. Showing the last known place."
+          }
+        }
+      }
+    },
+    "Kunne ikke opdatere din position. Viser sidst kendte sted: %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not update your location. Showing the last known place: %@."
+          }
+        }
+      }
+    },
+    "Latinsk navn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latin name"
+          }
+        }
+      }
+    },
+    "Licenser: CC0, public domain, CC BY og CC BY-SA. Fotograf og licens står under hvert billede. Billederne er beskåret og skaleret." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licences: CC0, public domain, CC BY and CC BY-SA. The photographer and the licence are shown under each image. Images are cropped and scaled."
+          }
+        }
+      }
+    },
+    "Listen følger dagens dato og din position. Du kan vælge en anden dag og et andet sted." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The list follows today's date and your location. You can pick another day and another place."
+          }
+        }
+      }
+    },
+    "Lister" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lists"
+          }
+        }
+      }
+    },
+    "Lokal jagttid" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local season"
+          }
+        }
+      }
+    },
+    "Lokale jagttider" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local seasons"
+          }
+        }
+      }
+    },
+    "Luk" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
+    "Luk bekræftelse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close confirmation"
+          }
+        }
+      }
+    },
+    "Lys" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        }
+      }
+    },
+    "Lørdag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saturday"
+          }
+        }
+      }
+    },
+    "Mangler data" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing data"
+          }
+        }
+      }
+    },
+    "Markeret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected"
+          }
+        }
+      }
+    },
+    "Mest specifikke sted gælder: ø før område før region før Danmark." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The most specific place wins: island before area before region before Denmark."
+          }
+        }
+      }
+    },
+    "Min position" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My location"
+          }
+        }
+      }
+    },
+    "Mørk" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dark"
+          }
+        }
+      }
+    },
+    "Nedlagt vildt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game taken"
+          }
+        }
+      }
+    },
+    "Note" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        }
+      },
+      "comment" : "A short note from the hunting regulations, shown as plain text."
+    },
+    "Notér %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record %@"
+          }
+        }
+      }
+    },
+    "Næste: %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next: %@, %@"
+          }
+        }
+      }
+    },
+    "Offline. Bruger gemt data." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline. Using saved data."
+          }
+        }
+      }
+    },
+    "Om" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
+    "Om registret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About the register"
+          }
+        }
+      }
+    },
+    "Områder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Areas"
+          }
+        }
+      }
+    },
+    "Opdateret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated"
+          }
+        }
+      }
+    },
+    "Opdateret fra net" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updated from the web"
+          }
+        }
+      }
+    },
+    "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location is off. The list shows all of Denmark. Pick a place, or turn location on."
+          }
+        }
+      }
+    },
+    "Posten er slettet." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The entry has been deleted."
+          }
+        }
+      }
+    },
+    "Privat og offline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private and offline"
+          }
+        }
+      }
+    },
+    "Privatliv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
+    },
+    "Påkørt hjortevildt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deer hit by a vehicle"
+          }
+        }
+      }
+    },
+    "Regioner" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regions"
+          }
+        }
+      }
+    },
+    "Regler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules"
+          }
+        }
+      }
+    },
+    "Ret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Ring 1812" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call 1812"
+          }
+        }
+      }
+    },
+    "Ring 1812, Dyrenes Beskyttelses Vagtcentral" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call 1812, the Danish Animal Welfare Society emergency line"
+          }
+        }
+      }
+    },
+    "Ring 93 59 70 80" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call 93 59 70 80"
+          }
+        }
+      }
+    },
+    "Ring 93 59 70 80, Schweiss-sekretariatet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call 93 59 70 80, the Schweiss secretariat"
+          }
+        }
+      }
+    },
+    "Ring, hvis dyret ikke er dødt. Vagtcentralen kontakter en schweisshundefører, hvis det er løbet væk. Afmærk stedet tydeligt i rabatten, og oplys sted, hændelse og flugtretning." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call if the animal is not dead. The emergency line contacts a Schweiss handler if it has run off. Mark the spot clearly in the verge, and say where, what happened and which way it ran."
+          }
+        }
+      }
+    },
+    "Rovdyr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Predators"
+          }
+        }
+      }
+    },
+    "Sammenfold grupper" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapse groups"
+          }
+        }
+      }
+    },
+    "Schweiss-registret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Schweiss register"
+          }
+        }
+      }
+    },
+    "Schweiss-registret er frivillige hundeførere med specialtrænede hunde. De er legitimeret af Naturstyrelsen og må eftersøge og aflive nødstedt vildt på anden mands grund. Du betaler kun kørsel." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Schweiss register is volunteer handlers with specially trained dogs. They are authorised by the Danish Nature Agency and may track and put down wounded game on another person's land. You pay for travel only."
+          }
+        }
+      }
+    },
+    "Schweiss-sekretariatet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Schweiss secretariat"
+          }
+        }
+      }
+    },
+    "Se hvad der er jagtbart i dag, der hvor du er." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See what you can hunt today, where you are."
+          }
+        }
+      }
+    },
+    "Se året" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See the year"
+          }
+        }
+      }
+    },
+    "Senest nedlagt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recently taken"
+          }
+        }
+      }
+    },
+    "Sidste dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last day"
+          }
+        }
+      }
+    },
+    "Sidste dag %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last day %@"
+          }
+        }
+      }
+    },
+    "Skjult" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hidden"
+          }
+        }
+      }
+    },
+    "Skriver til Schweiss-sekretariatet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emails the Schweiss secretariat"
+          }
+        }
+      }
+    },
+    "Slet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Slået fra i Indstillinger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turned off in Settings"
+          }
+        }
+      }
+    },
+    "Sol" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sun"
+          }
+        }
+      }
+    },
+    "Solopgang %@, solnedgang %@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunrise %@, sunset %@. %@"
+          }
+        }
+      }
+    },
+    "Sorteret efter næste åbning." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorted by next opening."
+          }
+        }
+      }
+    },
+    "Sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place"
+          }
+        }
+      }
+    },
+    "Swipe fjerner arten her. Journalen ændres ikke." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swiping removes the species here. The journal is not changed."
+          }
+        }
+      }
+    },
+    "System" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        }
+      }
+    },
+    "System følger telefonens indstilling for lys og mørk." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System follows the phone's light and dark setting."
+          }
+        }
+      }
+    },
+    "Sætter arten på artslisten eller tager den af" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puts the species on the species list, or takes it off"
+          }
+        }
+      }
+    },
+    "Søg" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        }
+      }
+    },
+    "Søg art" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search species"
+          }
+        }
+      }
+    },
+    "Søg i alle arter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search all species"
+          }
+        }
+      }
+    },
+    "Søg ø, område eller region" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search island, area or region"
+          }
+        }
+      }
+    },
+    "Søndag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunday"
+          }
+        }
+      }
+    },
+    "Tilføj" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Tilføj til journal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to journal"
+          }
+        }
+      }
+    },
+    "Udseende" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        }
+      }
+    },
+    "Ukendt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        }
+      }
+    },
+    "Valgt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected"
+          }
+        }
+      }
+    },
+    "Velkommen til JagtFokus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to JagtFokus"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "Vigtigt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Important"
+          }
+        }
+      }
+    },
+    "Vildtudbytte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bag"
+          }
+        }
+      }
+    },
+    "Virker offline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Works offline"
+          }
+        }
+      }
+    },
+    "Vis arter du har nedlagt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show the species you have taken"
+          }
+        }
+      }
+    },
+    "Vis årets poster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show this year's entries"
+          }
+        }
+      }
+    },
+    "Viser arter uden jagttid lige nu, sorteret efter næste åbning" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows species with no open season right now, sorted by next opening"
+          }
+        }
+      }
+    },
+    "Viser arterne i gruppen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the species in this group"
+          }
+        }
+      }
+    },
+    "Vist" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shown"
+          }
+        }
+      }
+    },
+    "Vælg" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose"
+          }
+        }
+      }
+    },
+    "Vælg dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose day"
+          }
+        }
+      }
+    },
+    "Vælg en anden dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick another day"
+          }
+        }
+      }
+    },
+    "Vælg en anden dag eller et andet sted." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick another day, or another place."
+          }
+        }
+      }
+    },
+    "Vælg et andet sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick another place"
+          }
+        }
+      }
+    },
+    "Vælg sted" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose place"
+          }
+        }
+      }
+    },
+    "art er jagtbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "species is huntable"
+          }
+        }
+      }
+    },
+    "arter er jagtbare" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "species are huntable"
+          }
+        }
+      }
+    },
+    "i dag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "today"
+          }
+        }
+      }
+    },
+    "i dag, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "today, %@"
+          }
+        }
+      }
+    },
+    "i morgen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tomorrow"
+          }
+        }
+      }
+    },
+    "om %lld dage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in %lld days"
+          }
+        }
+      }
+    },
+    "sidste dag %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "last day %@"
+          }
+        }
+      }
+    },
+    "stykke" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "animal"
+          }
+        }
+      },
+      "comment" : "Follows a count of animals taken."
+    },
+    "stykker" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "animals"
+          }
+        }
+      }
+    },
+    "til" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "to"
+          }
+        }
+      },
+      "comment" : "Between the first and the last day of a season, read aloud by VoiceOver."
+    },
+    "til %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "until %@"
+          }
+        }
+      }
+    },
+    "ukendt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unknown"
+          }
+        }
+      }
+    },
+    "Åbn Indstillinger-appen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the Settings app"
+          }
+        }
+      }
+    },
+    "Åbn Schweiss-registret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the Schweiss register"
+          }
+        }
+      }
+    },
+    "Åbn Wikimedia Commons" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Wikimedia Commons"
+          }
+        }
+      }
+    },
+    "Åbn bekendtgørelsen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the regulation"
+          }
+        }
+      }
+    },
+    "Åbner" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens"
+          }
+        }
+      }
+    },
+    "Åbner Naturstyrelsen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the Danish Nature Agency"
+          }
+        }
+      }
+    },
+    "Åbner billedet på Wikimedia Commons" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the image at Wikimedia Commons"
+          }
+        }
+      }
+    },
+    "Åbner schweiss.dk" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens schweiss.dk"
+          }
+        }
+      }
+    },
+    "Øer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Islands"
+          }
+        }
+      }
+    },
+    "Øer og områder med egne tider slår de generelle." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Islands and areas with their own seasons beat the general ones."
+          }
+        }
+      }
+    },
+    "Øvrige fugle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other birds"
+          }
+        }
+      }
+    },
+    "Øvrige pattedyr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other mammals"
+          }
+        }
+      }
+    },
+    "åbner %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "opens %@"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

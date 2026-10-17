@@ -108,9 +108,9 @@ struct BagTabView: View {
                     }
                 }
 
-                Section(isBagToday ? "Jagtbart i dag" : "Jagtbart") {
+                Section(isBagToday ? String(localized: "Jagtbart i dag") : String(localized: "Jagtbart")) {
                     if rest.isEmpty {
-                        Text(isBagToday ? "Intet jagtbart i dag." : "Intet jagtbart.")
+                        Text(isBagToday ? String(localized: "Intet jagtbart i dag.") : String(localized: "Intet jagtbart."))
                             .font(.body)
                             .foregroundStyle(.secondary)
                     } else {
@@ -183,7 +183,9 @@ struct BagTabView: View {
     private var yearRow: some View {
         let year = store.calendar.huntingYear(on: store.now)
         let pieces = yearSummary.pieces
-        let value = pieces == 0 ? "Ingen poster" : pieces == 1 ? "1 stykke" : "\(pieces) stykker"
+        let value = pieces == 0
+            ? String(localized: "Ingen poster")
+            : pieces == 1 ? String(localized: "1 stykke") : String(localized: "\(pieces) stykker")
         return Section {
             Button {
                 bag.clearPending()
@@ -217,9 +219,9 @@ struct BagTabView: View {
 
     private var speciesListValue: String {
         let count = bag.speciesList.ids.count
-        if count == 0 { return "Ingen arter" }
-        if count == 1 { return "1 art" }
-        return "\(count) arter"
+        if count == 0 { return String(localized: "Ingen arter") }
+        if count == 1 { return String(localized: "1 art") }
+        return String(localized: "\(count) arter")
     }
 
     private var queryRows: some View {
@@ -228,8 +230,8 @@ struct BagTabView: View {
                 QueryRow(
                     systemImage: "calendar",
                     title: "Dato",
-                    value: store.calendar.danishLongDate(bagDate).capitalizedFirst,
-                    detail: isBagToday ? "I dag" : nil
+                    value: store.calendar.longDate(bagDate).capitalizedFirst,
+                    detail: isBagToday ? String(localized: "I dag") : nil
                 )
             }
             .tint(.primary)
@@ -266,20 +268,20 @@ struct BagTabView: View {
     private var placeDetail: String? {
         guard draft.followHere else { return nil }
         switch store.locationState {
-        case .locating: return "Finder position…"
-        case .found: return "Din position"
+        case .locating: return String(localized: "Finder position…")
+        case .found: return String(localized: "Din position")
         case .denied, .unavailable, .idle: return nil
         }
     }
 
     private var locationProblem: String? {
         switch store.locationState {
-        case .denied: "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til."
+        case .denied: String(localized: "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til.")
         case .unavailable:
             if store.gpsPlace != nil {
-                "Kunne ikke opdatere din position. Viser sidst kendte sted."
+                String(localized: "Kunne ikke opdatere din position. Viser sidst kendte sted.")
             } else {
-                "Kunne ikke finde din position. Listen viser hele Danmark. Vælg sted."
+                String(localized: "Kunne ikke finde din position. Listen viser hele Danmark. Vælg sted.")
             }
         default: nil
         }
@@ -327,7 +329,7 @@ struct BagTabView: View {
                 .tint(.secondary)
                 .accessibilityLabel("Luk bekræftelse")
             }
-            Text(count == 1 ? "1 stykke" : "\(count) stykker")
+            Text(count == 1 ? String(localized: "1 stykke") : String(localized: "\(count) stykker"))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()

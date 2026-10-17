@@ -1,0 +1,96 @@
+{
+  "features": [
+    "refractivity",
+    "specular-location"
+  ],
+  "fill-specializations": [
+    {
+      "value": {
+        "automatic-gradient": "extended-srgb:0.18431,0.41961,0.27843,1.00000"
+      }
+    },
+    {
+      "appearance": "dark",
+      "value": {
+        "automatic-gradient": "extended-srgb:0.11765,0.30196,0.20392,1.00000"
+      }
+    }
+  ],
+  "groups": [
+    {
+      "name": "Sigtekors",
+      "layers": [
+        {
+          "name": "Ring",
+          "image-name": "sigtekors.png",
+          "glass": true,
+          "fill-specializations": [
+            {
+              "value": {
+                "solid": "extended-srgb:0.83137,0.72941,0.48627,1.00000"
+              }
+            },
+            {
+              "appearance": "dark",
+              "value": {
+                "solid": "extended-srgb:0.90196,0.81569,0.56078,1.00000"
+              }
+            },
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "extended-gray:1.00000,1.00000"
+              }
+            }
+          ]
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.35
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.22
+      },
+      "blur-material": 0.12
+    },
+    {
+      "name": "Fasan",
+      "layers": [
+        {
+          "name": "Fasan",
+          "glass": true,
+          "image-name-specializations": [
+            {
+              "value": "fasan.png"
+            },
+            {
+              "appearance": "dark",
+              "value": "fasan.png"
+            },
+            {
+              "appearance": "tinted",
+              "value": "fasan-mono.png"
+            }
+          ]
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.4
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": false,
+        "value": 0.5
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": [
+      "iOS"
+    ]
+  }
+}

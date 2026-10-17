@@ -15,7 +15,8 @@ Logo:
 - JagtFokus-logo.png        → Logo med tekst (til website, App Store screenshots, marketing)
 
 Anbefaling:
-Brug AppIcon-1024.png som master til at generere resten i Xcode (Asset Catalog) eller Android Studio.
+iOS-appikonet er Icon Composer-filen `App/JagtFokus/AppIcon.icon`, ikke en flad PNG.
+AppIcon-1024.png er den flade kilde til motivet og til Android.
 Alle filer er PNG med gennemsigtig/ hvid baggrund fjernet hvor relevant.
 
 Genereret til JagtFokus app.

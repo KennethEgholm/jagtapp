@@ -24,18 +24,18 @@ struct WelcomeView: View {
                 VStack(alignment: .leading, spacing: Spacing.l) {
                     Feature(
                         systemImage: "calendar.badge.clock",
-                        title: "Dato og sted",
-                        text: "Listen følger dagens dato og din position. Du kan vælge en anden dag og et andet sted."
+                        title: String(localized: "Dato og sted"),
+                        text: String(localized: "Listen følger dagens dato og din position. Du kan vælge en anden dag og et andet sted.")
                     )
                     Feature(
                         systemImage: "mappin.and.ellipse",
-                        title: "Lokale jagttider",
-                        text: "Øer og områder med egne tider slår de generelle."
+                        title: String(localized: "Lokale jagttider"),
+                        text: String(localized: "Øer og områder med egne tider slår de generelle.")
                     )
                     Feature(
                         systemImage: "lock.shield",
-                        title: "Privat og offline",
-                        text: "Ingen konto. Ingen tracking. Din position bliver på telefonen."
+                        title: String(localized: "Privat og offline"),
+                        text: String(localized: "Ingen konto. Ingen tracking. Din position bliver på telefonen.")
                     )
                 }
 

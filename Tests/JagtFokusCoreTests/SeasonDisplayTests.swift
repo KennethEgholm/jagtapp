@@ -3,7 +3,9 @@ import Testing
 @testable import JagtFokusCore
 
 struct SeasonDisplayTests {
-    let calendar = SeasonCalendar()
+    /// Danish is the source language. Pin the locale so the test does not depend on the machine.
+    let calendar = SeasonCalendar(locale: Locale(identifier: "da_DK"))
+    let english = SeasonCalendar(locale: Locale(identifier: "en_GB"))
 
     func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
         var components = DateComponents()
@@ -50,8 +52,28 @@ struct SeasonDisplayTests {
         #expect(calendar.days(from: date(2026, 12, 30), to: date(2027, 1, 2)) == 3)
     }
 
-    @Test func longDanishDateHasWeekdayAndFullMonth() {
-        #expect(calendar.danishLongDate(date(2026, 10, 11)) == "søndag 11. oktober")
+    @Test func longDateHasWeekdayAndFullMonth() {
+        #expect(calendar.longDate(date(2026, 10, 11)) == "søndag 11. oktober")
+        #expect(english.longDate(date(2026, 10, 11)) == "Sunday 11 October")
+    }
+
+    @Test func shortAndFullDateFollowTheLocale() {
+        let day = MonthDay(month: 10, day: 1)
+        #expect(calendar.short(day) == "1. okt.")
+        #expect(calendar.full(day) == "1. oktober")
+        #expect(english.short(day) == "1 Oct")
+        #expect(english.full(day) == "1 October")
+    }
+
+    @Test func monthDayOnItsOwnKeepsTheDayOfMonth() {
+        // 29 February must not be clamped by the year the display date is built in.
+        #expect(calendar.short(MonthDay(month: 2, day: 29)) == "29. feb.")
+    }
+
+    @Test func shortWithYearAndMonthYearFollowTheLocale() {
+        #expect(calendar.shortWithYear(date(2026, 10, 11)) == "11. okt. 2026")
+        #expect(calendar.monthYear(fromDayKey: "2026-10-11") == "oktober 2026")
+        #expect(english.monthYear(fromDayKey: "2026-10-11") == "October 2026")
     }
 
     @Test func statusOpenFarFromEnd() {
@@ -86,7 +108,13 @@ struct SeasonDisplayTests {
 
     @Test func spokenPeriodTextUsesFullMonths() {
         let buck = [period("05-16", "07-15"), period("10-01", "01-31")]
-        #expect(calendar.danishSpokenPeriodText(buck) == "16. maj til 15. juli og 1. oktober til 31. januar")
-        #expect(calendar.danishSpokenPeriodText([]) == "Ingen jagttid")
+        #expect(calendar.spokenPeriodText(buck) == "16. maj til 15. juli og 1. oktober til 31. januar")
+        #expect(calendar.spokenPeriodText([]) == "Ingen jagttid")
+    }
+
+    @Test func periodTextJoinsWithTheLocaleListWording() {
+        let buck = [period("05-16", "07-15"), period("10-01", "01-31")]
+        #expect(calendar.periodText(buck) == "16. maj – 15. jul. og 1. okt. – 31. jan.")
+        #expect(english.periodText(buck) == "16 May – 15 Jul and 1 Oct – 31 Jan")
     }
 }

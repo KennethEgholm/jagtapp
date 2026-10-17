@@ -4,7 +4,9 @@ import Testing
 
 /// Reference values: US Naval Observatory (aa.usno.navy.mil/api/rstt/oneday).
 struct SunTimesTests {
-    let calendar = SeasonCalendar()
+    /// Danish is the source language. Pin the locale so the clock format does not depend on the machine.
+    let calendar = SeasonCalendar(locale: Locale(identifier: "da_DK"))
+    let english = SeasonCalendar(locale: Locale(identifier: "en_GB"))
 
     func date(_ year: Int, _ month: Int, _ day: Int) -> Date {
         calendar.calendar.date(from: DateComponents(year: year, month: month, day: day, hour: 12))!
@@ -54,17 +56,18 @@ struct SunTimesTests {
         #expect(times.sunset == nil)
     }
 
-    @Test func danishTimeUsesPeriodSeparator() {
+    @Test func clockTimeUsesTheLocaleSeparator() {
         let time = calendar.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 7, minute: 42))!
-        #expect(calendar.danishTime(time) == "07.42")
+        #expect(calendar.clockTime(time) == "07.42")
+        #expect(english.clockTime(time) == "07:42")
     }
 
-    @Test func danishTimeRoundsToNearestMinute() {
+    @Test func clockTimeRoundsToNearestMinute() {
         let late = calendar.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 18, minute: 28, second: 40))!
         let early = calendar.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 18, minute: 28, second: 20))!
         let midnight = calendar.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 23, minute: 59, second: 50))!
-        #expect(calendar.danishTime(late) == "18.29")
-        #expect(calendar.danishTime(early) == "18.28")
-        #expect(calendar.danishTime(midnight) == "00.00")
+        #expect(calendar.clockTime(late) == "18.29")
+        #expect(calendar.clockTime(early) == "18.28")
+        #expect(calendar.clockTime(midnight) == "00.00")
     }
 }

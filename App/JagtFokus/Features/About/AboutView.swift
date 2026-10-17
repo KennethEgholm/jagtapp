@@ -104,8 +104,9 @@ struct AboutView: View {
 
     /// "2026-10-11" → "11. oktober 2026"
     private var updatedText: String {
-        let parts = store.catalog.updated.split(separator: "-").compactMap { Int($0) }
-        guard parts.count == 3 else { return store.catalog.updated }
-        return "\(store.calendar.danishFull(MonthDay(month: parts[1], day: parts[2]))) \(parts[0])"
+        guard let date = store.calendar.date(fromDayKey: store.catalog.updated) else {
+            return store.catalog.updated
+        }
+        return store.calendar.fullWithYear(date)
     }
 }

@@ -22,9 +22,19 @@ Seasons: `data/jagttider.json` (BEK 470/2024, SGAV table from 1 July 2024). Biol
 swift test
 ```
 
-72 tests cover open/closed, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, and biology.
+81 tests cover open/closed, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, and biology.
 
 Remote JSON: GitHub raw. Until the repo is public, the app uses the bundled file.
+
+## Languages
+
+The app ships **Danish and English**. Danish is the source language and the key in
+`App/JagtFokus/Localizable.xcstrings`; English is the translation. Species names, place names,
+notes and biology come from the data files and stay Danish in both. The App Store listing is
+Danish only.
+
+New UI copy is written in Danish where it is used. Build, then run
+`python3 tools/fill_string_catalog.py` to check that every string has an English line.
 
 ## Not in v1
 

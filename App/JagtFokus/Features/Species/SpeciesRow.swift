@@ -50,7 +50,7 @@ struct SpeciesRow: View {
                 }
             }
 
-            Text(store.calendar.danishPeriodText(periods))
+            Text(store.calendar.periodText(periods))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
@@ -81,9 +81,9 @@ struct SpeciesRow: View {
         if let status {
             parts.append(StatusCopy.spoken(status, calendar: store.calendar))
         }
-        parts.append(store.calendar.danishSpokenPeriodText(periods))
+        parts.append(store.calendar.spokenPeriodText(periods))
         if context == .query, item.isLocal {
-            parts.append("Lokal jagttid")
+            parts.append(String(localized: "Lokal jagttid"))
         }
         if let note {
             parts.append(note)

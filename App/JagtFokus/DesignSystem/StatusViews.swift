@@ -41,7 +41,7 @@ struct SeasonStatusText: View {
     }
 
     private func short(_ date: Date) -> String {
-        calendar.danish(calendar.monthDay(on: date))
+        calendar.short(calendar.monthDay(on: date))
     }
 }
 
@@ -49,20 +49,20 @@ enum StatusCopy {
     /// "i dag", "i morgen", "om 21 dage"
     static func relative(days: Int) -> String {
         switch days {
-        case 0: "i dag"
-        case 1: "i morgen"
-        default: "om \(days) dage"
+        case 0: String(localized: "i dag")
+        case 1: String(localized: "i morgen")
+        default: String(localized: "om \(days) dage")
         }
     }
 
     static func spoken(_ status: SeasonStatus, calendar: SeasonCalendar) -> String {
         if status.isOpen, let end = status.endDate, let left = status.daysLeft {
-            let last = "sidste dag \(calendar.danishFull(calendar.monthDay(on: end)))"
-            return left == 0 ? "Jagtbar, sidste dag" : "Jagtbar, \(last)"
+            let last = String(localized: "sidste dag \(calendar.full(calendar.monthDay(on: end)))")
+            return left == 0 ? String(localized: "Jagtbar, sidste dag") : String(localized: "Jagtbar, \(last)")
         }
         if let next = status.nextOpening {
-            return "Ikke jagtbar, åbner \(calendar.danishFull(calendar.monthDay(on: next)))"
+            return String(localized: "Ikke jagtbar, åbner \(calendar.full(calendar.monthDay(on: next)))")
         }
-        return "Ingen jagttid"
+        return String(localized: "Ingen jagttid")
     }
 }

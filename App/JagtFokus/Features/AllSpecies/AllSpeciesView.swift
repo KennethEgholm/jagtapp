@@ -38,7 +38,7 @@ struct AllSpeciesView: View {
                                     groupHeader(group, shown: expanded.contains(group.id), toggle: true)
                                 }
                                 .tint(.primary)
-                                .accessibilityValue(expanded.contains(group.id) ? "Vist" : "Skjult")
+                                .accessibilityValue(Copy.showState(expanded.contains(group.id)))
                                 .accessibilityHint("Viser arterne i gruppen")
 
                                 if expanded.contains(group.id) {
@@ -102,7 +102,7 @@ struct AllSpeciesView: View {
     private func groupHeader(_ group: ResolvedGroup, shown: Bool, toggle: Bool) -> some View {
         HStack(spacing: Spacing.xs) {
             GroupSketch(groupId: group.id)
-            Text(group.title)
+            Text(Copy.groupTitle(id: group.id, fromData: group.title))
                 .font(.body.weight(.semibold))
                 .foregroundStyle(.primary)
                 .layoutPriority(1)
@@ -121,7 +121,7 @@ struct AllSpeciesView: View {
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(group.title), \(group.species.count) arter")
+        .accessibilityLabel("\(Copy.groupTitle(id: group.id, fromData: group.title)), \(group.species.count) arter")
     }
 
     @ViewBuilder

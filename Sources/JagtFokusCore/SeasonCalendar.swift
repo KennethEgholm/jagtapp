@@ -13,12 +13,19 @@ public struct SeasonStatus: Sendable, Equatable {
 
 public struct SeasonCalendar: Sendable {
     public var calendar: Calendar
+    /// Language for the display helpers. Danish is the source language, so pass the
+    /// app's own language here rather than the device region.
+    public var locale: Locale
 
-    public init(timeZone: TimeZone = TimeZone(identifier: "Europe/Copenhagen") ?? .gmt) {
+    public init(
+        timeZone: TimeZone = TimeZone(identifier: "Europe/Copenhagen") ?? .gmt,
+        locale: Locale = .autoupdatingCurrent
+    ) {
         var calendar = Calendar(identifier: .gregorian)
-        calendar.locale = Locale(identifier: "da_DK")
+        calendar.locale = locale
         calendar.timeZone = timeZone
         self.calendar = calendar
+        self.locale = locale
     }
 
     public func monthDay(on date: Date) -> MonthDay {
@@ -106,43 +113,49 @@ public struct SeasonCalendar: Sendable {
         return calendar.dateComponents([.day], from: from, to: to).day ?? 0
     }
 
-    public func danishPeriodText(_ species: Species) -> String {
-        danishPeriodText(species.periods)
+    /// Year used to render a month and day on its own. A leap year, so 29 February survives.
+    private static let displayYear = 2004
+
+    /// Season text with short months: "16. maj – 15. jul og 1. okt – 31. jan".
+    public func periodText(_ species: Species) -> String {
+        periodText(species.periods)
     }
 
-    public func danishPeriodText(_ periods: [SeasonPeriod]) -> String {
-        guard !periods.isEmpty else { return "Ingen jagttid" }
-        return periods.map { period in
-            "\(danish(period.from)) – \(danish(period.to))"
-        }.joined(separator: " og ")
+    public func periodText(_ periods: [SeasonPeriod]) -> String {
+        guard !periods.isEmpty else { return String(localized: "Ingen jagttid") }
+        return list(joining: periods.map { "\(short($0.from)) – \(short($0.to))" })
     }
 
-    public func danish(_ day: MonthDay) -> String {
-        let months = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"]
-        let monthName = months[max(0, min(11, day.month - 1))]
-        return "\(day.day). \(monthName)"
+    /// Day and month: "1. oktober" in Danish, "1 October" in English.
+    public func full(_ day: MonthDay) -> String {
+        display(day, .wide)
     }
 
-    public func danishDate(_ date: Date) -> String {
-        let day = monthDay(on: date)
-        let year = calendar.component(.year, from: date)
-        return "\(danish(day)) \(year)"
+    /// Short day and month: "11. okt" in Danish, "11 Oct" in English.
+    public func short(_ day: MonthDay) -> String {
+        display(day, .abbreviated)
     }
 
-    /// "søndag 11. oktober"
-    public func danishLongDate(_ date: Date) -> String {
-        let weekdays = ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"]
-        let weekday = calendar.component(.weekday, from: date)
-        return "\(weekdays[(weekday - 1) % 7]) \(danishFull(monthDay(on: date)))"
+    /// Date with year: "11. okt 2026" in Danish, "11 Oct 2026" in English.
+    public func shortWithYear(_ date: Date) -> String {
+        date.formatted(.dateTime.day().month(.abbreviated).year().locale(locale))
     }
 
-    /// "1. oktober"
-    public func danishFull(_ day: MonthDay) -> String {
-        let months = [
-            "januar", "februar", "marts", "april", "maj", "juni",
-            "juli", "august", "september", "oktober", "november", "december"
-        ]
-        return "\(day.day). \(months[max(0, min(11, day.month - 1))])"
+    /// "søndag 11. oktober" in Danish, "Sunday 11 October" in English.
+    public func longDate(_ date: Date) -> String {
+        date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(locale))
+    }
+
+    /// "11. oktober 2026" in Danish, "11 October 2026" in English.
+    /// The year is not grouped: 2026, never 2,026.
+    public func fullWithYear(_ date: Date) -> String {
+        date.formatted(.dateTime.day().month(.wide).year().locale(locale))
+    }
+
+    /// "oktober 2026", from a day key.
+    public func monthYear(fromDayKey key: String) -> String? {
+        guard let date = date(fromDayKey: key) else { return nil }
+        return date.formatted(.dateTime.month(.wide).year().locale(locale))
     }
 
     /// Hunting year containing the date. 1 April starts the year named by that calendar year.
@@ -169,24 +182,25 @@ public struct SeasonCalendar: Sendable {
         return calendar.date(from: DateComponents(year: parts[0], month: parts[1], day: parts[2], hour: 12))
     }
 
-    /// "oktober 2026", from a day key.
-    public func danishMonthYear(fromDayKey key: String) -> String? {
-        guard let date = date(fromDayKey: key) else { return nil }
-        let months = [
-            "januar", "februar", "marts", "april", "maj", "juni",
-            "juli", "august", "september", "oktober", "november", "december"
-        ]
-        let month = calendar.component(.month, from: date)
-        let year = calendar.component(.year, from: date)
-        return "\(months[max(0, min(11, month - 1))]) \(year)"
+    /// Full month names, so VoiceOver reads "16. maj til 15. juli og 1. oktober til 31. januar".
+    public func spokenPeriodText(_ periods: [SeasonPeriod]) -> String {
+        guard !periods.isEmpty else { return String(localized: "Ingen jagttid") }
+        let to = String(localized: "til")
+        return list(joining: periods.map { "\(full($0.from)) \(to) \(full($0.to))" })
     }
 
-    /// Full month names, for VoiceOver.
-    public func danishSpokenPeriodText(_ periods: [SeasonPeriod]) -> String {
-        guard !periods.isEmpty else { return "Ingen jagttid" }
-        return periods.map { period in
-            "\(danishFull(period.from)) til \(danishFull(period.to))"
-        }.joined(separator: " og ")
+    /// Month and day on their own have no year. Render them in a fixed one; only the
+    /// month and the day reach the output.
+    private func display(_ day: MonthDay, _ width: Date.FormatStyle.Symbol.Month) -> String {
+        guard let date = date(year: Self.displayYear, monthDay: day) else { return "" }
+        return date.formatted(.dateTime.day().month(width).locale(locale))
+    }
+
+    /// Joins with the locale's own list wording: "og" in Danish, "and" in English.
+    private func list(joining parts: [String]) -> String {
+        let formatter = ListFormatter()
+        formatter.locale = locale
+        return formatter.string(from: parts) ?? parts.joined(separator: ", ")
     }
 
     private func nextStart(of from: MonthDay, onOrAfter day: Date) -> Date? {

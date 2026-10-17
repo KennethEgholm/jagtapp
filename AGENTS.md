@@ -8,7 +8,9 @@ Talk to the user in Danish.
 
 Write agent and developer docs in English. That includes this file and `README.md`.
 
-Keep Danish for the app and its direct description: UI copy, `spec/`, App Store text, support, and the privacy policy. Quote those strings verbatim. Do not translate them.
+Keep Danish for `spec/`, App Store text, support, and the privacy policy. Quote those strings verbatim. Do not translate them.
+
+The app ships two languages: **Danish** (source) and **English**. Danish is the key in `App/JagtFokus/Localizable.xcstrings`, English is the value. Species names, place names, notes and biology come from the data files and stay Danish. So does the App Store listing.
 
 ## What this is
 
@@ -25,7 +27,7 @@ v1, including the hunting journal, is in `spec/v1.md`. Journal details and the u
 | Data | `data/jagttider.json` (BEK 470/2024) |
 | Tests | `swift test` (Swift Testing) |
 
-Language: Danish. No account. No tracking.
+Language: Danish and English. No account. No tracking.
 
 ## Layout
 
@@ -38,10 +40,12 @@ spec/appstore/                     # App Store copy, replies, review notes, scre
 docs/                              # GitHub Pages: support (index.html) and privacy policy
 data/jagttider.json                # Seasons + places + local overrides
 Sources/JagtFokusCore/             # Models, calendar, status, timeline, place resolution, sun times, photos
-Tests/JagtFokusCoreTests/          # 72 tests
+Tests/JagtFokusCoreTests/          # 81 tests
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
 App/JagtFokus/
-  JagtFokusApp.swift, RootView.swift, Copy.swift
+  JagtFokusApp.swift, RootView.swift, Copy.swift, Localization.swift
+  Localizable.xcstrings            # UI copy: Danish source, English translation
+  InfoPlist.xcstrings              # The system's location prompt
   Store/                           # SeasonStore (@Observable), LocationService, Appearance
   DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle
   Features/Today/                  # Jagtbart, date/place rows, sheets
@@ -53,8 +57,10 @@ App/JagtFokus/
   Features/Onboarding/             # Welcome + disclaimer
   Resources/species-photos.json    # Photo credits: species → photo, photographer, license
   Resources/biologi.json           # Biology notes. Not hunting seasons. Not remote
-  Assets.xcassets                  # AppIcon, BrandMark, colors, SpeciesPhotos/photo-<id>
+  AppIcon.icon                     # Icon Composer app icon (layers + Liquid Glass)
+  Assets.xcassets                  # BrandMark, colors, SpeciesPhotos/photo-<id>
 tools/add_species_photo.py         # Fetch a species photo from Wikimedia Commons
+tools/fill_string_catalog.py       # Write the English String Catalog from the source
 tools/bump_build.sh                # Bump the build number before upload
 assets/                            # Source icons and logo (not bundled directly)
 ```
@@ -93,6 +99,31 @@ assets/                            # Source icons and logo (not bundled directly
 - Shared copy lives in `Copy.swift`.
 - Buttons in a `List` inherit the tint. Use `.tint(.primary)` on row buttons that are not links.
 - Attach sheets to the screen's `List` or `NavigationStack`, not to a `Section`.
+
+## Copy and translation
+
+Write the copy in Danish where it is used. A literal in `Text`, `Label`, `Button`, `Section`
+and the accessibility modifiers is a `LocalizedStringKey` and is translated on its own.
+A literal that lands in a `String` is not: wrap those in `String(localized:)`. That catches
+computed strings, `QueryRow(title:value:detail:)`, `Feature(title:text:)` and the `label:`
+and `hint:` parameters on the Schweiss page.
+
+Today's date, numbers and the system's own controls follow the app's language, not the
+device region. `AppLanguage.locale` feeds `SeasonCalendar` and the `\.locale` environment.
+Never hardcode `Locale(identifier: "da_DK")` in a view.
+
+After adding or changing copy:
+
+```sh
+python3 tools/fill_string_catalog.py <stringsdata-dir>   # see the tool for the path
+```
+
+It compares the keys Xcode extracted with the English table and refuses to write when the
+two do not match, so a forgotten translation is an error rather than a Danish sentence in
+the English app. Add the English line to the table in the same change.
+
+`SeasonCalendar` takes a locale, so date text is testable. Pass `Locale(identifier: "da_DK")`
+in tests; never rely on the machine.
 
 ## Run
 

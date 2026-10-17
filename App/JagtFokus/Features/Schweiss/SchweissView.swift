@@ -12,8 +12,8 @@ struct SchweissView: View {
 
             Section {
                 Text(Copy.schweissHuntDuty)
-                siteLink(Copy.schweissFindHandler, url: SchweissURL.handlers, hint: "Åbner schweiss.dk")
-                siteLink(Copy.schweissSource, url: SchweissURL.source, hint: "Åbner Naturstyrelsen")
+                siteLink(Copy.schweissFindHandler, url: SchweissURL.handlers, hint: String(localized: "Åbner schweiss.dk"))
+                siteLink(Copy.schweissSource, url: SchweissURL.source, hint: String(localized: "Åbner Naturstyrelsen"))
             } header: {
                 Text(Copy.schweissHuntHeading)
             } footer: {
@@ -24,7 +24,7 @@ struct SchweissView: View {
                 callLink(
                     Copy.schweissCall1812,
                     url: SchweissURL.vagtcentral,
-                    label: "Ring 1812, Dyrenes Beskyttelses Vagtcentral"
+                    label: String(localized: "Ring 1812, Dyrenes Beskyttelses Vagtcentral")
                 )
             } header: {
                 Text(Copy.schweissTrafficHeading)
@@ -35,9 +35,9 @@ struct SchweissView: View {
             Section {
                 Text(Copy.schweissAbout)
                 Text(Copy.schweissReferral)
-                siteLink(Copy.schweissAboutLink, url: SchweissURL.about, hint: "Åbner schweiss.dk")
-                siteLink(Copy.schweissRules, url: SchweissURL.rules, hint: "Åbner schweiss.dk")
-                siteLink(Copy.schweissExpect, url: SchweissURL.expect, hint: "Åbner schweiss.dk")
+                siteLink(Copy.schweissAboutLink, url: SchweissURL.about, hint: String(localized: "Åbner schweiss.dk"))
+                siteLink(Copy.schweissRules, url: SchweissURL.rules, hint: String(localized: "Åbner schweiss.dk"))
+                siteLink(Copy.schweissExpect, url: SchweissURL.expect, hint: String(localized: "Åbner schweiss.dk"))
             } header: {
                 Text(Copy.schweissAboutHeading)
             }
@@ -46,9 +46,9 @@ struct SchweissView: View {
                 callLink(
                     Copy.schweissCallSecretariat,
                     url: SchweissURL.secretariat,
-                    label: "Ring 93 59 70 80, Schweiss-sekretariatet"
+                    label: String(localized: "Ring 93 59 70 80, Schweiss-sekretariatet")
                 )
-                siteLink(Copy.schweissSecretariatMail, url: SchweissURL.mail, systemImage: "envelope", hint: "Skriver til Schweiss-sekretariatet")
+                siteLink(Copy.schweissSecretariatMail, url: SchweissURL.mail, systemImage: "envelope", hint: String(localized: "Skriver til Schweiss-sekretariatet"))
             } header: {
                 Text(Copy.schweissSecretariatHeading)
             } footer: {

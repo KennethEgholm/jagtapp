@@ -21,7 +21,10 @@ struct SpeciesDetailView: View {
 
         return List {
             Section {
-                ListHeading(title: item.name, eyebrow: store.group(of: item.id)?.title)
+                ListHeading(
+                    title: item.name,
+                    eyebrow: store.group(of: item.id).map { Copy.groupTitle(id: $0.id, fromData: $0.title) }
+                )
             }
             .listSectionSpacing(.compact)
 
@@ -69,12 +72,12 @@ struct SpeciesDetailView: View {
                     )
                     .padding(.top, Spacing.xxs)
                     if periods.isEmpty {
-                        Text(isQuery ? "Ingen jagttid her." : "Ingen generel jagttid.")
+                        Text(isQuery ? String(localized: "Ingen jagttid her.") : String(localized: "Ingen generel jagttid."))
                             .foregroundStyle(.secondary)
                     } else {
                         ForEach(Array(periods.enumerated()), id: \.offset) { _, period in
                             Label {
-                                Text("\(calendar.danishFull(period.from)) – \(calendar.danishFull(period.to))")
+                                Text("\(calendar.full(period.from)) – \(calendar.full(period.to))")
                                     .monospacedDigit()
                             } icon: {
                                 Image(systemName: "calendar")
@@ -85,9 +88,9 @@ struct SpeciesDetailView: View {
                 }
                 .padding(.vertical, Spacing.xxs)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel(calendar.danishSpokenPeriodText(periods))
+                .accessibilityLabel(calendar.spokenPeriodText(periods))
             } header: {
-                Text(isQuery ? "Jagttid i \(store.queryPlace.name)" : "Generel jagttid")
+                Text(isQuery ? String(localized: "Jagttid i \(store.queryPlace.name)") : String(localized: "Generel jagttid"))
             } footer: {
                 Text("Jagtåret vist fra 1. april til 31. marts.")
             }
@@ -96,7 +99,7 @@ struct SpeciesDetailView: View {
                 Section {
                     LabeledContent("Gælder for", value: store.place(id: item.localPlaceId)?.name ?? "")
                     LabeledContent("Generel jagttid") {
-                        Text(calendar.danishPeriodText(item.generalPeriods))
+                        Text(calendar.periodText(item.generalPeriods))
                             .monospacedDigit()
                     }
                 } header: {
@@ -158,9 +161,9 @@ struct StatusSummary: View {
                     .foregroundStyle(status.isOpen ? Color.seasonOpen : Color.secondary)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(status.isOpen ? "Jagtbar" : "Ikke jagtbar")
+                    Text(status.isOpen ? String(localized: "Jagtbar") : String(localized: "Ikke jagtbar"))
                         .font(.title2.weight(.bold))
-                    Text("\(calendar.danishLongDate(store.queryDate).capitalizedFirst) · \(store.queryPlace.name)")
+                    Text("\(calendar.longDate(store.queryDate).capitalizedFirst) · \(store.queryPlace.name)")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -168,13 +171,18 @@ struct StatusSummary: View {
             }
             if status.isOpen, let end = status.endDate, let left = status.daysLeft {
                 fact(
-                    title: "Sidste dag",
-                    value: calendar.danishLongDate(end),
+                    title: String(localized: "Sidste dag"),
+                    value: calendar.longDate(end),
                     detail: StatusCopy.relative(days: left),
                     tint: status.isClosingSoon ? .seasonClosingSoon : .secondary
                 )
             } else if let next = status.nextOpening, let days = status.daysUntilOpening {
-                fact(title: "Åbner", value: calendar.danishLongDate(next), detail: StatusCopy.relative(days: days), tint: .secondary)
+                fact(
+                    title: String(localized: "Åbner"),
+                    value: calendar.longDate(next),
+                    detail: StatusCopy.relative(days: days),
+                    tint: .secondary
+                )
             } else {
                 Text("Ingen jagttid her i jagtåret.")
                     .foregroundStyle(.secondary)

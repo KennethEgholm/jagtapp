@@ -3,7 +3,8 @@ import Testing
 @testable import JagtFokusCore
 
 struct SeasonCalendarTests {
-    let calendar = SeasonCalendar()
+    /// Danish is the source language. Pin the locale so the display text does not depend on the machine.
+    let calendar = SeasonCalendar(locale: Locale(identifier: "da_DK"))
     let catalog: HuntingCatalog
 
     init() throws {
@@ -84,8 +85,8 @@ struct SeasonCalendarTests {
         #expect(!calendar.isOpen(species("kronkalv"), on: date(2027, 3, 1)))
     }
 
-    @Test func danishPeriodTextJoinsTwoSeasons() {
-        let text = calendar.danishPeriodText(species("raabuk"))
-        #expect(text == "16. maj – 15. jul og 1. okt – 31. jan")
+    @Test func periodTextJoinsTwoSeasons() {
+        let text = calendar.periodText(species("raabuk"))
+        #expect(text == "16. maj – 15. jul. og 1. okt. – 31. jan.")
     }
 }

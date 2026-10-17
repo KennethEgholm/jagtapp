@@ -84,10 +84,10 @@ struct PlacePickerView: View {
     private var hereSubtitle: String {
         switch store.locationState {
         case .found: store.gpsPlace?.name ?? "Danmark"
-        case .locating: "Finder position…"
-        case .denied: "Slået fra i Indstillinger"
-        case .unavailable: "Kunne ikke finde position"
-        case .idle: "Brug GPS"
+        case .locating: String(localized: "Finder position…")
+        case .denied: String(localized: "Slået fra i Indstillinger")
+        case .unavailable: String(localized: "Kunne ikke finde position")
+        case .idle: String(localized: "Brug GPS")
         }
     }
 
@@ -107,10 +107,10 @@ struct PlacePickerView: View {
             let items = filtered.filter { $0.kind == kind }
             guard !items.isEmpty else { return nil }
             let title: String = switch kind {
-            case .country: "Hele landet"
-            case .region: "Regioner"
-            case .area: "Områder"
-            case .island: "Øer"
+            case .country: String(localized: "Hele landet")
+            case .region: String(localized: "Regioner")
+            case .area: String(localized: "Områder")
+            case .island: String(localized: "Øer")
             }
             return (title, items)
         }
@@ -136,7 +136,7 @@ private struct PlaceRow: View {
             }
             Spacer()
             if localCount > 0 {
-                Text(localCount == 1 ? "1 lokal tid" : "\(localCount) lokale tider")
+                Text(localCount == 1 ? String(localized: "1 lokal tid") : String(localized: "\(localCount) lokale tider"))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.localTime)
                     .monospacedDigit()
@@ -154,7 +154,7 @@ private struct PlaceRow: View {
     }
 
     private var subtitle: String? {
-        if place.kind == .country { return "Generelle jagttider" }
+        if place.kind == .country { return String(localized: "Generelle jagttider") }
         return parent
     }
 }

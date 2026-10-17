@@ -17,7 +17,7 @@ struct SpeciesListView: View {
                 }
             } else {
                 ForEach(groups, id: \.id) { group in
-                    Section(group.title) {
+                    Section(Copy.groupTitle(id: group.id, fromData: group.title)) {
                         ForEach(group.species) { species in
                             Text(species.name)
                                 .swipeActions {
@@ -87,7 +87,7 @@ struct SpeciesListAddView: View {
                     ContentUnavailableView.search(text: query)
                 }
                 ForEach(groups) { group in
-                    Section(group.title) {
+                    Section(Copy.groupTitle(id: group.id, fromData: group.title)) {
                         ForEach(group.species) { species in
                             Button {
                                 bag.setSpecies(species.id, included: !bag.speciesList.contains(species.id))
@@ -102,7 +102,7 @@ struct SpeciesListAddView: View {
                                 }
                             }
                             .tint(.primary)
-                            .accessibilityValue(bag.speciesList.contains(species.id) ? "Markeret" : "Ikke markeret")
+                            .accessibilityValue(Copy.selectionState(bag.speciesList.contains(species.id)))
                             .accessibilityHint("Sætter arten på artslisten eller tager den af")
                         }
                     }
