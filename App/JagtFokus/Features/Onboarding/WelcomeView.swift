@@ -94,7 +94,7 @@ struct WelcomeView: View {
             ZStack {
                 Color.brandDeep
                 RadialGradient(
-                    colors: [Color(red: 0.13, green: 0.30, blue: 0.20).opacity(0.9), .clear],
+                    colors: [Color.brandGlow.opacity(0.9), .clear],
                     center: .topTrailing,
                     startRadius: 20,
                     endRadius: 520

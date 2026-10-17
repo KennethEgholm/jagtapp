@@ -8,6 +8,7 @@ staying Danish. Run after a build:
     python3 tools/fill_string_catalog.py [stringsdata-dir]
 
 Write new copy in the code first, build, then add the English line below.
+A count that changes the words ("1 art", "2 arter") goes in PLURALS instead.
 """
 import json
 import os
@@ -24,18 +25,9 @@ ENGLISH = {
     "%@ · %@": "%@ · %@",
     "%@ – %@": "%@ – %@",
     "%@, %@": "%@, %@",
-    "%@, %lld arter": "%@, %lld species",
     "%@, den %@": "%@, %@",
     "%lld": "%lld",
-    "%lld arter": "%lld species",
-    "%lld har sidste dag inden for en uge": "%lld have their last day within a week",
-    "%lld lokale tider": "%lld local seasons",
-    "%lld stykker": "%lld animals",
     "+1": "+1",
-    "1 art": "1 species",
-    "1 har sidste dag inden for en uge": "1 has its last day within a week",
-    "1 lokal tid": "1 local season",
-    "1 stykke": "1 animal",
     "Alle arter": "All species",
     "Andefugle": "Ducks",
     "Annuller": "Cancel",
@@ -303,16 +295,36 @@ ENGLISH = {
     "åbner %@": "opens %@",
 }
 
+# Keys with a count that changes the words around it. Danish is the source language,
+# so it gets its own forms too. Each language: (one, other).
+PLURALS = {
+    "%lld arter": {
+        "da": ("%lld art", "%lld arter"),
+        "en": ("%lld species", "%lld species"),
+    },
+    "%lld har sidste dag inden for en uge": {
+        "da": ("%lld har sidste dag inden for en uge", "%lld har sidste dag inden for en uge"),
+        "en": ("%lld has its last day within a week", "%lld have their last day within a week"),
+    },
+    "%lld lokale tider": {
+        "da": ("%lld lokal tid", "%lld lokale tider"),
+        "en": ("%lld local season", "%lld local seasons"),
+    },
+    "%lld stykker": {
+        "da": ("%lld stykke", "%lld stykker"),
+        "en": ("%lld animal", "%lld animals"),
+    },
+}
+
 # Keys whose meaning is not obvious from the text alone.
 COMMENTS = {
     "%@ %@": "Weekday and date on a day button, e.g. “Saturday 24 Oct”.",
     "%@ · %@": "A date and a place, separated by a middle dot.",
     "%@, %@": "A place, then a date, e.g. “Zealand, 16 October”.",
     "%@, den %@": "The place and date the sun times belong to, e.g. “Zealand, 16 October”.",
-    "%@, %lld arter": "A group heading and how many species it holds.",
     "%lld": "A count on its own, shown in a large font.",
     "til": "Between the first and the last day of a season, read aloud by VoiceOver.",
-    "1 stykke": "How many animals were taken. The app never says which sex or age.",
+    "%lld stykker": "How many animals were taken. The app never says which sex or age.",
     "stykke": "Follows a count of animals taken.",
     "Jagtbart": "The first tab, and the word for a species with an open season.",
     "Note": "A short note from the hunting regulations, shown as plain text.",
@@ -334,12 +346,25 @@ def extracted_keys(directory):
     return keys
 
 
+def plural_variations(one, other):
+    """A String Catalog entry that picks the form from the count."""
+    return {
+        "variations": {
+            "plural": {
+                "one": {"stringUnit": {"state": "translated", "value": one}},
+                "other": {"stringUnit": {"state": "translated", "value": other}},
+            }
+        }
+    }
+
+
 def main():
     directory = sys.argv[1] if len(sys.argv) > 1 else None
     if directory and os.path.isdir(directory):
         found = extracted_keys(directory)
-        missing = sorted(found - set(ENGLISH))
-        extra = sorted(set(ENGLISH) - found)
+        known = set(ENGLISH) | set(PLURALS)
+        missing = sorted(found - known)
+        extra = sorted(known - found)
         if missing:
             print("In the code but not translated:")
             for key in missing:
@@ -353,13 +378,22 @@ def main():
             print("Fix the table above, then run this script again.")
             return 1
 
+    both = set(ENGLISH) & set(PLURALS)
+    if both:
+        print("In both ENGLISH and PLURALS:", sorted(both))
+        return 1
+
     strings = {}
-    for key in sorted(ENGLISH):
-        entry = {
-            "localizations": {
+    for key in sorted(set(ENGLISH) | set(PLURALS)):
+        if key in PLURALS:
+            localizations = {
+                language: plural_variations(*forms) for language, forms in PLURALS[key].items()
+            }
+        else:
+            localizations = {
                 "en": {"stringUnit": {"state": "translated", "value": ENGLISH[key]}}
             }
-        }
+        entry = {"localizations": localizations}
         if key in COMMENTS:
             entry["comment"] = COMMENTS[key]
         strings[key] = entry

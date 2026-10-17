@@ -51,10 +51,6 @@ struct SpeciesDetailView: View {
                             .font(.body.weight(.semibold))
                             .foregroundStyle(.primary)
                         Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.tertiary)
-                            .accessibilityHidden(true)
                     }
                     .padding(.vertical, 2)
                     .contentShape(Rectangle())

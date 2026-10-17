@@ -13,7 +13,7 @@ struct QueryRows: View {
             Button { showDate = true } label: {
                 QueryRow(
                     systemImage: "calendar",
-                    title: "Dato",
+                    title: String(localized: "Dato"),
                     value: store.calendar.longDate(store.queryDate).capitalizedFirst,
                     detail: store.isQueryToday ? String(localized: "I dag") : nil
                 )
@@ -24,7 +24,7 @@ struct QueryRows: View {
             Button { showPlace = true } label: {
                 QueryRow(
                     systemImage: store.followHere ? "location.fill" : "mappin",
-                    title: "Sted",
+                    title: String(localized: "Sted"),
                     value: store.queryPlace.name,
                     detail: placeDetail,
                     isWorking: store.followHere && store.locationState == .locating
@@ -149,7 +149,7 @@ struct SunRow: View {
         let stacked = dynamicTypeSize.isAccessibilitySize
         HStack(alignment: .top, spacing: Spacing.s) {
             if !stacked {
-                IconTile(systemImage: "sun.horizon.fill", color: .orange)
+                IconTile(systemImage: "sun.horizon.fill", color: .sun)
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text("Sol")
@@ -185,7 +185,7 @@ struct SunRow: View {
             // Multicolor draws the arrows white, invisible in light mode.
             Image(systemName: systemImage)
                 .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(.orange)
+                .foregroundStyle(.sun)
         }
     }
 

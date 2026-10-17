@@ -121,7 +121,7 @@ struct AllSpeciesView: View {
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(Copy.groupTitle(id: group.id, fromData: group.title)), \(group.species.count) arter")
+        .accessibilityLabel([Copy.groupTitle(id: group.id, fromData: group.title), Copy.speciesCount(group.species.count)].joined(separator: ", "))
     }
 
     @ViewBuilder

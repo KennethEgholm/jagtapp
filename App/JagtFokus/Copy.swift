@@ -54,6 +54,16 @@ enum Copy {
     static let collapseGroupsTitle = String(localized: "Sammenfold grupper")
     static let collapseGroupsFooter = String(localized: "Jagtbart og Alle arter starter med grupperne lukket. Slå fra for at se alle arter med det samme.")
 
+    /// "1 art", "14 arter". The plural forms live in the String Catalog.
+    static func speciesCount(_ count: Int) -> String {
+        String(localized: "\(count) arter")
+    }
+
+    /// "1 stykke", "11 stykker". A count of animals taken.
+    static func pieces(_ count: Int) -> String {
+        String(localized: "\(count) stykker")
+    }
+
     /// "Vist" / "Skjult", for the accessibility value on a row that folds out.
     static func showState(_ shown: Bool) -> String {
         shown ? String(localized: "Vist") : String(localized: "Skjult")
@@ -66,7 +76,8 @@ enum Copy {
 
     /// Group headings come from the data in Danish. These are the app's own names for
     /// the same groups. An unknown id falls back to the data title.
-    static func groupTitle(id: String, fromData title: String) -> String {        switch id {
+    static func groupTitle(id: String, fromData title: String) -> String {
+        switch id {
         case "klovbaerende": String(localized: "Klovbærende")
         case "rovdyr": String(localized: "Rovdyr")
         case "ovrige_pattedyr": String(localized: "Øvrige pattedyr")

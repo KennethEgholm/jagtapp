@@ -122,6 +122,14 @@ It compares the keys Xcode extracted with the English table and refuses to write
 two do not match, so a forgotten translation is an error rather than a Danish sentence in
 the English app. Add the English line to the table in the same change.
 
+The check cannot see a key that Xcode extracted from another call site. `QueryRow(title: "Dato")`
+was never translated, because `DatePicker("Dato")` put "Dato" in the catalogue anyway. Run the
+app in English after copy changes.
+
+A count that changes the words ("1 art", "2 arter") goes in `PLURALS` in the tool, with Danish
+and English forms. Do not branch on `count == 1` in Swift. Shared counts are `Copy.speciesCount`
+and `Copy.pieces`.
+
 `SeasonCalendar` takes a locale, so date text is testable. Pass `Locale(identifier: "da_DK")`
 in tests; never rely on the machine.
 

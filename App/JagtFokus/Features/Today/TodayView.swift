@@ -182,7 +182,7 @@ struct TodayView: View {
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(Copy.groupTitle(id: group.id, fromData: group.title)), \(group.species.count) arter")
+        .accessibilityLabel([Copy.groupTitle(id: group.id, fromData: group.title), Copy.speciesCount(group.species.count)].joined(separator: ", "))
     }
 
     /// Only the current launch. A leftover UserDefaults value from `-groups open` must not keep groups open.
@@ -253,9 +253,17 @@ struct AnswerCard: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(openCount == 1 ? String(localized: "art er jagtbar") : String(localized: "arter er jagtbare"))
                     .font(.headline)
-                Text(subtitle)
-                    .font(.subheadline)
-                    .foregroundStyle(closingSoon > 0 ? Color.seasonClosingSoon : Color.secondary)
+                Group {
+                    if closingSoon > 0 {
+                        // Inline, so the icon stays on the first line when the text wraps.
+                        Text("\(Image(systemName: "hourglass")) \(subtitle)")
+                            .foregroundStyle(.seasonClosingSoon)
+                    } else {
+                        Text(subtitle)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .font(.subheadline)
             }
             Spacer(minLength: 0)
         }
@@ -272,8 +280,7 @@ struct AnswerCard: View {
             }
             return String(localized: "Vælg en anden dag eller et andet sted.")
         }
-        if closingSoon == 1 { return String(localized: "1 har sidste dag inden for en uge") }
-        if closingSoon > 1 { return String(localized: "\(closingSoon) har sidste dag inden for en uge") }
+        if closingSoon > 0 { return String(localized: "\(closingSoon) har sidste dag inden for en uge") }
         return store.isQueryToday
             ? String(localized: "i dag, \(store.queryPlace.name)")
             : String(localized: "\(store.calendar.short(store.calendar.monthDay(on: store.queryDate))), \(store.queryPlace.name)")

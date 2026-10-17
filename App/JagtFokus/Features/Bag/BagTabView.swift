@@ -183,9 +183,7 @@ struct BagTabView: View {
     private var yearRow: some View {
         let year = store.calendar.huntingYear(on: store.now)
         let pieces = yearSummary.pieces
-        let value = pieces == 0
-            ? String(localized: "Ingen poster")
-            : pieces == 1 ? String(localized: "1 stykke") : String(localized: "\(pieces) stykker")
+        let value = pieces == 0 ? String(localized: "Ingen poster") : Copy.pieces(pieces)
         return Section {
             Button {
                 bag.clearPending()
@@ -219,9 +217,7 @@ struct BagTabView: View {
 
     private var speciesListValue: String {
         let count = bag.speciesList.ids.count
-        if count == 0 { return String(localized: "Ingen arter") }
-        if count == 1 { return String(localized: "1 art") }
-        return String(localized: "\(count) arter")
+        return count == 0 ? String(localized: "Ingen arter") : Copy.speciesCount(count)
     }
 
     private var queryRows: some View {
@@ -229,7 +225,7 @@ struct BagTabView: View {
             Button { showDate = true } label: {
                 QueryRow(
                     systemImage: "calendar",
-                    title: "Dato",
+                    title: String(localized: "Dato"),
                     value: store.calendar.longDate(bagDate).capitalizedFirst,
                     detail: isBagToday ? String(localized: "I dag") : nil
                 )
@@ -240,7 +236,7 @@ struct BagTabView: View {
             Button { showPlace = true } label: {
                 QueryRow(
                     systemImage: draft.followHere ? "location.fill" : "mappin",
-                    title: "Sted",
+                    title: String(localized: "Sted"),
                     value: draft.place(in: store).name,
                     detail: placeDetail,
                     isWorking: draft.followHere && store.locationState == .locating
@@ -325,11 +321,13 @@ struct BagTabView: View {
                         .font(.title3)
                         .symbolRenderingMode(.hierarchical)
                         .foregroundStyle(.secondary)
+                        .frame(minWidth: 44, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
                 .tint(.secondary)
                 .accessibilityLabel("Luk bekræftelse")
             }
-            Text(count == 1 ? String(localized: "1 stykke") : String(localized: "\(count) stykker"))
+            Text(Copy.pieces(count))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .monospacedDigit()

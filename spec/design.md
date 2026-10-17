@@ -18,8 +18,17 @@ Levende dokument. Gælder alle skærme. Bygger på Apple Human Interface Guideli
 | `Brass` | `#7A5C17` | `#D9B65E` | Lokal jagttid-mærke |
 | `Amber` | `#A35200` | `#FFB547` | Lukker snart |
 | `BrandDeep` | `#0D2A1C` | `#0D2A1C` | Velkomst-baggrund |
+| `BrandGold` | `#D9B65E` | `#D9B65E` | Velkomst: knap, ikoner, “Vigtigt”-ramme |
 
-Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er systemfarver (`.primary`, `.secondary`, grouped backgrounds).
+Tokens i kode (`Theme.swift`), ikke i Assets:
+
+| Token | Værdi | Brug |
+|---|---|---|
+| `.forest` | `#2F6B47` fast | `IconTile`-felt. Lys accent er for bleg bag hvidt symbol i mørk tilstand |
+| `.sun` | systemets orange | Solrækken. Kun visning, ikke status |
+| `.brandGlow` | `#214D33` | Lyset i velkomstens baggrund |
+
+Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er systemfarver (`.primary`, `.secondary`, grouped backgrounds). Views bruger tokens, aldrig RGB eller hex.
 
 ## Typografi og afstand
 
@@ -47,7 +56,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ### Jagtbar
 - Overskrift i indholdet: “Jagtbart vildt efter tid og sted”. Navigationstitel “Jagtbart” vises først ved scroll.
 - To rækker: **Dato** (I dag · lørdag 11. oktober) og **Sted** (Midtjylland · Din position). Fuld bredde, ingen afkortning. Åbner sheets.
-- Svar-kort: stort tal + “arter er jagtbare” + “3 har sidste dag inden for en uge” (amber), ellers dag og sted.
+- Svar-kort: stort tal + “arter er jagtbare” + “⏳ 3 har sidste dag inden for en uge” (amber, med timeglas), ellers dag og sted.
 - Liste: kun jagtbare arter. Hver gruppe er et kort, der starter sammenfoldet. Rækken viser en stregtegning, navn, antal og en pil. Svar-kortet står stadig øverst. Trailing i en åben gruppe: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
 - Nederst: sammenfoldet sektion “Ikke jagtbar her (n)” med “Åbner 1. nov”. Holder hovedlisten ren, men svarer på “hvornår må jeg?”.
 - Tom tilstand: svar-kortet viser 0 og næste åbning (“Næste: Canadagås på omdriftsarealer, 1. aug”). “Ikke jagtbar her” foldes ud.
@@ -79,7 +88,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 
 - Fane **Journal** (`plus.circle`) mellem Jagtbart og Alle arter. Overskrift på siden: “Jagtjournal”. Jagtbart har ingen knap til det.
 - Swipe til venstre på en artsrække i **Jagtbart** eller **Alle arter** har handlingen **Journal** (`plus.circle`): noterer 1 stykke og skifter til **Journal**-fanen med bekræftelsen klar.
-- Artsdetaljen har en række **Tilføj til journal** med `IconTile`, der noterer 1 stykke og skifter til **Journal**-fanen.
+- Artsdetaljen har en række **Tilføj til journal** med `IconTile`, der noterer 1 stykke og skifter til **Journal**-fanen. Ingen pil: rækken er en handling, ikke navigation.
 - Fanen starter med række “Nedlagt vildt” (årets antal), så Dato og Sted, samme rækker som Jagtbart. Standard: i dag og din position. Et andet valg ændrer ikke Jagtbart, men listen under følger med.
 - Store rækker i `.title2`, ombryder. Senest nedlagt, så jagtbart for den dato og det sted. Søgning er en knap, ikke et åbent felt. Plus-ikonet er ikke jagtbar-grønt.
 - Tryk gemmer ét stykke. Bekræftelse bliver nede: “[Art] noteret”, **Fortryd** og **+1**.
@@ -113,6 +122,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - VoiceOver: hver række er ét element med fuld tekst (“Råbuk. Jagtbar. 1. oktober til 31. januar. Lokal jagttid.”). Måneder udtales fuldt.
 - Dynamic Type op til AX-størrelser. Rækker ombryder i stedet for at afkorte.
 - Haptik (`sensoryFeedback(.selection)`) ved skift af dato/sted.
+- Tal med ord bøjes i String Catalog (“1 art”, “2 arter”), ikke med `count == 1` i koden. VoiceOver siger aldrig “1 arter”.
 - Reduce Motion: kun systemets standardanimationer.
 
 ## Beslutninger (2026-10-11)
@@ -145,3 +155,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Soltider (2026-10-16): under tiden står “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Fx “Sjælland, den 16. oktober”.
 - Engelsk UI (2026-10-16): appen findes på dansk og engelsk. Dansk er kilden og nøglen i `Localizable.xcstrings`, engelsk er oversættelsen. Arter, steder, noter og biologi kommer fra data og er danske i begge sprog. App Store-teksten er dansk. Datoer, klokkeslæt og systemets egne kontroller følger appens sprog, ikke telefonens område. Gruppetitlerne er appens egne ord (data har de danske), så en ny gruppe fra remote data falder tilbage til data-titlen. `SeasonCalendar` tager en locale, så datoformater kan testes på begge sprog.
 - App-ikonet (2026-10-16): flad PNG erstattet af Icon Composer, `App/JagtFokus/AppIcon.icon`. To lag med Liquid Glass: sigtekors bagved, fasan foran. Feltet er stadig `#2F6B47`. Mørk tilstand er dybere skovgrøn `#1E4D34`, ikke næsten sort, så fasanen kan læses i lille størrelse. Farvet tilstand bruger en grå fasan og et hvidt sigtekors. Ringen er et PNG-lag, ikke SVG: den ældre renderer fyldte cirklen ud. Xcode laver flade ikoner til iOS 18–25 ud fra samme fil. BrandMark i Velkomst og Om bliver den flade tegning. Ingen glas på indhold.
+- Design-gennemgang 1 (2026-10-17): “Dato” og “Sted” stod på dansk i den engelske app, fordi `QueryRow` tager en `String`. Nu `String(localized:)`. Bekræftelsens luk-knap har 44 × 44 pt trykflade. Flertal ligger i String Catalog, også for dansk. Amber-linjen på svar-kortet har timeglas. Solens orange og velkomstens grønne lys er tokens. “Tilføj til journal” har ingen pil.

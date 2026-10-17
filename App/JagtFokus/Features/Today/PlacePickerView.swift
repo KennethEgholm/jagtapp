@@ -136,7 +136,7 @@ private struct PlaceRow: View {
             }
             Spacer()
             if localCount > 0 {
-                Text(localCount == 1 ? String(localized: "1 lokal tid") : String(localized: "\(localCount) lokale tider"))
+                Text("\(localCount) lokale tider")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.localTime)
                     .monospacedDigit()
