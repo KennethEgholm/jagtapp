@@ -39,8 +39,10 @@ spec/ideas.md                      # Backlog
 spec/appstore/                     # App Store copy, replies, review notes, screenshots
 docs/                              # GitHub Pages: support (index.html) and privacy policy
 data/jagttider.json                # Seasons + places + local overrides
-Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun times, photos
-Tests/JagtFokusCoreTests/          # 89 tests
+Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun times, photos, catalog check
+Tests/JagtFokusCoreTests/          # 104 tests
+.github/workflows/tests.yml        # swift test on every push to main and every PR
+.github/workflows/appstore.yml     # App Store upload, manual and off
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
 App/JagtFokus/
   JagtFokusApp.swift, RootView.swift, Copy.swift, Localization.swift
@@ -134,6 +136,11 @@ and `Copy.pieces`.
 `SeasonCalendar` takes a locale, so date text is testable. Pass `Locale(identifier: "da_DK")`
 in tests; never rely on the machine.
 
+`SeasonCalendar` counts days in Europe/Copenhagen, and its text must too. Format through
+`SeasonCalendar.dateTime`, never `.dateTime` on its own: that uses the phone's zone, and a phone
+west of Denmark then shows a season opening 1 October as “30. sep.”. CI runs in UTC, so a test
+that leans on the machine's zone fails there.
+
 ## Run
 
 ```sh
@@ -206,6 +213,14 @@ xcrun simctl io booted screenshot /tmp/shot.png
 Source: SGAV hunting table from 1 July 2024, BEK 470/2024.
 
 `version` in the JSON. The bundle is the fallback. Remote GitHub raw overwrites it only when the version is newer.
+
+A push to `main` reaches every phone within minutes. Three guards:
+
+- `HuntingCatalog.decodeChecked` refuses a downloaded or cached file with `problems`: no species, no `dk`, a repeated species or place id, a parent or override pointing at nothing, or a `source_url` that is not https on retsinformation.dk. The app keeps the data it has and shows “Fejl i ny data. Bruger gemt data.”
+- The tests read `data/jagttider.json` (`bundledDataPasses` and others), and `.github/workflows/tests.yml` runs them on every push. A red run after a data push means phones may already have the file, unless the check above refuses it. Fix it right away.
+- `main` has a ruleset: no force-push, no deletion.
+
+The source link opens only through `HuntingCatalog.sourceLink`. Never build it with `URL(string: catalog.sourceURL)`.
 
 New local seasons: add `places` and `overrides` in `data/jagttider.json`. Bump `version`.
 

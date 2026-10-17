@@ -518,6 +518,16 @@
         }
       }
     },
+    "Fejl i ny data. Bruger gemt data." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error in new data. Using saved data."
+          }
+        }
+      }
+    },
     "Find hundefører på schweiss.dk" : {
       "localizations" : {
         "en" : {

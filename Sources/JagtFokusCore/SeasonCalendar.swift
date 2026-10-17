@@ -138,24 +138,24 @@ public struct SeasonCalendar: Sendable {
 
     /// Date with year: "11. okt 2026" in Danish, "11 Oct 2026" in English.
     public func shortWithYear(_ date: Date) -> String {
-        date.formatted(.dateTime.day().month(.abbreviated).year().locale(locale))
+        date.formatted(dateTime.day().month(.abbreviated).year())
     }
 
     /// "søndag 11. oktober" in Danish, "Sunday 11 October" in English.
     public func longDate(_ date: Date) -> String {
-        date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(locale))
+        date.formatted(dateTime.weekday(.wide).day().month(.wide))
     }
 
     /// "11. oktober 2026" in Danish, "11 October 2026" in English.
     /// The year is not grouped: 2026, never 2,026.
     public func fullWithYear(_ date: Date) -> String {
-        date.formatted(.dateTime.day().month(.wide).year().locale(locale))
+        date.formatted(dateTime.day().month(.wide).year())
     }
 
     /// "oktober 2026", from a day key.
     public func monthYear(fromDayKey key: String) -> String? {
         guard let date = date(fromDayKey: key) else { return nil }
-        return date.formatted(.dateTime.month(.wide).year().locale(locale))
+        return date.formatted(dateTime.month(.wide).year())
     }
 
     /// Hunting year containing the date. 1 April starts the year named by that calendar year.
@@ -193,7 +193,13 @@ public struct SeasonCalendar: Sendable {
     /// month and the day reach the output.
     private func display(_ day: MonthDay, _ width: Date.FormatStyle.Symbol.Month) -> String {
         guard let date = date(year: Self.displayYear, monthDay: day) else { return "" }
-        return date.formatted(.dateTime.day().month(width).locale(locale))
+        return date.formatted(dateTime.day().month(width))
+    }
+
+    /// Language, calendar and zone of this calendar. `Date.FormatStyle` uses the device's
+    /// zone by default, which shows a different day than the one the seasons use.
+    var dateTime: Date.FormatStyle {
+        Date.FormatStyle(locale: locale, calendar: calendar, timeZone: calendar.timeZone)
     }
 
     /// Joins with the locale's own list wording: "og" in Danish, "and" in English.

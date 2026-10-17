@@ -206,7 +206,7 @@ final class SeasonStore {
                 remoteStatus = String(localized: "Bruger indbygget data")
                 return
             }
-            let remote = try HuntingCatalog.decode(from: data)
+            let remote = try HuntingCatalog.decodeChecked(from: data)
             if remote.version >= catalog.version {
                 catalog = remote
                 // Places may have moved or gained local times in the new data.
@@ -219,6 +219,9 @@ final class SeasonStore {
             } else {
                 remoteStatus = String(localized: "Indbygget data er nyere")
             }
+        } catch is CatalogRefused, is DecodingError {
+            // A broken file reaches every phone. Keep the data this one has.
+            remoteStatus = String(localized: "Fejl i ny data. Bruger gemt data.")
         } catch {
             remoteStatus = String(localized: "Offline. Bruger gemt data.")
         }
@@ -259,7 +262,7 @@ final class SeasonStore {
 
     private static func cachedCatalog() -> HuntingCatalog? {
         guard let data = try? Data(contentsOf: cacheURL) else { return nil }
-        return try? HuntingCatalog.decode(from: data)
+        return try? HuntingCatalog.decodeChecked(from: data)
     }
 
     private static func saveCache(_ data: Data) throws {

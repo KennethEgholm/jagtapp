@@ -22,9 +22,9 @@ Seasons: `data/jagttider.json` (BEK 470/2024, SGAV table from 1 July 2024). Biol
 swift test
 ```
 
-89 tests cover open/closed, the Jagtbart lists, search, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, and biology.
+104 tests cover open/closed, the Jagtbart lists, search, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, biology, and the check on downloaded data. GitHub Actions runs them on every push to `main`.
 
-Remote JSON: GitHub raw. Until the repo is public, the app uses the bundled file.
+Remote JSON: GitHub raw, from `main`. The app refuses a file that fails the catalog check and keeps the data it has.
 
 ## Languages
 

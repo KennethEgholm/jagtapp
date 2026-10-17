@@ -65,6 +65,22 @@ struct SeasonDisplayTests {
         #expect(english.full(day) == "1 October")
     }
 
+    /// The calendar's zone decides the day, not the device's. A phone west of the
+    /// calendar would otherwise show a season opening 1 October as 30 September.
+    /// Auckland is far from any build machine, so this fails anywhere the bug is.
+    @Test func datesFollowTheCalendarsTimeZoneNotTheDevice() throws {
+        let auckland = SeasonCalendar(
+            timeZone: try #require(TimeZone(identifier: "Pacific/Auckland")),
+            locale: Locale(identifier: "da_DK")
+        )
+        let morning = try #require(auckland.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 8)))
+        #expect(auckland.short(MonthDay(month: 10, day: 1)) == "1. okt.")
+        #expect(auckland.full(MonthDay(month: 10, day: 1)) == "1. oktober")
+        #expect(auckland.shortWithYear(morning) == "11. okt. 2026")
+        #expect(auckland.fullWithYear(morning) == "11. oktober 2026")
+        #expect(auckland.longDate(morning) == "søndag 11. oktober")
+    }
+
     @Test func monthDayOnItsOwnKeepsTheDayOfMonth() {
         // 29 February must not be clamped by the year the display date is built in.
         #expect(calendar.short(MonthDay(month: 2, day: 29)) == "29. feb.")

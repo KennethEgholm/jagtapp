@@ -18,7 +18,7 @@ struct AboutSections: View {
             if let remoteStatus = store.remoteStatus {
                 LabeledContent("Data", value: remoteStatus)
             }
-            if let url = URL(string: store.catalog.sourceURL) {
+            if let url = store.catalog.sourceLink {
                 Link(destination: url) {
                     Label("Åbn bekendtgørelsen", systemImage: "arrow.up.right.square")
                 }

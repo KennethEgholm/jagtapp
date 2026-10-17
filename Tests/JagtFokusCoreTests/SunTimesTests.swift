@@ -62,6 +62,16 @@ struct SunTimesTests {
         #expect(english.clockTime(time) == "07:42")
     }
 
+    /// Danish time on the sun row, whatever zone the phone is set to.
+    @Test func clockTimeIsInTheCalendarsTimeZone() throws {
+        let auckland = SeasonCalendar(
+            timeZone: try #require(TimeZone(identifier: "Pacific/Auckland")),
+            locale: Locale(identifier: "da_DK")
+        )
+        let time = try #require(auckland.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 7, minute: 42)))
+        #expect(auckland.clockTime(time) == "07.42")
+    }
+
     @Test func clockTimeRoundsToNearestMinute() {
         let late = calendar.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 18, minute: 28, second: 40))!
         let early = calendar.calendar.date(from: DateComponents(year: 2026, month: 10, day: 11, hour: 18, minute: 28, second: 20))!

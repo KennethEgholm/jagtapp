@@ -64,6 +64,7 @@ ENGLISH = {
         "If there are signs that deer has been wounded and the animal has not been found, "
         "you must call a handler from the Schweiss register no later than six daylight hours afterwards."
     ),
+    "Fejl i ny data. Bruger gemt data.": "Error in new data. Using saved data.",
     "Find hundefører på schweiss.dk": "Find a handler at schweiss.dk",
     "Finder position…": "Finding your location…",
     "Fjern": "Remove",

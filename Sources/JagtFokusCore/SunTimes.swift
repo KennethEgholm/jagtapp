@@ -37,7 +37,7 @@ public extension SeasonCalendar {
     /// "07.42" in Danish, "07:42" in English. Rounded to the nearest minute like almanacs do.
     func clockTime(_ date: Date) -> String {
         let rounded = Date(timeIntervalSinceReferenceDate: (date.timeIntervalSinceReferenceDate / 60).rounded() * 60)
-        return rounded.formatted(.dateTime.hour().minute().locale(locale))
+        return rounded.formatted(dateTime.hour().minute())
     }
 }
 
