@@ -148,9 +148,6 @@ ENGLISH = {
         "Could not find your location. The list shows all of Denmark. Pick a place."
     ),
     "Kunne ikke finde position": "Could not find your location",
-    "Kunne ikke opdatere din position. Viser sidst kendte sted.": (
-        "Could not update your location. Showing the last known place."
-    ),
     "Kunne ikke opdatere din position. Viser sidst kendte sted: %@.": (
         "Could not update your location. Showing the last known place: %@."
     ),

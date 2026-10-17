@@ -22,7 +22,7 @@ Seasons: `data/jagttider.json` (BEK 470/2024, SGAV table from 1 July 2024). Biol
 swift test
 ```
 
-81 tests cover open/closed, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, and biology.
+89 tests cover open/closed, the Jagtbart lists, search, the year boundary, next opening, last day, the hunting-year timeline, local seasons, GPS place matching, sun times, photo licenses, and biology.
 
 Remote JSON: GitHub raw. Until the repo is public, the app uses the bundled file.
 

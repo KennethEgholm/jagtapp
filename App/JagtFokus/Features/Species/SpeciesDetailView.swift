@@ -111,7 +111,7 @@ struct SpeciesDetailView: View {
                 }
             }
 
-            if isDeer(item) {
+            if item.species.isRedOrFallowDeer {
                 Section {
                     Label(Copy.deerNote, systemImage: "map")
                         .foregroundStyle(.secondary)
@@ -136,10 +136,6 @@ struct SpeciesDetailView: View {
         }
         .contentMargins(.top, Spacing.xs, for: .scrollContent)
         .scrollRevealedTitle(item.name)
-    }
-
-    private func isDeer(_ item: ResolvedSpecies) -> Bool {
-        item.id.hasPrefix("kron") || item.id.hasPrefix("daa")
     }
 }
 

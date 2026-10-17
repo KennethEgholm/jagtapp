@@ -44,12 +44,13 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - **StatusSummary** (`SpeciesDetailView.swift`) — stor Jagtbar / Ikke jagtbar med sidste dag eller åbning.
 - **LocalBadge** — “Lokal jagttid”, brass. Vises når en lokal override gælder.
 - **SpeciesRow** — navn, perioder, note (maks 2 linjer), evt. LocalBadge, evt. status. Tryk → detalje. `SpeciesContext.query` / `.general` styrer om status må vises.
-- **QueryRows / QueryRow** — dato- og sted-række (Settings-stil med IconTile).
-- **AnswerCard** — svaret på Jagtbar: antal jagtbare.
+- **DatePlaceRows / QueryRow** (`DesignSystem/QueryRow.swift`) — dato- og sted-række (Settings-stil med IconTile), med positionsproblemet i footeren. Jagtbart og Journal giver hver sit valg. Footeren siger, hvad rækken viser: sidst kendte sted eller hele Danmark.
+- **CountCard** (`DesignSystem/CountCard.swift`) — stort tal med en linje ved siden af. **AnswerCard** på Jagtbart og årssummen i journalen bruger det.
+- **GroupHeader / FoldButton / FoldChevron** (`DesignSystem/GroupHeader.swift`) — gruppens række på Jagtbart og Alle arter: tegning, navn, antal, pil. `FoldButton` folder sektionen og giver VoiceOver “Vist / Skjult”. “Ikke jagtbar her” bruger samme knap og pil.
 - **ListHeading** + `scrollRevealedTitle` — stor ombrydende overskrift i indholdet, titel i baren ved scroll.
 - **IconTile**, **BrandMark** (`Theme.swift`).
 - **GroupSketch** (`DesignSystem/GroupSketch.swift`) — stregtegning ved gruppenavnet. Kronhjort, ræv, hare, and, gås, fasan, lille fugl. Primær farve, ikke grøn: den er pynt, ikke status. Skjult for VoiceOver. Ukendt gruppe får en ring.
-- **SunRow** (`QueryHeader.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve). Under tiden: “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Ikke trykbar.
+- **SunRow** (`Features/Today/SunRow.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve). Under tiden: “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Ikke trykbar.
 
 ## Skærme
 
@@ -156,3 +157,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Engelsk UI (2026-10-16): appen findes på dansk og engelsk. Dansk er kilden og nøglen i `Localizable.xcstrings`, engelsk er oversættelsen. Arter, steder, noter og biologi kommer fra data og er danske i begge sprog. App Store-teksten er dansk. Datoer, klokkeslæt og systemets egne kontroller følger appens sprog, ikke telefonens område. Gruppetitlerne er appens egne ord (data har de danske), så en ny gruppe fra remote data falder tilbage til data-titlen. `SeasonCalendar` tager en locale, så datoformater kan testes på begge sprog.
 - App-ikonet (2026-10-16): flad PNG erstattet af Icon Composer, `App/JagtFokus/AppIcon.icon`. To lag med Liquid Glass: sigtekors bagved, fasan foran. Feltet er stadig `#2F6B47`. Mørk tilstand er dybere skovgrøn `#1E4D34`, ikke næsten sort, så fasanen kan læses i lille størrelse. Farvet tilstand bruger en grå fasan og et hvidt sigtekors. Ringen er et PNG-lag, ikke SVG: den ældre renderer fyldte cirklen ud. Xcode laver flade ikoner til iOS 18–25 ud fra samme fil. BrandMark i Velkomst og Om bliver den flade tegning. Ingen glas på indhold.
 - Design-gennemgang 1 (2026-10-17): “Dato” og “Sted” stod på dansk i den engelske app, fordi `QueryRow` tager en `String`. Nu `String(localized:)`. Bekræftelsens luk-knap har 44 × 44 pt trykflade. Flertal ligger i String Catalog, også for dansk. Amber-linjen på svar-kortet har timeglas. Solens orange og velkomstens grønne lys er tokens. “Tilføj til journal” har ingen pil.
+- Design-gennemgang 2 (2026-10-17): grupperækken, dato/sted-rækkerne og tal-kortet fandtes i to kopier. Nu én komponent hver i `DesignSystem/`. Journalens positionstekst sagde “Viser sidst kendte sted”, mens rækken viste Danmark. Nu siger footeren, hvad rækken viser. Listerne på Jagtbart (åbne grupper, lukkede arter efter næste åbning, antal der lukker snart), søgning og hjortenoten er flyttet til Core med tests. Søgning ignorerer store bogstaver og accenter ens på alle skærme (“gas” finder “Grågås”). Solen står som sit eget kort.

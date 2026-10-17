@@ -14,8 +14,8 @@ struct TodayView: View {
     var body: some View {
         NavigationStack(path: $path) {
             let sections = store.resolvedSections
-            let open = openGroups(sections)
-            let closed = closedItems(sections)
+            let open = store.calendar.openGroups(sections, on: store.queryDate)
+            let closed = store.calendar.closedSpecies(sections, on: store.queryDate)
 
             List {
                 Section {
@@ -23,35 +23,37 @@ struct TodayView: View {
                 }
                 .listSectionSpacing(.compact)
 
-                QueryRows(showDate: $showDate, showPlace: $showPlace)
+                DatePlaceRows(
+                    date: store.queryDate,
+                    place: store.queryPlace,
+                    followsHere: store.followHere,
+                    showDate: $showDate,
+                    showPlace: $showPlace
+                )
+
+                QuerySunSection()
 
                 Section {
                     AnswerCard(
                         openCount: open.reduce(0) { $0 + $1.species.count },
-                        closingSoon: open.flatMap(\.species).filter { store.status(of: $0).isClosingSoon }.count,
+                        closingSoon: store.calendar.closingSoonCount(open, on: store.queryDate),
                         nextOpening: closed.first
                     )
                 }
 
                 ForEach(open) { group in
-                    if collapseGroups {
-                        Section {
-                            Button {
-                                withAnimation { toggle(group.id) }
+                    Section {
+                        if collapseGroups {
+                            FoldButton(expanded: expanded.contains(group.id), hint: "Viser arterne i gruppen") {
+                                expanded.toggle(group.id)
                             } label: {
-                                groupHeader(group, shown: expanded.contains(group.id))
+                                GroupHeader(group: group, expanded: expanded.contains(group.id))
                             }
-                            .tint(.primary)
-                            .accessibilityValue(Copy.showState(expanded.contains(group.id)))
-                            .accessibilityHint("Viser arterne i gruppen")
-
                             if expanded.contains(group.id) {
                                 openLinks(group)
                             }
-                        }
-                    } else {
-                        Section {
-                            groupHeader(group, shown: true, chevron: false)
+                        } else {
+                            GroupHeader(group: group)
                             openLinks(group)
                         }
                     }
@@ -60,24 +62,19 @@ struct TodayView: View {
                 if !closed.isEmpty {
                     Section {
                         if open.isEmpty {
-                            closedHeader(count: closed.count, chevron: nil)
+                            closedHeader(count: closed.count, expanded: nil)
                         } else {
-                            Button {
-                                withAnimation { showsClosed.toggle() }
+                            FoldButton(expanded: showsClosed, hint: "Viser arter uden jagttid lige nu, sorteret efter næste åbning") {
+                                showsClosed.toggle()
                             } label: {
-                                closedHeader(count: closed.count, chevron: showsClosed)
+                                closedHeader(count: closed.count, expanded: showsClosed)
                             }
-                            .tint(.primary)
-                            .accessibilityValue(Copy.showState(showsClosed))
-                            .accessibilityHint("Viser arter uden jagttid lige nu, sorteret efter næste åbning")
                         }
 
-                        if closedExpanded(open) {
+                        // Nothing open: show closed species without the extra tap.
+                        if showsClosed || open.isEmpty {
                             ForEach(closed) { item in
-                                NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
-                                    SpeciesRow(item: item, context: .query)
-                                }
-                                .bagSwipeAction(speciesId: item.id)
+                                speciesLink(item)
                             }
                         }
                     } footer: {
@@ -130,8 +127,8 @@ struct TodayView: View {
             path = [SpeciesRoute(speciesId: id, context: .query)]
         }
         if defaults.bool(forKey: "closed") { showsClosed = true }
-        if Self.launchOpensGroups {
-            expanded = Set(openGroups(store.resolvedSections).map(\.id))
+        if GroupFolding.launchOpensAll {
+            expanded = Set(store.calendar.openGroups(store.resolvedSections, on: store.queryDate).map(\.id))
         }
         switch defaults.string(forKey: "sheet") {
         case "date": showDate = true
@@ -145,72 +142,18 @@ struct TodayView: View {
     @ViewBuilder
     private func openLinks(_ group: ResolvedGroup) -> some View {
         ForEach(group.species) { item in
-            NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
-                SpeciesRow(item: item, context: .query)
-            }
-            .bagSwipeAction(speciesId: item.id)
+            speciesLink(item)
         }
     }
 
-    private func toggle(_ id: String) {
-        if expanded.contains(id) {
-            expanded.remove(id)
-        } else {
-            expanded.insert(id)
+    private func speciesLink(_ item: ResolvedSpecies) -> some View {
+        NavigationLink(value: SpeciesRoute(speciesId: item.id, context: .query)) {
+            SpeciesRow(item: item, context: .query)
         }
+        .bagSwipeAction(speciesId: item.id)
     }
 
-    private func groupHeader(_ group: ResolvedGroup, shown: Bool, chevron: Bool = true) -> some View {
-        HStack(spacing: Spacing.xs) {
-            GroupSketch(groupId: group.id)
-            Text(Copy.groupTitle(id: group.id, fromData: group.title))
-                .font(.body.weight(.semibold))
-                .foregroundStyle(.primary)
-                .layoutPriority(1)
-            Spacer(minLength: Spacing.xs)
-            Text("\(group.species.count)")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .monospacedDigit()
-            if chevron {
-                Image(systemName: "chevron.down")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.tertiary)
-                    .rotationEffect(.degrees(shown ? 180 : 0))
-                    .accessibilityHidden(true)
-            }
-        }
-        .contentShape(Rectangle())
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel([Copy.groupTitle(id: group.id, fromData: group.title), Copy.speciesCount(group.species.count)].joined(separator: ", "))
-    }
-
-    /// Only the current launch. A leftover UserDefaults value from `-groups open` must not keep groups open.
-    private static var launchOpensGroups: Bool {
-        let args = ProcessInfo.processInfo.arguments
-        guard let index = args.firstIndex(of: "-groups"), index + 1 < args.count else { return false }
-        return args[index + 1] == "open"
-    }
-
-    private func openGroups(_ sections: [ResolvedGroup]) -> [ResolvedGroup] {
-        sections.compactMap { group in
-            let open = group.species.filter { store.status(of: $0).isOpen }
-            return open.isEmpty ? nil : ResolvedGroup(id: group.id, title: group.title, species: open)
-        }
-    }
-
-    /// Closed here and now, soonest opening first. No season at all goes last.
-    private func closedItems(_ sections: [ResolvedGroup]) -> [ResolvedSpecies] {
-        sections.flatMap(\.species)
-            .filter { !store.status(of: $0).isOpen }
-            .sorted { lhs, rhs in
-                let l = store.status(of: lhs).daysUntilOpening ?? .max
-                let r = store.status(of: rhs).daysUntilOpening ?? .max
-                return l == r ? lhs.name < rhs.name : l < r
-            }
-    }
-
-    private func closedHeader(count: Int, chevron expanded: Bool?) -> some View {
+    private func closedHeader(count: Int, expanded: Bool?) -> some View {
         HStack {
             Label("Ikke jagtbar her", systemImage: "moon.zzz")
                 .foregroundStyle(.primary)
@@ -219,19 +162,10 @@ struct TodayView: View {
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
             if let expanded {
-                Image(systemName: "chevron.down")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.tertiary)
-                    .rotationEffect(.degrees(expanded ? 180 : 0))
-                    .accessibilityHidden(true)
+                FoldChevron(expanded: expanded)
             }
         }
         .contentShape(Rectangle())
-    }
-
-    /// Nothing open: show closed species without the extra tap.
-    private func closedExpanded(_ open: [ResolvedGroup]) -> Bool {
-        showsClosed || open.isEmpty
     }
 }
 
@@ -243,34 +177,19 @@ struct AnswerCard: View {
     let nextOpening: ResolvedSpecies?
 
     var body: some View {
-        HStack(alignment: .center, spacing: Spacing.m) {
-            Text("\(openCount)")
-                .font(.system(.largeTitle, design: .rounded).weight(.bold))
-                .monospacedDigit()
-                .foregroundStyle(openCount > 0 ? Color.seasonOpen : Color.secondary)
-                .contentTransition(.numericText())
-                .frame(minWidth: 44)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(openCount == 1 ? String(localized: "art er jagtbar") : String(localized: "arter er jagtbare"))
-                    .font(.headline)
-                Group {
-                    if closingSoon > 0 {
-                        // Inline, so the icon stays on the first line when the text wraps.
-                        Text("\(Image(systemName: "hourglass")) \(subtitle)")
-                            .foregroundStyle(.seasonClosingSoon)
-                    } else {
-                        Text(subtitle)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .font(.subheadline)
+        CountCard(
+            count: openCount,
+            title: openCount == 1 ? String(localized: "art er jagtbar") : String(localized: "arter er jagtbare")
+        ) {
+            if closingSoon > 0 {
+                // Inline, so the icon stays on the first line when the text wraps.
+                Text("\(Image(systemName: "hourglass")) \(subtitle)")
+                    .foregroundStyle(.seasonClosingSoon)
+            } else {
+                Text(subtitle)
+                    .foregroundStyle(.secondary)
             }
-            Spacer(minLength: 0)
         }
-        .padding(.vertical, Spacing.xxs)
-        .listRowBackground(Color.seasonOpen.opacity(openCount > 0 ? 0.12 : 0.05))
-        .animation(.snappy, value: openCount)
-        .accessibilityElement(children: .combine)
     }
 
     private var subtitle: String {

@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 /// Date and place for this tab only. Does not change Jagtbar.
 @MainActor
@@ -57,7 +56,6 @@ final class BagDraft {
 struct BagTabView: View {
     @Environment(SeasonStore.self) private var store
     @Environment(BagStore.self) private var bag
-    @Environment(\.openURL) private var openURL
     @State private var path: [BagRoute] = []
     @State private var showDate = false
     @State private var showPlace = false
@@ -72,10 +70,8 @@ struct BagTabView: View {
 
     /// Open for this tab's date and place, not Jagtbar's query.
     private var openHere: [ResolvedSpecies] {
-        let place = draft.place(in: store)
-        return store.catalog.resolvedSections(at: place)
-            .flatMap(\.species)
-            .filter { store.calendar.status(of: $0.periods, on: bagDate).isOpen }
+        let sections = store.catalog.resolvedSections(at: draft.place(in: store))
+        return store.calendar.openGroups(sections, on: bagDate).flatMap(\.species)
     }
 
     /// Recent only if still open for this date and place. Closed species stay in search.
@@ -98,7 +94,13 @@ struct BagTabView: View {
                 .listSectionSpacing(.compact)
 
                 yearRow
-                queryRows
+                DatePlaceRows(
+                    date: bagDate,
+                    place: draft.place(in: store),
+                    followsHere: draft.followHere,
+                    showDate: $showDate,
+                    showPlace: $showPlace
+                )
 
                 if !recent.isEmpty {
                     Section("Senest nedlagt") {
@@ -220,69 +222,6 @@ struct BagTabView: View {
         return count == 0 ? String(localized: "Ingen arter") : Copy.speciesCount(count)
     }
 
-    private var queryRows: some View {
-        Section {
-            Button { showDate = true } label: {
-                QueryRow(
-                    systemImage: "calendar",
-                    title: String(localized: "Dato"),
-                    value: store.calendar.longDate(bagDate).capitalizedFirst,
-                    detail: isBagToday ? String(localized: "I dag") : nil
-                )
-            }
-            .tint(.primary)
-            .accessibilityHint("Vælg en anden dag")
-
-            Button { showPlace = true } label: {
-                QueryRow(
-                    systemImage: draft.followHere ? "location.fill" : "mappin",
-                    title: String(localized: "Sted"),
-                    value: draft.place(in: store).name,
-                    detail: placeDetail,
-                    isWorking: draft.followHere && store.locationState == .locating
-                )
-            }
-            .tint(.primary)
-            .accessibilityHint("Vælg et andet sted")
-        } footer: {
-            if draft.followHere, let problem = locationProblem {
-                VStack(alignment: .leading, spacing: Spacing.xs) {
-                    Text(problem)
-                    if store.locationState == .denied {
-                        Button("Åbn Indstillinger-appen") {
-                            if let url = URL(string: UIApplication.openSettingsURLString) {
-                                openURL(url)
-                            }
-                        }
-                        .font(.footnote.weight(.semibold))
-                    }
-                }
-            }
-        }
-    }
-
-    private var placeDetail: String? {
-        guard draft.followHere else { return nil }
-        switch store.locationState {
-        case .locating: return String(localized: "Finder position…")
-        case .found: return String(localized: "Din position")
-        case .denied, .unavailable, .idle: return nil
-        }
-    }
-
-    private var locationProblem: String? {
-        switch store.locationState {
-        case .denied: String(localized: "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til.")
-        case .unavailable:
-            if store.gpsPlace != nil {
-                String(localized: "Kunne ikke opdatere din position. Viser sidst kendte sted.")
-            } else {
-                String(localized: "Kunne ikke finde din position. Listen viser hele Danmark. Vælg sted.")
-            }
-        default: nil
-        }
-    }
-
     private func recordButton(id: String, name: String) -> some View {
         Button {
             record(id)
@@ -383,11 +322,7 @@ struct BagSearchView: View {
     @State private var query = ""
 
     private var species: [Species] {
-        let all = store.catalog.allSpecies
-        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return all }
-        let needle = folded(trimmed)
-        return all.filter { folded($0.name).contains(needle) }
+        store.catalog.allSpecies.filter { TextSearch.matches($0.name, query: query) }
     }
 
     var body: some View {
@@ -415,10 +350,6 @@ struct BagSearchView: View {
         .navigationTitle("Søg")
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: "Art")
-    }
-
-    private func folded(_ text: String) -> String {
-        text.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: Locale(identifier: "da_DK"))
     }
 }
 

@@ -26,29 +26,19 @@ struct AllSpeciesView: View {
                 }
 
                 ForEach(groups) { group in
-                    if collapseGroups {
-                        Section {
-                            if searching {
-                                groupHeader(group, shown: true, toggle: false)
-                                speciesLinks(group)
-                            } else {
-                                Button {
-                                    withAnimation { toggle(group.id) }
-                                } label: {
-                                    groupHeader(group, shown: expanded.contains(group.id), toggle: true)
-                                }
-                                .tint(.primary)
-                                .accessibilityValue(Copy.showState(expanded.contains(group.id)))
-                                .accessibilityHint("Viser arterne i gruppen")
-
-                                if expanded.contains(group.id) {
-                                    speciesLinks(group)
-                                }
+                    Section {
+                        // Search opens the groups with hits, without the extra tap.
+                        if collapseGroups && !searching {
+                            FoldButton(expanded: expanded.contains(group.id), hint: "Viser arterne i gruppen") {
+                                expanded.toggle(group.id)
+                            } label: {
+                                GroupHeader(group: group, expanded: expanded.contains(group.id))
                             }
-                        }
-                    } else {
-                        Section {
-                            groupHeader(group, shown: true, toggle: false)
+                            if expanded.contains(group.id) {
+                                speciesLinks(group)
+                            }
+                        } else {
+                            GroupHeader(group: group)
                             speciesLinks(group)
                         }
                     }
@@ -74,54 +64,14 @@ struct AllSpeciesView: View {
             isSearching = true
             query = text
         }
-        if Self.launchOpensGroups {
+        if GroupFolding.launchOpensAll {
             expanded = Set(groups.map(\.id))
         }
         #endif
     }
 
-    /// Only the current launch. A leftover UserDefaults value from `-groups open` must not keep groups open.
-    private static var launchOpensGroups: Bool {
-        let args = ProcessInfo.processInfo.arguments
-        guard let index = args.firstIndex(of: "-groups"), index + 1 < args.count else { return false }
-        return args[index + 1] == "open"
-    }
-
     private var searching: Bool {
         !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
-
-    private func toggle(_ id: String) {
-        if expanded.contains(id) {
-            expanded.remove(id)
-        } else {
-            expanded.insert(id)
-        }
-    }
-
-    private func groupHeader(_ group: ResolvedGroup, shown: Bool, toggle: Bool) -> some View {
-        HStack(spacing: Spacing.xs) {
-            GroupSketch(groupId: group.id)
-            Text(Copy.groupTitle(id: group.id, fromData: group.title))
-                .font(.body.weight(.semibold))
-                .foregroundStyle(.primary)
-                .layoutPriority(1)
-            Spacer(minLength: Spacing.xs)
-            Text("\(group.species.count)")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .monospacedDigit()
-            if toggle {
-                Image(systemName: "chevron.down")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(.tertiary)
-                    .rotationEffect(.degrees(shown ? 180 : 0))
-                    .accessibilityHidden(true)
-            }
-        }
-        .contentShape(Rectangle())
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel([Copy.groupTitle(id: group.id, fromData: group.title), Copy.speciesCount(group.species.count)].joined(separator: ", "))
     }
 
     @ViewBuilder
@@ -137,10 +87,9 @@ struct AllSpeciesView: View {
     /// General periods only: resolved at Danmark, so no override leaks in.
     private var groups: [ResolvedGroup] {
         let all = store.catalog.resolvedSections(at: store.catalog.denmark)
-        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !needle.isEmpty else { return all }
+        guard searching else { return all }
         return all.compactMap { group in
-            let hits = group.species.filter { $0.name.localizedStandardContains(needle) }
+            let hits = group.species.filter { TextSearch.matches($0.name, query: query) }
             return hits.isEmpty ? nil : ResolvedGroup(id: group.id, title: group.title, species: hits)
         }
     }

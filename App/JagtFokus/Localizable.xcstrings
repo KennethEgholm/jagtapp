@@ -1159,16 +1159,6 @@
         }
       }
     },
-    "Kunne ikke opdatere din position. Viser sidst kendte sted." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Could not update your location. Showing the last known place."
-          }
-        }
-      }
-    },
     "Kunne ikke opdatere din position. Viser sidst kendte sted: %@." : {
       "localizations" : {
         "en" : {

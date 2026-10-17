@@ -92,12 +92,8 @@ struct PlacePickerView: View {
     }
 
     private var filtered: [Place] {
-        let places = store.catalog.places
-        let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !q.isEmpty else { return places }
-        return places.filter { place in
-            let hay = ([place.name] + place.matchNames).joined(separator: " ")
-            return hay.localizedStandardContains(q)
+        store.catalog.places.filter { place in
+            TextSearch.matches(any: [place.name] + place.matchNames, query: query)
         }
     }
 

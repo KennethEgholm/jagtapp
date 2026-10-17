@@ -78,6 +78,11 @@ public struct Species: Codable, Sendable, Hashable, Identifiable {
         self.periods = periods
         self.note = note
     }
+
+    /// Red deer or fallow deer. They get the note about local management plans. Display only.
+    public var isRedOrFallowDeer: Bool {
+        id.hasPrefix("kron") || id.hasPrefix("daa")
+    }
 }
 
 public struct SeasonPeriod: Codable, Sendable, Hashable {

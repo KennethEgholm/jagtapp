@@ -34,24 +34,13 @@ struct BagListView: View {
     var body: some View {
         List {
             Section {
-                HStack(alignment: .center, spacing: Spacing.m) {
-                    Text("\(summary.pieces)")
-                        .font(.system(.largeTitle, design: .rounded).weight(.bold))
-                        .monospacedDigit()
-                        .foregroundStyle(summary.pieces > 0 ? Color.seasonOpen : Color.secondary)
-                        .frame(minWidth: 44)
-                    VStack(alignment: .leading, spacing: Spacing.xxs) {
-                        Text(summary.pieces == 1 ? String(localized: "stykke") : String(localized: "stykker"))
-                            .font(.headline)
-                        Text("Jagtåret \(store.calendar.huntingYearLabel(year))")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer(minLength: 0)
+                CountCard(
+                    count: summary.pieces,
+                    title: summary.pieces == 1 ? String(localized: "stykke") : String(localized: "stykker")
+                ) {
+                    Text("Jagtåret \(store.calendar.huntingYearLabel(year))")
+                        .foregroundStyle(.secondary)
                 }
-                .padding(.vertical, Spacing.xxs)
-                .listRowBackground(Color.seasonOpen.opacity(summary.pieces > 0 ? 0.12 : 0.05))
-                .accessibilityElement(children: .combine)
             }
 
             if rows.isEmpty {

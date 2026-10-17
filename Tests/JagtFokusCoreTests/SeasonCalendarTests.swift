@@ -89,4 +89,12 @@ struct SeasonCalendarTests {
         let text = calendar.periodText(species("raabuk"))
         #expect(text == "16. maj – 15. jul. og 1. okt. – 31. jan.")
     }
+
+    /// The deer note follows the id. A new red or fallow deer id must keep the prefix.
+    @Test func redAndFallowDeerAreExactlyTheKronAndDaSpecies() {
+        let byName = catalog.allSpecies.filter { $0.name.hasPrefix("Kron") || $0.name.hasPrefix("Då") }
+        let flagged = catalog.allSpecies.filter(\.isRedOrFallowDeer)
+        #expect(Set(flagged.map(\.id)) == Set(byName.map(\.id)))
+        #expect(flagged.count == 6)
+    }
 }

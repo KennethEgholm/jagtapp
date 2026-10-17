@@ -120,11 +120,8 @@ struct SpeciesListAddView: View {
     }
 
     private var groups: [SpeciesGroup] {
-        let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        return store.catalog.groups.compactMap { group in
-            let species = group.species.filter { species in
-                needle.isEmpty || species.name.localizedStandardContains(needle)
-            }
+        store.catalog.groups.compactMap { group in
+            let species = group.species.filter { TextSearch.matches($0.name, query: query) }
             guard !species.isEmpty else { return nil }
             return SpeciesGroup(id: group.id, title: group.title, species: species)
         }

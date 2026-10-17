@@ -39,15 +39,15 @@ spec/ideas.md                      # Backlog
 spec/appstore/                     # App Store copy, replies, review notes, screenshots
 docs/                              # GitHub Pages: support (index.html) and privacy policy
 data/jagttider.json                # Seasons + places + local overrides
-Sources/JagtFokusCore/             # Models, calendar, status, timeline, place resolution, sun times, photos
-Tests/JagtFokusCoreTests/          # 81 tests
+Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun times, photos
+Tests/JagtFokusCoreTests/          # 89 tests
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
 App/JagtFokus/
   JagtFokusApp.swift, RootView.swift, Copy.swift, Localization.swift
   Localizable.xcstrings            # UI copy: Danish source, English translation
   InfoPlist.xcstrings              # The system's location prompt
   Store/                           # SeasonStore (@Observable), LocationService, Appearance
-  DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle
+  DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle, GroupHeader, CountCard, QueryRow
   Features/Today/                  # Jagtbart, date/place rows, sheets
   Features/Species/                # SpeciesRow, SpeciesDetailView
   Features/AllSpecies/             # Alle arter
@@ -95,7 +95,8 @@ assets/                            # Source icons and logo (not bundled directly
 - Use tokens from `DesignSystem/Theme.swift` (`Spacing`, `Radius`, `.seasonOpen`, `.seasonClosingSoon`, `.localTime`). No hex colors in views.
 - Dynamic Type styles only. Test at an accessibility size (see Run).
 - Status is text plus an icon. Never color alone.
-- Logic (dates, status, timeline) lives in `JagtFokusCore` with tests. Views only format.
+- Logic (dates, status, timeline) lives in `JagtFokusCore` with tests. Views only format. Jagtbart's lists come from `SeasonCalendar.openGroups`, `closedSpecies` and `closingSoonCount`. Every search uses `TextSearch`.
+- A component used on two screens lives in `DesignSystem/`. Do not copy a row from one feature to another.
 - Shared copy lives in `Copy.swift`.
 - Buttons in a `List` inherit the tint. Use `.tint(.primary)` on row buttons that are not links.
 - Attach sheets to the screen's `List` or `NavigationStack`, not to a `Section`.
