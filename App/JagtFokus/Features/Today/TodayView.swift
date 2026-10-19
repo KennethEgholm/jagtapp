@@ -35,7 +35,10 @@ struct TodayView: View {
                     showPlace: $showPlace
                 )
 
-                // The answer right under the question. The sun is display only, so it comes after.
+                // Date, place and the day's sun and weather first, then the answer as the
+                // heading of the groups it counts. The sun is display only.
+                QuerySunSection()
+
                 Section {
                     AnswerCard(
                         openCount: open.reduce(0) { $0 + $1.species.count },
@@ -43,8 +46,6 @@ struct TodayView: View {
                         nextOpening: closed.first
                     )
                 }
-
-                QuerySunSection()
 
                 ForEach(open) { group in
                     Section {
@@ -88,6 +89,8 @@ struct TodayView: View {
                 }
             }
             .listStyle(.insetGrouped)
+            // A little tighter than the system's 35 pt, so the cards read as one answer.
+            .listSectionSpacing(Spacing.l)
             .contentMargins(.top, Spacing.xs, for: .scrollContent)
             .refreshable { await store.refresh() }
             .scrollRevealedTitle(Copy.todayTab)

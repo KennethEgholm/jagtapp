@@ -4,7 +4,7 @@ Levende dokument. Gælder alle skærme. Bygger på Apple Human Interface Guideli
 
 ## Principper
 
-1. **5 sekunder.** Svaret står øverst: hvor mange arter er jagtbare, hvornår, hvor. Alt andet er ét tryk væk.
+1. **5 sekunder.** Svaret kan ses uden at scrolle ved normal tekststørrelse: hvor mange arter er jagtbare, hvornår, hvor. Alt andet er ét tryk væk.
 2. **Systemet først.** Standard-SwiftUI (List, NavigationStack, sheets, TabView, searchable). Ingen egne navigationsmønstre. Liquid Glass kommer gratis med systemets bars.
 3. **Status med mere end farve.** Altid tekst + ikon/form. Farve er ekstra.
 4. **Appen er ikke loven.** Noter vises som tekst. Kilde og fraskrivelse er altid ét tryk væk.
@@ -58,8 +58,9 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ### Jagtbar
 - Overskrift i indholdet: “Jagtbart vildt efter tid og sted”. Navigationstitel “Jagtbart” vises først ved scroll.
 - To rækker: **Dato** (I dag · lørdag 11. oktober) og **Sted** (Midtjylland · Din position). Fuld bredde, ingen afkortning. Åbner sheets.
-- Svar-kort lige under Dato og Sted: stort tal + “arter er jagtbare” + “⏳ 3 har sidste dag inden for en uge” (amber, med timeglas), ellers dag og sted. Svaret står over solen, så det kan ses uden at scrolle, også ved AX-størrelser.
-- Sol-kort under svar-kortet (se Soltider).
+- Kortene står 24 pt fra hinanden (`listSectionSpacing(Spacing.l)`), lidt tættere end systemets ca. 35 pt.
+- Sol-kort lige under Dato og Sted (se Soltider). Dato, sted og dagens sol og vejr hører sammen.
+- Svar-kort under sol-kortet, som overskrift for grupperne, det tæller: stort tal + “arter er jagtbare” + “⏳ 3 har sidste dag inden for en uge” (amber, med timeglas), ellers dag og sted. Ved normal tekststørrelse står det over fanebaren uden at scrolle. Ved AX-størrelser skal man scrolle (valgt 2026-10-19).
 - Liste: kun jagtbare arter. Hver gruppe er et kort, der starter sammenfoldet. Rækken viser en stregtegning, navn, antal og en pil. Har gruppen arter med sidste dag inden for en uge, står “⏳ 2 har sidste dag inden for en uge” i amber under navnet, også når gruppen er lukket. Så kan advarslen på svar-kortet findes uden at åbne hver gruppe. Kun på Jagtbart: Alle arter viser ingen status. Trailing i en åben gruppe: “til 31. jan”, eller “⏳ Sidste dag 15. okt” (amber) når sidste dag er inden for 7 dage.
 - Nederst: sammenfoldet sektion “Ikke jagtbar her (n)” med “Åbner 1. nov”. Holder hovedlisten ren, men svarer på “hvornår må jeg?”.
 - Tom tilstand: svar-kortet viser 0 og næste åbning (“Næste: Canadagås på omdriftsarealer, 1. aug”). “Ikke jagtbar her” foldes ud.
@@ -67,7 +68,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Position nægtet: inline-besked med “Åbn Indstillinger”.
 
 ### Soltider (på Jagtbar)
-- Eget kort under svar-kortet, ikke en række under Dato og Sted. Klokkeslæt i dansk format (“07.42”), afrundet til nærmeste minut som almanakker.
+- Eget kort lige under Dato og Sted, over svar-kortet. Ikke en række i Dato og Sted. Klokkeslæt i dansk format (“07.42”), afrundet til nærmeste minut som almanakker.
 - Under tiden: “[Sted], den [dato]”, samme sted og dato som rækkerne ovenfor. Fx “Sjælland, den 16. oktober”.
 - Kun visning. Listen afgøres stadig af dato og sted.
 - Tryk på kortet skubber **Sol og vejr** ind for samme dag og sted. Kortet og siden hedder det samme, så trykket lander, hvor det siger.
@@ -182,3 +183,4 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Vejr-siden som flisegitter (2026-10-19): rækkerne blev skiftet ud med almanak-fliser i to kolonner — guldetiket, stor værdi, lille note (`Gold`-farven i Assets, samme par som Brass). MET’s compact-svar giver også luftfugtighed og tryk; tryktrenden ser fremad (næste tre timer), for prognosen ikke har tre timer tilbage. `Grid` frem for `LazyVGrid` inde i en List: det lazy gitter satte cellerne forkert. Fliserne er én VoiceOver-element hver. `QueryRow`’s `showsChevron`-parameter er fjernet igen — fliserne overtog opgaven.
 - Sol-kortet med vejr og måne (2026-10-19): kortet viser kompakte linjer — temperaturer (“Maks 11,9° · Min 9,1°” med termometer), dagens vejr (“0 mm · [pil] op til 6,8 m/s”) når datoen ligger inden for MET’s horisont, og månen (“57 % oplyst”), som altid kan beregnes. Vindpilen er kompasset: den peger der, vinden blæser hen (fra øst → pil mod vest), som på vejrkort; VoiceOver hører “fra Ø”. `WeatherStore` er flyttet til `Store/` og ejes af `SeasonStore`, så kortet og Vejr-siden deler ét svar og højst ét kald pr. sted og dag (ti minutters genbrug). Vindretningen er retningen ved dagens kraftigste vind, i otte streger. Linjerne ombryder ved AX-størrelser.
 - Design-gennemgang 5 (2026-10-19): sol-kortet og Sol og vejr. Kortet hed “Sol”, men viste vejr og måne, og siden hed “Vejr”, men viste sol og måne. Nu hedder begge “Sol og vejr”. Kortet havde to venstrekanter og ikoner af forskellig bredde, så teksten efter dem startede tre steder. Nu står alle ikoner i én kolonne under titlen, som i `QueryRow`. Stedet og datoen står i samme tekstkolonne og ikke længere i fuld bredde. Kun det længste stednavn (“Syddanmark vest for Lillebælt”) brydes, og det ville det også gøre i fuld bredde. Vinden siger “fra Ø” ved siden af pilen, for jægere taler om, hvor vinden står fra. Vejr-siden var et gitter af guldfliser, som ingen anden skærm bruger, med ulige høje fliser, ord der brød midt i (“VEJ-RET”) og ingen én-kolonne ved AX. Nu er den sektioner og `LabeledContent` som artsdetaljen, og stedet og datoen står over titlen. `Gold` er fjernet: farven var den samme som `Brass`, der betyder “Lokal jagttid”. Månen er grå, ikke indigo, så kun solen har farve. Tallene blandede “nu” og “hele dagen” uden at sige det. Nu siger sektionens overskrift det. Lufttryk skrives “1034 hPa” uden tusindtalspunktum. Fejl fundet i samme gennemgang og rettet med tests: fra ca. tredje dag ligger MET’s skridt på UTC-timer, så vejrsymbol og nedbør manglede (“–”). I dag talte nedbøren kun kl. 18–24, og dagens symbol var nattens. Kortets vindlinje kunne starte med et løst “·”.
+- Jagtbart-rækkefølge (2026-10-19): Dato og Sted → Sol og vejr → svar-kort → grupper. Brugerens valg: dato, sted og dagens sol og vejr hører sammen, og svaret står lige over de grupper, det tæller. Det vender Design-gennemgang 3. Ved normal tekststørrelse står svaret stadig over fanebaren (ca. 78 % nede, før ca. 47 %). Ved AX-L ligger det under folden, og det er accepteret. At bytte rækkefølgen kun ved AX-størrelser blev valgt fra: det er enklere, at skærmen har samme rækkefølge for alle. Afstanden mellem kortene på Jagtbart er 24 pt (`Spacing.l`) i stedet for systemets ca. 35 pt, så kortene hænger sammen, og den næste gruppe kommer med over folden.
