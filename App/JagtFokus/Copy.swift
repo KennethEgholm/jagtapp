@@ -59,6 +59,14 @@ enum Copy {
         String(localized: "\(place), den \(day)")
     }
 
+    /// The sun card's title and the page it opens. One name, so the tap lands where it says.
+    static let sunWeatherTitle = String(localized: "Sol og vejr")
+
+    /// "Maks 11,9° · Min 9,1°", on the sun card and the weather page.
+    static func maxMin(_ max: Double, _ min: Double, locale: Locale) -> String {
+        String(localized: "Maks \(WeatherSymbols.decimal(max, locale))° · Min \(WeatherSymbols.decimal(min, locale))°")
+    }
+
     /// "1 art", "14 arter". The plural forms live in the String Catalog.
     static func speciesCount(_ count: Int) -> String {
         String(localized: "\(count) arter")

@@ -41,7 +41,7 @@ docs/                              # GitHub Pages: support (index.html) and priv
 data/jagttider.json                # Seasons + places + local overrides
 Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun and moon, MET weather decode, photos, catalog check
 
-Tests/JagtFokusCoreTests/          # 122 tests
+Tests/JagtFokusCoreTests/          # 127 tests
 .github/workflows/tests.yml        # swift test on every push to main and every PR
 .github/workflows/appstore.yml     # App Store upload, manual and off
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
@@ -50,9 +50,9 @@ App/JagtFokus/
   Localizable.xcstrings            # UI copy: Danish source, English translation
   InfoPlist.xcstrings              # The system's location prompt
   Store/                           # SeasonStore (@Observable), WeatherStore, LocationService, Appearance
-  DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle, GroupHeader, CountCard, QueryRow
+  DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle, GroupHeader, CountCard, QueryRow, WindArrow
   Features/Today/                  # Jagtbart, date/place rows, sheets
-  Features/Weather/                # Vejr og måne (push from the sun card; MET Norway)
+  Features/Weather/                # Sol og vejr (push from the sun card; MET Norway)
   Features/Species/                # SpeciesRow, SpeciesDetailView
   Features/AllSpecies/             # Alle arter
   Features/Settings/               # Indstillinger (appearance, lists), with the Om sections below
@@ -149,7 +149,7 @@ that leans on the machine's zone fails there.
 swift test
 ```
 
-If `swift test` fails with “TestingMacros … not found”, run it again. That happens on the first build after a test file changes. `swift build --build-tests` shows the real compile errors.
+If `swift test` fails with “TestingMacros … not found”, run it again. That happens on the first build after a test file changes. If it keeps failing, the CommandLineTools toolchain has no TestingMacros plugin: run `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test`. `swift build --build-tests` shows the real compile errors.
 
 `xcode-select` points at CommandLineTools. Use Xcode through `DEVELOPER_DIR`:
 
@@ -208,7 +208,7 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-species raabuk` | Open the species page from Jagtbart |
 | `-sheet date` / `-sheet place` / `-sheet schweiss` | Open a picker, or the Schweiss page from Jagtbart |
 | `-closed YES` | Expand “Ikke jagtbar her” |
-| `-open vejr` | Push the weather page from Jagtbart |
+| `-open vejr` | Push Sol og vejr from Jagtbart |
 | `-search ræv` | Open search on Alle arter with that text (use with `-tab all`) |
 | `-groups open` | Expand every group on Jagtbart, or on Alle arter with `-tab all` |
 | `-UIPreferredContentSizeCategoryName UICTContentSizeCategoryAccessibilityL` | Large text |

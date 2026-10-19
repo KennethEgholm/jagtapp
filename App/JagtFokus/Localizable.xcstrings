@@ -12,6 +12,17 @@
       },
       "comment" : "Weekday and date on a day button, e.g. “Saturday 24 Oct”."
     },
+    "%@ m/s fra %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ m/s from %@"
+          }
+        }
+      },
+      "comment" : "Wind speed and where it comes from, e.g. “6,8 m/s fra Ø”."
+    },
     "%@ noteret" : {
       "localizations" : {
         "en" : {
@@ -419,16 +430,6 @@
         }
       }
     },
-    "Barometer" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Barometer"
-          }
-        }
-      }
-    },
     "Biologi" : {
       "localizations" : {
         "en" : {
@@ -769,6 +770,17 @@
           }
         }
       }
+    },
+    "Hele dagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All day"
+          }
+        }
+      },
+      "comment" : "Weather page section on later days: the whole day."
     },
     "Hele landet" : {
       "localizations" : {
@@ -1381,6 +1393,16 @@
         }
       }
     },
+    "Kraftigste vind" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strongest wind"
+          }
+        }
+      }
+    },
     "Kron- og dåvildt har store lokale forvaltningsplaner. Appen viser kun de generelle tider." : {
       "localizations" : {
         "en" : {
@@ -1621,6 +1643,16 @@
         }
       }
     },
+    "Lufttryk" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pressure"
+          }
+        }
+      }
+    },
     "Luk" : {
       "localizations" : {
         "en" : {
@@ -1710,6 +1742,17 @@
           }
         }
       }
+    },
+    "Midt på dagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midday"
+          }
+        }
+      },
+      "comment" : "Weather page section on later days: the forecast at 12:00."
     },
     "Min position" : {
       "localizations" : {
@@ -1813,6 +1856,17 @@
         }
       }
     },
+    "Nu" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now"
+          }
+        }
+      },
+      "comment" : "Weather page section: the forecast hour nearest now."
+    },
     "Nymåne" : {
       "localizations" : {
         "en" : {
@@ -1872,6 +1926,28 @@
           }
         }
       }
+    },
+    "Op til %@ m/s" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up to %@ m/s"
+          }
+        }
+      },
+      "comment" : "The strongest wind of the day, on the sun card, e.g. “Op til 6,8 m/s”."
+    },
+    "Op til %@ m/s fra %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up to %@ m/s from %@"
+          }
+        }
+      },
+      "comment" : "The strongest wind of the day and where it comes from, e.g. “Op til 6,8 m/s fra Ø”."
     },
     "Opdateret" : {
       "localizations" : {
@@ -2002,6 +2078,17 @@
           }
         }
       }
+    },
+    "Resten af dagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rest of the day"
+          }
+        }
+      },
+      "comment" : "Weather page section for today: the hours from now to midnight."
     },
     "Ret" : {
       "localizations" : {
@@ -2323,15 +2410,26 @@
         }
       }
     },
-    "Sol" : {
+    "Sol og måne" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sun"
+            "value" : "Sun and moon"
           }
         }
       }
+    },
+    "Sol og vejr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sun and weather"
+          }
+        }
+      },
+      "comment" : "The sun card on the first tab, and the page it opens."
     },
     "Solnedgang" : {
       "localizations" : {
@@ -2583,16 +2681,6 @@
         }
       }
     },
-    "Vejr" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Weather"
-          }
-        }
-      }
-    },
     "Vejret" : {
       "localizations" : {
         "en" : {
@@ -2823,17 +2911,6 @@
         }
       }
     },
-    "fra %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "from %@"
-          }
-        }
-      },
-      "comment" : "Which way the wind comes from, e.g. “fra Ø”."
-    },
     "i dag" : {
       "localizations" : {
         "en" : {
@@ -2873,17 +2950,6 @@
           }
         }
       }
-    },
-    "op til %@ m/s" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "up to %@ m/s"
-          }
-        }
-      },
-      "comment" : "The strongest wind of the day, on the sun card, e.g. “op til 6,8 m/s”."
     },
     "sidste dag %@" : {
       "localizations" : {
@@ -2987,12 +3053,12 @@
         }
       }
     },
-    "Åbn vejr og måne for dagen" : {
+    "Åbn sol og vejr for dagen" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open the day's weather and moon"
+            "value" : "Open the day's sun and weather"
           }
         }
       }
@@ -3106,7 +3172,7 @@
           }
         }
       },
-      "comment" : "How the barometer has moved over three hours: rising."
+      "comment" : "How the barometer has moved over the next three hours: rising."
     },
     "→ Uændret" : {
       "localizations" : {
@@ -3117,7 +3183,7 @@
           }
         }
       },
-      "comment" : "How the barometer has moved over three hours: steady."
+      "comment" : "How the barometer has moved over the next three hours: steady."
     },
     "↓ Faldende" : {
       "localizations" : {
@@ -3128,7 +3194,7 @@
           }
         }
       },
-      "comment" : "How the barometer has moved over three hours: falling."
+      "comment" : "How the barometer has moved over the next three hours: falling."
     }
   },
   "version" : "1.0"

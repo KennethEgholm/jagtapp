@@ -117,16 +117,14 @@ enum WeatherSymbols {
     static func decimal(_ value: Double, _ locale: Locale, digits: ClosedRange<Int> = 1...1) -> String {
         value.formatted(.number.precision(.fractionLength(digits)).locale(locale))
     }
-}
 
-/// The compass arrow for the wind: points the way the wind blows, so wind from the
-/// east points west, as weather maps do.
-struct WindArrow: View {
-    /// Where the wind comes from, in degrees from north. Nil points north.
-    let direction: Double?
+    /// "1034 hPa", as weather services write it: no thousands separator.
+    static func pressure(_ value: Double, _ locale: Locale) -> String {
+        value.formatted(.number.precision(.fractionLength(0)).grouping(.never).locale(locale)) + " hPa"
+    }
 
-    var body: some View {
-        Image(systemName: "arrow.up")
-            .rotationEffect(.degrees(((direction ?? 0) + 180).truncatingRemainder(dividingBy: 360)))
+    /// "0 mm", "1,2 mm".
+    static func rain(_ value: Double, _ locale: Locale) -> String {
+        decimal(value, locale, digits: 0...1) + " mm"
     }
 }

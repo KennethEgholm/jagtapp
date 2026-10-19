@@ -69,22 +69,89 @@ struct MetForecastTests {
         #expect(day.maxTemperature == 12.3)
         #expect(day.maxWindSpeed == 6.2)
         // The direction belongs to the strongest wind, not to the first hour.
-        #expect(day.windDirection == 225.0)
+        #expect(day.maxWindDirection == 225.0)
     }
 
-    /// 5.0 mm sits on 17:00 local, inside the 12–18 block. Only the blocks at 00, 06,
-    /// 12 and 18 count, or the same rain would be summed twice.
-    @Test func precipitationOnlyCountsTheSixHourBlocks() throws {
+    /// The six-hour blocks follow on from each other: 09–15, then the next step after
+    /// 15, 17–23. The 18:00 block overlaps 17–23 and stays out, or its rain would count twice.
+    @Test func sixHourBlocksFollowOnWithoutOverlap() throws {
         let forecast = try decode(Self.fixture)
         let day = try #require(forecast.day(on: danish(2026, 10, 19), timeZone: met))
-        #expect(day.precipitation == 1.2)
+        #expect(day.precipitation == 5.0)
     }
 
-    /// The 18:00 block has 1.2 mm, so its rain symbol beats the dry ones.
+    /// The 17:00 block has 5 mm, so its rain symbol beats the dry ones.
     @Test func aWetBlockWinsTheSymbol() throws {
         let forecast = try decode(Self.fixture)
         let day = try #require(forecast.day(on: danish(2026, 10, 19), timeZone: met))
-        #expect(day.symbolCode == "rain_day")
+        #expect(day.symbolCode == "heavyrain_day")
+    }
+
+    /// One timeseries entry. `hour` and `sixHours` are MET's next_1_hours and
+    /// next_6_hours: a symbol and millimetres.
+    func entry(_ time: String, hour: (String, Double)? = nil, sixHours: (String, Double)? = nil) -> String {
+        var data = #""instant":{"details":{"air_temperature":10.0}}"#
+        if let (symbol, mm) = hour {
+            data += #","next_1_hours":{"summary":{"symbol_code":"\#(symbol)"},"details":{"precipitation_amount":\#(mm)}}"#
+        }
+        if let (symbol, mm) = sixHours {
+            data += #","next_6_hours":{"summary":{"symbol_code":"\#(symbol)"},"details":{"precipitation_amount":\#(mm)}}"#
+        }
+        return #"{"time":"\#(time)","data":{\#(data)}}"#
+    }
+
+    func forecast(_ entries: [String]) throws -> MetForecast {
+        try decode(#"{"properties":{"timeseries":["# + entries.joined(separator: ",") + "]}}")
+    }
+
+    /// From about the third day MET only has steps at 00, 06, 12 and 18 UTC: 02, 08, 14
+    /// and 20 Danish summer time. Every step counts, and the wettest gives the symbol.
+    @Test func laterDaysUseTheSixHourSteps() throws {
+        let forecast = try forecast([
+            entry("2026-10-23T00:00:00Z", sixHours: ("cloudy", 0.4)),
+            entry("2026-10-23T06:00:00Z", sixHours: ("partlycloudy_day", 0.0)),
+            entry("2026-10-23T12:00:00Z", sixHours: ("lightrain_day", 1.1)),
+            entry("2026-10-23T18:00:00Z", sixHours: ("cloudy_night", 0.0)),
+        ])
+        let day = try #require(forecast.day(on: danish(2026, 10, 23), timeZone: met))
+        #expect(abs((day.precipitation ?? 0) - 1.5) < 0.001)
+        #expect(day.symbolCode == "lightrain_day")
+    }
+
+    /// A dry later day takes the symbol of the step over midday: 08–14 local.
+    @Test func aDryLaterDayTakesTheStepOverMidday() throws {
+        let forecast = try forecast([
+            entry("2026-10-23T00:00:00Z", sixHours: ("cloudy_night", 0.0)),
+            entry("2026-10-23T06:00:00Z", sixHours: ("fair_day", 0.0)),
+            entry("2026-10-23T12:00:00Z", sixHours: ("cloudy", 0.0)),
+            entry("2026-10-23T18:00:00Z", sixHours: ("clearsky_night", 0.0)),
+        ])
+        let day = try #require(forecast.day(on: danish(2026, 10, 23), timeZone: met))
+        #expect(day.symbolCode == "fair_day")
+    }
+
+    /// In MET's hourly part each hour counts once, from next_1_hours. The six-hour
+    /// amounts there overlap and would count the same rain up to six times.
+    @Test func hourlyStepsCountEachHourOnce() throws {
+        let forecast = try forecast((12...21).map { hour in
+            entry("2026-10-19T\(hour):00:00Z", hour: ("cloudy", 0.1), sixHours: ("rain", 9.9))
+        })
+        let day = try #require(forecast.day(on: danish(2026, 10, 19), timeZone: met))
+        #expect(abs((day.precipitation ?? 0) - 1.0) < 0.001)
+    }
+
+    /// Opened at 13:31 the forecast starts at 14:00, past midday. The day's symbol is
+    /// the afternoon's, not the evening block's night symbol.
+    @Test func afterMiddayTheSymbolIsTheHoursLeft() throws {
+        let forecast = try forecast((12...21).map { hour in
+            entry(
+                "2026-10-19T\(hour):00:00Z",
+                hour: ("partlycloudy_day", 0.0),
+                sixHours: (hour < 16 ? "partlycloudy_day" : "partlycloudy_night", 0.0)
+            )
+        })
+        let day = try #require(forecast.day(on: danish(2026, 10, 19), timeZone: met, now: local(19, 13, 31)))
+        #expect(day.symbolCode == "partlycloudy_day")
     }
 
     /// All blocks dry: the block over midday gives the day's symbol.
@@ -117,6 +184,17 @@ struct MetForecastTests {
         #expect(day.humidity == 65.0)
         #expect(day.pressure == 1035.9)
         #expect(abs((day.pressureTrend ?? 0) + 0.9) < 0.001)
+    }
+
+    /// The wind on the weather page is the reference hour's, like the temperature.
+    /// The day's strongest stays for the sun card.
+    @Test func referenceHourHasItsOwnWind() throws {
+        let forecast = try decode(Self.fixture)
+        let day = try #require(forecast.day(on: danish(2026, 10, 19), timeZone: met, now: local(19, 9, 10)))
+        #expect(day.windSpeed == 3.0)
+        #expect(day.windDirection == 80.0)
+        #expect(day.maxWindSpeed == 6.2)
+        #expect(day.maxWindDirection == 225.0)
     }
 
     /// On later days the readings come from midday. When the hour three ahead is

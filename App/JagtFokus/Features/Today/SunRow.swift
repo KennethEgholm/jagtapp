@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Sun times for Jagtbart's date and place, as their own card. Tapping opens the
-/// weather and moon page for the same day and place.
+/// Sun times for Jagtbart's date and place, as their own card, with the day's weather
+/// and the moon. Tapping opens Sol og vejr for the same day and place.
 struct QuerySunSection: View {
     @Environment(SeasonStore.self) private var store
 
@@ -19,7 +19,7 @@ struct QuerySunSection: View {
                         moon: store.calendar.moonPhase(on: store.queryDate)
                     )
                 }
-                .accessibilityHint("Åbn vejr og måne for dagen")
+                .accessibilityHint("Åbn sol og vejr for dagen")
                 .task(id: weatherTaskKey) {
                     if let coordinate = store.queryCoordinate?.point {
                         await store.weather.load(coordinate: coordinate, on: store.queryDate, calendar: store.calendar)
@@ -46,10 +46,13 @@ struct QuerySunSection: View {
     }
 }
 
-/// Sunrise and sunset for the query, with optional day weather and moon phase on
-/// the card. Not tappable by itself. Display only.
+/// The sun card, laid out like `QueryRow`: icon tile, small title, the times as the value.
+/// Under them the day's weather and the moon as short lines, then the place and date.
+/// Not tappable by itself. Display only.
 struct SunRow: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    /// One column for the icons, so every line's text starts in the same place.
+    @ScaledMetric(relativeTo: .body) private var iconColumn: CGFloat = 24
     let calendar: SeasonCalendar
     let times: SunTimes
     /// What the clock times are for. Always shown, so “here” and a chosen place cannot be confused.
@@ -61,111 +64,105 @@ struct SunRow: View {
 
     var body: some View {
         let stacked = dynamicTypeSize.isAccessibilitySize
-        VStack(alignment: .leading, spacing: Spacing.xxs) {
-            HStack(alignment: .top, spacing: Spacing.s) {
-                if !stacked {
-                    IconTile(systemImage: "sun.horizon.fill", color: .sun)
+        HStack(alignment: .top, spacing: Spacing.s) {
+            if !stacked {
+                IconTile(systemImage: "sun.horizon.fill", color: .sun)
+            }
+            VStack(alignment: .leading, spacing: Spacing.xxs) {
+                Text(Copy.sunWeatherTitle)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                let layout = stacked
+                    ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.xxs))
+                    : AnyLayout(HStackLayout(spacing: Spacing.m))
+                layout {
+                    event(times.sunrise, systemImage: "sunrise.fill")
+                    event(times.sunset, systemImage: "sunset.fill")
                 }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Sol")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    let layout = stacked
-                        ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.xxs))
-                        : AnyLayout(HStackLayout(spacing: Spacing.m))
-                    layout {
-                        event(times.sunrise, systemImage: "sunrise.fill")
-                        event(times.sunset, systemImage: "sunset.fill")
+                .font(.body.weight(.semibold))
+                .monospacedDigit()
+                if let weather {
+                    if let sky = skyText(weather) {
+                        line(sky) {
+                            Image(systemName: WeatherSymbols.icon(forSymbolCode: weather.symbolCode))
+                        }
                     }
-                    .font(.body.weight(.semibold))
-                    .monospacedDigit()
+                    if let wind = windText(weather) {
+                        line(wind) { windIcon(weather.maxWindDirection) }
+                    }
                 }
-            }
-            if let weather {
-                if let max = weather.maxTemperature, let min = weather.minTemperature {
-                    summaryLine(tempLine(max, min))
+                if let moon {
+                    line(String(localized: "\(lit(moon)) oplyst")) {
+                        Image(systemName: WeatherSymbols.moonSymbol(moon.name))
+                    }
                 }
-                if weather.symbolCode != nil || weather.precipitation != nil || weather.maxWindSpeed != nil {
-                    weatherLine(weather)
-                }
+                Text(basis)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            if let moon {
-                summaryLine(moonLine(moon))
-            }
-            // Full width, so the place and date keep to one line.
-            Text(basis)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, 2)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(spoken)
     }
 
-    /// One compact secondary line under the times. Wraps at accessibility sizes.
-    private func summaryLine(_ text: Text) -> some View {
-        text
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    /// Temps first in the line, thermometer in front: "Maks 11,9° · Min 9,1°".
-    private func tempLine(_ max: Double, _ min: Double) -> Text {
-        let icon = Text(Image(systemName: "thermometer"))
-        let temps = String(localized: "Maks \(WeatherSymbols.decimal(max, calendar.locale))° · Min \(WeatherSymbols.decimal(min, calendar.locale))°")
-        return icon + Text("   " + temps)
-    }
-
-    /// Precipitation and wind on one line. The arrow is the compass: it points the way
-    /// the wind blows, so wind from the east points west, as weather maps do.
-    private func weatherLine(_ weather: MetDay) -> some View {
+    /// One secondary line with its icon in the column. Wraps rather than truncates.
+    private func line<Icon: View>(_ text: String, @ViewBuilder icon: () -> Icon) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: Spacing.xs) {
-            Image(systemName: WeatherSymbols.icon(forSymbolCode: weather.symbolCode))
-                .accessibilityHidden(true)
-            if let rain = weather.precipitation {
-                Text(verbatim: "\(WeatherSymbols.decimal(rain, calendar.locale, digits: 0...1)) mm")
-            }
-            if let wind = weather.maxWindSpeed {
-                Text(verbatim: "·")
-                if weather.windDirection != nil {
-                    WindArrow(direction: weather.windDirection)
-                }
-                Text(verbatim: String(localized: "op til \(WeatherSymbols.decimal(wind, calendar.locale)) m/s"))
-            }
+            icon()
+                .frame(width: iconColumn)
+            Text(text)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .font(.subheadline)
         .foregroundStyle(.secondary)
-        .fixedSize(horizontal: false, vertical: true)
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func windArrow(_ direction: Double) -> some View {
-        WindArrow(direction: direction)
+    /// "Maks 11,9° · Min 9,1° · 0 mm", or what of it MET has.
+    private func skyText(_ weather: MetDay) -> String? {
+        var parts: [String] = []
+        if let max = weather.maxTemperature, let min = weather.minTemperature {
+            parts.append(Copy.maxMin(max, min, locale: calendar.locale))
+        }
+        if let rain = weather.precipitation {
+            parts.append(WeatherSymbols.rain(rain, calendar.locale))
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
-    private func moonLine(_ moon: MoonPhase) -> Text {
-        let icon = Text(Image(systemName: WeatherSymbols.moonSymbol(moon.name)))
-            .foregroundColor(.moon)
-        let lit = moon.illumination
-            .formatted(.percent.precision(.fractionLength(0)).locale(calendar.locale))
-        return icon + Text("   " + String(localized: "\(lit) oplyst"))
+    /// The day's strongest wind, in words as hunters say it: "Op til 6,8 m/s fra Ø".
+    private func windText(_ weather: MetDay) -> String? {
+        guard let wind = weather.maxWindSpeed else { return nil }
+        let speed = WeatherSymbols.decimal(wind, calendar.locale)
+        guard let direction = weather.maxWindDirection else {
+            return String(localized: "Op til \(speed) m/s")
+        }
+        return String(localized: "Op til \(speed) m/s fra \(WeatherSymbols.windText(fromDirection: direction))")
+    }
+
+    /// The compass arrow when MET gives a direction, else plain wind.
+    @ViewBuilder
+    private func windIcon(_ direction: Double?) -> some View {
+        if let direction {
+            WindArrow(direction: direction)
+        } else {
+            Image(systemName: "wind")
+        }
     }
 
     private func event(_ date: Date?, systemImage: String) -> some View {
-        Label {
-            Text(time(date))
-                .foregroundStyle(.primary)
-                .lineLimit(1)
-                .fixedSize()
-        } icon: {
+        HStack(alignment: .firstTextBaseline, spacing: Spacing.xs) {
             // Multicolor draws the arrows white, invisible in light mode.
             Image(systemName: systemImage)
                 .symbolRenderingMode(.hierarchical)
                 .foregroundStyle(.sun)
+                .frame(width: iconColumn)
+            Text(time(date))
+                .foregroundStyle(.primary)
+                .lineLimit(1)
+                .fixedSize()
         }
     }
 
@@ -173,9 +170,17 @@ struct SunRow: View {
         date.map(calendar.clockTime) ?? "–"
     }
 
+    private func lit(_ moon: MoonPhase) -> String {
+        moon.illumination
+            .formatted(.percent.precision(.fractionLength(0)).locale(calendar.locale))
+    }
+
     private var spoken: String {
         var parts = [String(localized: "Solopgang \(time(times.sunrise)), solnedgang \(time(times.sunset)). \(basis)")]
         if let weather {
+            if let condition = WeatherSymbols.text(forSymbolCode: weather.symbolCode) {
+                parts.append(condition + ".")
+            }
             if let max = weather.maxTemperature, let min = weather.minTemperature {
                 parts.append(String(localized: "Maks \(WeatherSymbols.decimal(max, calendar.locale))°, min \(WeatherSymbols.decimal(min, calendar.locale))°."))
             }
@@ -183,7 +188,7 @@ struct SunRow: View {
                 parts.append(String(localized: "Nedbør \(WeatherSymbols.decimal(rain, calendar.locale, digits: 0...1)) mm."))
             }
             if let wind = weather.maxWindSpeed {
-                if let direction = weather.windDirection {
+                if let direction = weather.maxWindDirection {
                     parts.append(String(localized: "Vind op til \(WeatherSymbols.decimal(wind, calendar.locale)) m/s fra \(WeatherSymbols.windText(fromDirection: direction))."))
                 } else {
                     parts.append(String(localized: "Vind op til \(WeatherSymbols.decimal(wind, calendar.locale)) m/s."))
@@ -191,9 +196,7 @@ struct SunRow: View {
             }
         }
         if let moon {
-            let lit = moon.illumination
-                .formatted(.percent.precision(.fractionLength(0)).locale(calendar.locale))
-            parts.append(String(localized: "\(WeatherSymbols.moonText(moon.name)), \(lit) oplyst."))
+            parts.append(String(localized: "\(WeatherSymbols.moonText(moon.name)), \(lit(moon)) oplyst."))
         }
         return parts.joined(separator: " ")
     }

@@ -9,13 +9,18 @@ public struct MetDay: Sendable, Equatable {
     /// The strongest wind of the day, in m/s.
     public var maxWindSpeed: Double?
     /// Where that wind comes from, in degrees from north.
-    public var windDirection: Double?
-    /// Millimetres through the day, counted in six-hour blocks.
+    public var maxWindDirection: Double?
+    /// Millimetres through the day: hour by hour where MET has hours, then its
+    /// six-hour steps. The last step can run a few hours past midnight.
     public var precipitation: Double?
     /// Humidity at the reference hour, in percent.
     public var humidity: Double?
     /// Temperature at the reference hour — the "now" temperature.
     public var temperature: Double?
+    /// Wind at the reference hour, in m/s.
+    public var windSpeed: Double?
+    /// Where the reference hour's wind comes from, in degrees from north.
+    public var windDirection: Double?
     /// Sea-level pressure at the reference hour, hPa.
     public var pressure: Double?
     /// How the pressure is expected to move over the three hours after the
@@ -42,6 +47,8 @@ public struct MetForecast: Sendable, Equatable {
         public var symbolCode: String?
         /// Millimetres over the six hours that follow `time`.
         public var precipitation: Double?
+        /// Millimetres over the hour that follows `time`. Only in MET's first two or three days.
+        public var hourPrecipitation: Double?
     }
 }
 
@@ -59,7 +66,8 @@ public extension MetForecast {
                 windSpeed: details?.windSpeed,
                 windDirection: details?.windFromDirection,
                 symbolCode: entry.payload?.next6Hours?.summary?.symbolCode,
-                precipitation: entry.payload?.next6Hours?.details?.precipitationAmount
+                precipitation: entry.payload?.next6Hours?.details?.precipitationAmount,
+                hourPrecipitation: entry.payload?.next1Hours?.details?.precipitationAmount
             )
         }
         return MetForecast(updatedAt: response.properties.meta?.updatedAt, timeseries: hours)
@@ -81,8 +89,8 @@ public extension MetForecast {
 
     /// The chosen day's weather, grouped by the clock in `timeZone` — Danish, whatever the
     /// phone is set to. Nil when the day has no forecast: in the past, or beyond MET's
-    /// horizon of about ten days. `now` picks the reference hour for humidity and
-    /// pressure: the hour nearest the moment, or midday on later days.
+    /// horizon of about ten days. `now` picks the reference hour for temperature, wind,
+    /// humidity and pressure: the hour nearest the moment, or midday on later days.
     func day(on date: Date, timeZone: TimeZone, now: Date? = nil) -> MetDay? {
         var local = Calendar(identifier: .gregorian)
         local.timeZone = timeZone
@@ -92,7 +100,7 @@ public extension MetForecast {
 
         var day = MetDay(
             symbolCode: nil, minTemperature: nil, maxTemperature: nil, maxWindSpeed: nil,
-            windDirection: nil, precipitation: nil, humidity: nil, temperature: nil,
+            maxWindDirection: nil, precipitation: nil, humidity: nil, temperature: nil, windSpeed: nil, windDirection: nil,
             pressure: nil, pressureTrend: nil
         )
         for hour in hours {
@@ -103,15 +111,17 @@ public extension MetForecast {
             if let wind = hour.windSpeed, wind > (day.maxWindSpeed ?? -1) {
                 // The direction of the strongest wind is the one that matters.
                 day.maxWindSpeed = wind
-                day.windDirection = hour.windDirection
+                day.maxWindDirection = hour.windDirection
             }
         }
 
-        // The hour the humidity and pressure readings belong to: nearest the moment
-        // when the chosen day is today, otherwise midday.
+        // The hour the temperature, wind, humidity and pressure readings belong to:
+        // nearest the moment when the chosen day is today, otherwise midday.
         if let reference = referenceHour(hours: hours, on: date, local: local, now: now) {
             day.humidity = reference.humidity
             day.temperature = reference.temperature
+            day.windSpeed = reference.windSpeed
+            day.windDirection = reference.windDirection
             day.pressure = reference.pressure
             // The pressure's move over the next three hours.
             if let ahead = timeseries.first(where: {
@@ -121,17 +131,36 @@ public extension MetForecast {
             }
         }
 
-        // Precipitation and the day's symbol come from the six-hour blocks that start at
-        // 00, 06, 12 and 18 local time. Every other hour would double count.
-        let blocks = [0, 6, 12, 18].compactMap { hour in
-            hours.first { local.component(.hour, from: $0.time) == hour }
+        // Each hour's rain counts once: from next_1_hours while MET has hours, then from
+        // the six-hour steps. Their six-hour amounts overlap and would count it again.
+        var rain: Double?
+        var counted = Date.distantPast
+        for hour in hours where hour.time >= counted {
+            if let amount = hour.hourPrecipitation {
+                rain = (rain ?? 0) + amount
+                counted = hour.time.addingTimeInterval(3600)
+            } else if let amount = hour.precipitation {
+                rain = (rain ?? 0) + amount
+                counted = hour.time.addingTimeInterval(6 * 3600)
+            }
         }
-        let rains = blocks.compactMap(\.precipitation)
-        if !rains.isEmpty {
-            day.precipitation = rains.reduce(0, +)
-        }
-        day.symbolCode = symbol(blocks: blocks, local: local)
+        day.precipitation = rain
+        day.symbolCode = symbol(
+            blocks: sixHourBlocks(hours),
+            noon: local.date(bySettingHour: 12, minute: 0, second: 0, of: date)
+        )
         return day
+    }
+
+    /// Six-hour blocks that follow on from each other, from the day's first. MET's steps
+    /// sit at 00, 06, 12 and 18 UTC from about the third day, so not on the Danish clock.
+    private func sixHourBlocks(_ hours: [Hour]) -> [Hour] {
+        var blocks: [Hour] = []
+        for hour in hours where hour.symbolCode != nil {
+            if let last = blocks.last, hour.time < last.time.addingTimeInterval(6 * 3600) { continue }
+            blocks.append(hour)
+        }
+        return blocks
     }
 
     /// The reference hour: nearest `now` when it falls inside the day, else 12 local.
@@ -148,13 +177,16 @@ public extension MetForecast {
     }
 
     /// A block with rain says more than a dry one; otherwise the block over midday.
-    private func symbol(blocks: [Hour], local: Calendar) -> String? {
+    /// Past midday today, the first block left: the afternoon, not the night.
+    private func symbol(blocks: [Hour], noon: Date?) -> String? {
         if let wettest = blocks.max(by: { ($0.precipitation ?? 0) < ($1.precipitation ?? 0) }),
            let code = wettest.symbolCode, (wettest.precipitation ?? 0) > 0.05 {
             return code
         }
-        let midday = blocks.first { local.component(.hour, from: $0.time) == 12 }
-        return (midday ?? blocks.first)?.symbolCode
+        let overNoon = noon.flatMap { noon in
+            blocks.first { $0.time <= noon && noon < $0.time.addingTimeInterval(6 * 3600) }
+        }
+        return (overNoon ?? blocks.first)?.symbolCode
     }
 
     private static let decoder: JSONDecoder = {
@@ -196,10 +228,12 @@ private struct Response: Decodable {
 
         struct Payload: Decodable {
             var instant: Instant?
+            var next1Hours: Block?
             var next6Hours: Block?
 
             enum CodingKeys: String, CodingKey {
                 case instant
+                case next1Hours = "next_1_hours"
                 case next6Hours = "next_6_hours"
             }
         }

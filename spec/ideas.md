@@ -13,6 +13,7 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
 ## Senere
 
 - Alarm/vibration 10 minutter før solnedgang
+- Vind ved solopgang og solnedgang på Sol og vejr: morgen- og aftenjagten afgøres af vinden da, ikke af dagens kraftigste
 - Jagt-log (ud over journalen i v1)
   - Placering (GPS / manuelt)
   - Vejret på dagen
