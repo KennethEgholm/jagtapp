@@ -39,8 +39,9 @@ spec/ideas.md                      # Backlog
 spec/appstore/                     # App Store copy, replies, review notes, screenshots
 docs/                              # GitHub Pages: support (index.html) and privacy policy
 data/jagttider.json                # Seasons + places + local overrides
-Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun times, photos, catalog check
-Tests/JagtFokusCoreTests/          # 104 tests
+Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun and moon, MET weather decode, photos, catalog check
+
+Tests/JagtFokusCoreTests/          # 122 tests
 .github/workflows/tests.yml        # swift test on every push to main and every PR
 .github/workflows/appstore.yml     # App Store upload, manual and off
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
@@ -48,9 +49,10 @@ App/JagtFokus/
   JagtFokusApp.swift, RootView.swift, Copy.swift, Localization.swift
   Localizable.xcstrings            # UI copy: Danish source, English translation
   InfoPlist.xcstrings              # The system's location prompt
-  Store/                           # SeasonStore (@Observable), LocationService, Appearance
+  Store/                           # SeasonStore (@Observable), WeatherStore, LocationService, Appearance
   DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle, GroupHeader, CountCard, QueryRow
   Features/Today/                  # Jagtbart, date/place rows, sheets
+  Features/Weather/                # Vejr og måne (push from the sun card; MET Norway)
   Features/Species/                # SpeciesRow, SpeciesDetailView
   Features/AllSpecies/             # Alle arter
   Features/Settings/               # Indstillinger (appearance, lists), with the Om sections below
@@ -185,6 +187,15 @@ The simulator has no GPS. Set a Danish position:
 xcrun simctl location booted set 56.1629,10.2039
 ```
 
+The simulator's own language may be English. Make the app open in Danish anyway, stored
+in the app's preference domain (persists across launches; a `-AppleLanguages` launch
+argument still wins when you want to check the English app):
+
+```sh
+xcrun simctl spawn booted defaults write dk.jagtfokus.app AppleLanguages -array da
+xcrun simctl spawn booted defaults write dk.jagtfokus.app AppleLocale -string da_DK
+```
+
 Debug launch arguments (DEBUG only) for screenshots and manual checks:
 
 | Argument | Effect |
@@ -197,6 +208,7 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-species raabuk` | Open the species page from Jagtbart |
 | `-sheet date` / `-sheet place` / `-sheet schweiss` | Open a picker, or the Schweiss page from Jagtbart |
 | `-closed YES` | Expand “Ikke jagtbar her” |
+| `-open vejr` | Push the weather page from Jagtbart |
 | `-search ræv` | Open search on Alle arter with that text (use with `-tab all`) |
 | `-groups open` | Expand every group on Jagtbart, or on Alle arter with `-tab all` |
 | `-UIPreferredContentSizeCategoryName UICTContentSizeCategoryAccessibilityL` | Large text |

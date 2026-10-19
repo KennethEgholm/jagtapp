@@ -17,6 +17,7 @@ Levende dokument. Gælder alle skærme. Bygger på Apple Human Interface Guideli
 | `AccentColor` (Forest) | `#2F6B47` | `#7FC79A` | Tint, Jagtbar-status, valgt |
 | `Brass` | `#7A5C17` | `#D9B65E` | Lokal jagttid-mærke |
 | `Amber` | `#A35200` | `#FFB547` | Lukker snart |
+| `Gold` | `#7A5C17` | `#D9B65E` | Vejr-sidens etiketter og ikoner (almanak-guld) |
 | `BrandDeep` | `#0D2A1C` | `#0D2A1C` | Velkomst-baggrund |
 | `BrandGold` | `#D9B65E` | `#D9B65E` | Velkomst: knap, ikoner, “Vigtigt”-ramme |
 
@@ -50,7 +51,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - **ListHeading** + `scrollRevealedTitle` — stor ombrydende overskrift i indholdet, titel i baren ved scroll. Kun hvor titlen er lang: Jagtbart, artsdetaljen og Schweiss-registret. Korte titler (Journal, Alle arter, Indstillinger) bruger systemets store titel.
 - **IconTile**, **BrandMark** (`Theme.swift`).
 - **GroupSketch** (`DesignSystem/GroupSketch.swift`) — stregtegning ved gruppenavnet. Kronhjort, ræv, hare, and, gås, fasan, lille fugl. Primær farve, ikke grøn: den er pynt, ikke status. Skjult for VoiceOver. Ukendt gruppe får en ring.
-- **SunRow** (`Features/Today/SunRow.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve). Under tiden: “[Sted], den [dato]”, samme valg som rækkerne ovenfor. Ikke trykbar.
+- **SunRow** (`Features/Today/SunRow.swift`) — “Sol” med ⬆︎ solopgang og ⬇︎ solnedgang (orange hierarkiske symboler, tid i primær farve). Under tiden to kompakte linjer: dagens vejr (symbol, temperatur, nedbør, vind med komaspil — kun inden for MET’s horisont) og månen (fasesymbol, hvor stor en del der er oplyst — altid). Under det: “[Sted], den [dato]” på hele kortbredden. Tryk åbner Vejr-siden. Bruges kun på Jagtbart; Vejr-siden har sine egne fliser.
 
 ## Skærme
 
@@ -69,6 +70,16 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Eget kort under svar-kortet, ikke en række under Dato og Sted. Klokkeslæt i dansk format (“07.42”), afrundet til nærmeste minut som almanakker.
 - Under tiden: “[Sted], den [dato]”, samme sted og dato som rækkerne ovenfor. Fx “Sjælland, den 16. oktober”.
 - Kun visning. Listen afgøres stadig af dato og sted.
+- Tryk på kortet skubber **Vejr og måne** ind for samme dag og sted.
+
+### Vejr og måne (push fra sol-kortet)
+- Fliser i to kolonner (almanak-stil): guldt token `Gold` til små versal-etiketter og ikoner, stor værdi i primær, lille note i sekundær. Én flise pr. emne: **Vejret** (symbol + ord), **Vind** (kompaspil der peger der vinden blæser hen + m/s + “fra Ø”), **Temperatur** (nu-timen i dag, ellers maks; note “Maks 12,3° · Min 6,1°”), **Fugtighed** (%), **Nedbør** (mm, seks-timers blokke), **Barometer** (hPa + “↓ Faldende” — trykkets bevægelse over de næste tre timer, ±0,3 hPa grænse), **Solopgang/Solnedgang** (note “i dag” eller dagen), **Månen** over begge kolonner (fase + “57 % oplyst”).
+- MET’s compact-svar rummer også fugtighed og tryk; referencetimen er den time, der ligger nærmest nu, når den valgte dag er i dag, ellers kl. 12. Nedbør tælles i MET’s seks-timers blokke, så den ikke tælles dobbelt. Dagens symbol er den vådeste blok, ellers midt i dagen.
+- Vejr fra MET Norway Locationforecast 2.0 (compact), hentet ved tryk og af sol-kortet. Koordinater afrundes til to decimaler. Svaret genbruges i ti minutter. Skærmen lover intet om “jagtbar nu”: vejret er kun visning.
+- Ingen Vejr-data (datoen er i fortiden eller MET’s horisont på ca. ti dage): én linje om det, og solen og månen står stadig. Fejl eller offline: samme mønster. Kortlægningen af MET’s symbolkoder bor i `Features/Weather/WeatherSymbols.swift`.
+- Sol og måne beregnes på telefonen (`SunTimes`, `MoonPhase` i `JagtFokusCore`), ligesom månefasen. Måneflisen står altid.
+- Footer: “Kilde: Meteorologisk institutt (MET). Vejr og måne er kun visning.” Kreditering er også et licenskrav (NLOD/CC BY 4.0).
+- Kort titel: systemets store titel “Vejr”, ingen ListHeading. Ved AX-tekststørrelser stables fliserne i én kolonne.
 
 ### Alle arter
 - Generelle jagttider, grupperet, søgbar. Hver række har SeasonBar uden markør.
@@ -161,3 +172,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 - Design-gennemgang 2 (2026-10-17): grupperækken, dato/sted-rækkerne og tal-kortet fandtes i to kopier. Nu én komponent hver i `DesignSystem/`. Journalens positionstekst sagde “Viser sidst kendte sted”, mens rækken viste Danmark. Nu siger footeren, hvad rækken viser. Listerne på Jagtbart (åbne grupper, lukkede arter efter næste åbning, antal der lukker snart), søgning og hjortenoten er flyttet til Core med tests. Søgning ignorerer store bogstaver og accenter ens på alle skærme (“gas” finder “Grågås”). Solen står som sit eget kort.
 - Design-gennemgang 3 (2026-10-17): svaret var gledet ned under overskrift, dato, sted og sol (ca. 60 % nede, under folden ved AX-L). Rækkefølgen er nu Dato og Sted → svar-kort → sol → grupper. Grupperne starter stadig sammenfoldet, men en gruppe med arter der lukker inden for en uge viser det i amber under navnet. Antallet til højre brydes aldrig.
 - Design-gennemgang 4 (2026-10-17): fem faner blev til fire. Indstillinger havde kun to kontroller, så Om står nu under dem i samme fane, som i iOS’ egen Indstillinger. Om er sektioner, ikke en push, så kilde og fraskrivelse er ét tryk væk. Journal har systemets store titel som Alle arter og Indstillinger, så titlen ikke hopper mellem fanerne. Journal-ikonet er `book.closed`: et faneikon viser et sted, ikke en handling.
+- Vejr og måne (2026-10-19): tryk på sol-kortet skubber Vejr-siden ind. Vejr fra MET Norway Locationforecast 2.0 med User-Agent, der identificerer appen, koordinater afrundet til to decimaler og et svar genbrugt i ti minutter (MET’s krav). Dagsopsummering, ikke time-rækker; fortid og horisont udenfor ca. ti dage skjuler vejret, sol og måne bliver. Månefasen er en synodisk beregning i Core, testet mod forholds- og måneformørkelser som ankre. Privatlivssiden, reklameteksten og beskrivelsen er opdateret i samme ændring. `QueryRow` fik `showsChevron: false`, for vejr-rækkerne er tal, ikke navigation. Cachen bor i hukommelsen; disk-cache kan komme senere, hvis MET-mængden nogensinde kræver det.
+- SunRow (2026-10-19): basis-linjen (“Als, den 19. oktober”) stod i samme smalle kolonne som klokkeslættet og brød i to linjer, så kortet blev unødig højt. Den står nu på hele kortbredden under ikon og tider.
+- Vejr-siden som flisegitter (2026-10-19): rækkerne blev skiftet ud med almanak-fliser i to kolonner — guldetiket, stor værdi, lille note (`Gold`-farven i Assets, samme par som Brass). MET’s compact-svar giver også luftfugtighed og tryk; tryktrenden ser fremad (næste tre timer), for prognosen ikke har tre timer tilbage. `Grid` frem for `LazyVGrid` inde i en List: det lazy gitter satte cellerne forkert. Fliserne er én VoiceOver-element hver. `QueryRow`’s `showsChevron`-parameter er fjernet igen — fliserne overtog opgaven.
+- Sol-kortet med vejr og måne (2026-10-19): kortet viser kompakte linjer — temperaturer (“Maks 11,9° · Min 9,1°” med termometer), dagens vejr (“0 mm · [pil] op til 6,8 m/s”) når datoen ligger inden for MET’s horisont, og månen (“57 % oplyst”), som altid kan beregnes. Vindpilen er kompasset: den peger der, vinden blæser hen (fra øst → pil mod vest), som på vejrkort; VoiceOver hører “fra Ø”. `WeatherStore` er flyttet til `Store/` og ejes af `SeasonStore`, så kortet og Vejr-siden deler ét svar og højst ét kald pr. sted og dag (ti minutters genbrug). Vindretningen er retningen ved dagens kraftigste vind, i otte streger. Linjerne ombryder ved AX-størrelser.

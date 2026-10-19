@@ -54,6 +54,11 @@ enum Copy {
     static let collapseGroupsTitle = String(localized: "Sammenfold grupper")
     static let collapseGroupsFooter = String(localized: "Jagtbart og Alle arter starter med grupperne lukket. Slå fra for at se alle arter med det samme.")
 
+    /// “[Sted], den [dato]”: what the sun and weather clock times belong to.
+    static func basis(place: String, day: String) -> String {
+        String(localized: "\(place), den \(day)")
+    }
+
     /// "1 art", "14 arter". The plural forms live in the String Catalog.
     static func speciesCount(_ count: Int) -> String {
         String(localized: "\(count) arter")

@@ -9,6 +9,10 @@ struct TodayView: View {
     @State private var showDate = false
     @State private var showPlace = false
     @State private var showSchweiss = false
+    #if DEBUG
+    /// `-open vejr` pushes the weather page straight away, for screenshots.
+    @State private var debugWeather = false
+    #endif
     @AppStorage(Copy.collapseGroupsKey) private var collapseGroups = true
 
     var body: some View {
@@ -97,6 +101,11 @@ struct TodayView: View {
             .navigationDestination(for: SpeciesRoute.self) { route in
                 SpeciesDetailView(route: route)
             }
+            #if DEBUG
+            .navigationDestination(isPresented: $debugWeather) {
+                WeatherView()
+            }
+            #endif
             .sheet(isPresented: $showDate) {
                 DatePickerSheet(initialDate: store.queryDate) { store.select(date: $0) }
             }
@@ -120,7 +129,8 @@ struct TodayView: View {
     }
 
     /// Debug only: `-species raabuk` opens a detail, `-closed YES` expands the closed section,
-    /// `-groups open` expands every open group, `-sheet date|place|schweiss` opens a picker or the Schweiss page.
+    /// `-groups open` expands every open group, `-sheet date|place|schweiss` opens a picker or the
+    /// Schweiss page, `-open vejr` pushes the weather page.
     private func applyLaunchRoute() {
         #if DEBUG
         let defaults = UserDefaults.standard
@@ -137,6 +147,7 @@ struct TodayView: View {
         case "schweiss": showSchweiss = true
         default: break
         }
+        if defaults.string(forKey: "open") == "vejr" { debugWeather = true }
         #endif
     }
 

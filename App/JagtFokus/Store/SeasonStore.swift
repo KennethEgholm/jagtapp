@@ -31,6 +31,8 @@ final class SeasonStore {
     private(set) var userSelections = 0
 
     let calendar = SeasonCalendar(locale: AppLanguage.locale)
+    /// Weather for the query, from MET Norway. Loaded when Jagtbart's sun card shows.
+    let weather = WeatherStore()
     /// Bundled photo credits. Images are in the asset catalog.
     let photos = SeasonStore.bundlePhotos()
     /// Bundled life-history notes. Display only.
@@ -89,14 +91,22 @@ final class SeasonStore {
         catalog.resolvedSections(at: queryPlace)
     }
 
+    /// The point the sun and the weather are computed for. Exact at the GPS position;
+    /// otherwise at the place's representative point, so approximate.
+    var queryCoordinate: (point: Coordinate, isExact: Bool)? {
+        if followHere, let gpsCoordinate, gpsPlace != nil { return (gpsCoordinate, true) }
+        guard let point = catalog.coordinate(for: queryPlace) else { return nil }
+        return (point, false)
+    }
+
     /// Sun times for the query. Exact at the GPS position; otherwise at the place's
     /// representative point, so approximate. Display only, never used for "jagtbar".
     var querySun: (times: SunTimes, isApproximate: Bool)? {
-        if followHere, let gpsCoordinate, gpsPlace != nil {
-            return (calendar.sunTimes(on: queryDate, latitude: gpsCoordinate.latitude, longitude: gpsCoordinate.longitude), false)
-        }
-        guard let point = catalog.coordinate(for: queryPlace) else { return nil }
-        return (calendar.sunTimes(on: queryDate, latitude: point.latitude, longitude: point.longitude), true)
+        guard let coordinate = queryCoordinate else { return nil }
+        return (
+            calendar.sunTimes(on: queryDate, latitude: coordinate.point.latitude, longitude: coordinate.point.longitude),
+            !coordinate.isExact
+        )
     }
 
     func status(of item: ResolvedSpecies) -> SeasonStatus {

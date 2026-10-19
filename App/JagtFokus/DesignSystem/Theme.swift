@@ -28,6 +28,8 @@ extension ShapeStyle where Self == Color {
     static var forest: Color { Color(red: 0.184, green: 0.420, blue: 0.278) }
     /// Sunrise and sunset. Display only, not status.
     static var sun: Color { .orange }
+    /// Moon phase on the weather page. Display only, not status.
+    static var moon: Color { .indigo }
     /// Lighter green glow in the welcome background.
     static var brandGlow: Color { Color(red: 0.13, green: 0.30, blue: 0.20) }
 }

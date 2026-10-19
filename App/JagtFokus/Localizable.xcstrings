@@ -22,6 +22,17 @@
         }
       }
     },
+    "%@ oplyst" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ lit"
+          }
+        }
+      },
+      "comment" : "How much of the moon's disc is lit, e.g. “63 % oplyst”."
+    },
     "%@ · %@" : {
       "localizations" : {
         "en" : {
@@ -53,6 +64,17 @@
         }
       },
       "comment" : "A place, then a date, e.g. “Zealand, 16 October”."
+    },
+    "%@, %@ oplyst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %@ lit."
+          }
+        }
+      },
+      "comment" : "The moon's name and how much of its disc is lit, read aloud by VoiceOver."
     },
     "%@, den %@" : {
       "localizations" : {
@@ -247,6 +269,26 @@
         }
       }
     },
+    "Aftagende måne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waning moon"
+          }
+        }
+      }
+    },
+    "Aftagende månesegl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waning crescent"
+          }
+        }
+      }
+    },
     "Alle arter" : {
       "localizations" : {
         "en" : {
@@ -377,6 +419,16 @@
         }
       }
     },
+    "Barometer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Barometer"
+          }
+        }
+      }
+    },
     "Biologi" : {
       "localizations" : {
         "en" : {
@@ -454,6 +506,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Date and place"
+          }
+        }
+      }
+    },
+    "Delvis skyet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partly cloudy"
           }
         }
       }
@@ -618,12 +680,42 @@
         }
       }
     },
+    "Fugtighed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Humidity"
+          }
+        }
+      }
+    },
+    "Fuldmåne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full moon"
+          }
+        }
+      }
+    },
     "Færdig" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Done"
+          }
+        }
+      }
+    },
+    "Første kvarter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First quarter"
           }
         }
       }
@@ -684,6 +776,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All of Denmark"
+          }
+        }
+      }
+    },
+    "Henter vejret…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetching the weather…"
           }
         }
       }
@@ -1129,12 +1231,152 @@
         }
       }
     },
+    "Kilde: Meteorologisk institutt (MET). Vejr og måne er kun visning." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source: the Norwegian Meteorological Institute (MET). Weather and moon are display only."
+          }
+        }
+      }
+    },
+    "Klart" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear sky"
+          }
+        }
+      }
+    },
     "Klovbærende" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cloven-hoofed game"
+          }
+        }
+      }
+    },
+    "Kraftig regn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy rain"
+          }
+        }
+      }
+    },
+    "Kraftig regn og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy rain and thunder"
+          }
+        }
+      }
+    },
+    "Kraftig slud" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy sleet"
+          }
+        }
+      }
+    },
+    "Kraftig slud og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy sleet and thunder"
+          }
+        }
+      }
+    },
+    "Kraftig sne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy snow"
+          }
+        }
+      }
+    },
+    "Kraftig sne og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy snow and thunder"
+          }
+        }
+      }
+    },
+    "Kraftige regnbyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy rain showers"
+          }
+        }
+      }
+    },
+    "Kraftige regnbyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy rain showers and thunder"
+          }
+        }
+      }
+    },
+    "Kraftige sludbyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy sleet showers"
+          }
+        }
+      }
+    },
+    "Kraftige sludbyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy sleet showers and thunder"
+          }
+        }
+      }
+    },
+    "Kraftige snebyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy snow showers"
+          }
+        }
+      }
+    },
+    "Kraftige snebyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heavy snow showers and thunder"
           }
         }
       }
@@ -1169,6 +1411,16 @@
         }
       }
     },
+    "Kunne ikke hente vejret. Tjek forbindelsen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not fetch the weather. Check the connection."
+          }
+        }
+      }
+    },
     "Kunne ikke opdatere din position. Viser sidst kendte sted: %@." : {
       "localizations" : {
         "en" : {
@@ -1185,6 +1437,136 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Latin name"
+          }
+        }
+      }
+    },
+    "Let regn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light rain"
+          }
+        }
+      }
+    },
+    "Let regn og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light rain and thunder"
+          }
+        }
+      }
+    },
+    "Let regnbyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light rain showers"
+          }
+        }
+      }
+    },
+    "Let regnbyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light rain showers and thunder"
+          }
+        }
+      }
+    },
+    "Let skyet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fair"
+          }
+        }
+      }
+    },
+    "Let slud" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light sleet"
+          }
+        }
+      }
+    },
+    "Let slud og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light sleet and thunder"
+          }
+        }
+      }
+    },
+    "Let sludbyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light sleet showers"
+          }
+        }
+      }
+    },
+    "Let sludbyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light sleet showers and thunder"
+          }
+        }
+      }
+    },
+    "Let sne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light snow"
+          }
+        }
+      }
+    },
+    "Let sne og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light snow and thunder"
+          }
+        }
+      }
+    },
+    "Let snebyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light snow showers"
+          }
+        }
+      }
+    },
+    "Let snebyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light snow showers and thunder"
           }
         }
       }
@@ -1279,6 +1661,26 @@
         }
       }
     },
+    "Maks %@° · Min %@°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max %@° · Min %@°"
+          }
+        }
+      }
+    },
+    "Maks %@°, min %@°." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max %@°, min %@°."
+          }
+        }
+      }
+    },
     "Mangler data" : {
       "localizations" : {
         "en" : {
@@ -1319,12 +1721,63 @@
         }
       }
     },
+    "Månen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moon"
+          }
+        }
+      }
+    },
     "Mørk" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dark"
+          }
+        }
+      }
+    },
+    "N" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N"
+          }
+        }
+      },
+      "comment" : "Compass point for the wind, eight points, e.g. “Vind op til 6,8 m/s fra NØ”."
+    },
+    "NV" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NW"
+          }
+        }
+      }
+    },
+    "Nedbør" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precipitation"
+          }
+        }
+      }
+    },
+    "Nedbør %@ mm." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precipitation %@ mm."
           }
         }
       }
@@ -1356,6 +1809,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Record %@"
+          }
+        }
+      }
+    },
+    "Nymåne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New moon"
+          }
+        }
+      }
+    },
+    "NØ" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NE"
           }
         }
       }
@@ -1490,6 +1963,46 @@
         }
       }
     },
+    "Regn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain"
+          }
+        }
+      }
+    },
+    "Regn og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain and thunder"
+          }
+        }
+      }
+    },
+    "Regnbyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain showers"
+          }
+        }
+      }
+    },
+    "Regnbyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain showers and thunder"
+          }
+        }
+      }
+    },
     "Ret" : {
       "localizations" : {
         "en" : {
@@ -1556,6 +2069,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Predators"
+          }
+        }
+      }
+    },
+    "S" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S"
+          }
+        }
+      }
+    },
+    "SV" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SW"
           }
         }
       }
@@ -1650,6 +2183,16 @@
         }
       }
     },
+    "Sidste kvarter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last quarter"
+          }
+        }
+      }
+    },
     "Skjult" : {
       "localizations" : {
         "en" : {
@@ -1670,12 +2213,62 @@
         }
       }
     },
+    "Skyet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cloudy"
+          }
+        }
+      }
+    },
     "Slet" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Slud" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleet"
+          }
+        }
+      }
+    },
+    "Slud og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleet and thunder"
+          }
+        }
+      }
+    },
+    "Sludbyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleet showers"
+          }
+        }
+      }
+    },
+    "Sludbyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleet showers and thunder"
           }
         }
       }
@@ -1690,12 +2283,72 @@
         }
       }
     },
+    "Sne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snow"
+          }
+        }
+      }
+    },
+    "Sne og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snow and thunder"
+          }
+        }
+      }
+    },
+    "Snebyger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snow showers"
+          }
+        }
+      }
+    },
+    "Snebyger og torden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snow showers and thunder"
+          }
+        }
+      }
+    },
     "Sol" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sun"
+          }
+        }
+      }
+    },
+    "Solnedgang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunset"
+          }
+        }
+      }
+    },
+    "Solopgang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sunrise"
           }
         }
       }
@@ -1760,6 +2413,16 @@
         }
       }
     },
+    "SØ" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SE"
+          }
+        }
+      }
+    },
     "Sætter arten på artslisten eller tager den af" : {
       "localizations" : {
         "en" : {
@@ -1820,6 +2483,16 @@
         }
       }
     },
+    "Temperatur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperature"
+          }
+        }
+      }
+    },
     "Tilføj" : {
       "localizations" : {
         "en" : {
@@ -1836,6 +2509,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add to journal"
+          }
+        }
+      }
+    },
+    "Tiltagende måne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waxing moon"
+          }
+        }
+      }
+    },
+    "Tiltagende månesegl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waxing crescent"
+          }
+        }
+      }
+    },
+    "Tåge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fog"
           }
         }
       }
@@ -1860,12 +2563,52 @@
         }
       }
     },
+    "V" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W"
+          }
+        }
+      }
+    },
     "Valgt" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selected"
+          }
+        }
+      }
+    },
+    "Vejr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather"
+          }
+        }
+      }
+    },
+    "Vejret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather"
+          }
+        }
+      }
+    },
+    "Vejret vises kun for de næste ti dage." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The weather is shown only for the next ten days."
           }
         }
       }
@@ -1906,6 +2649,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bag"
+          }
+        }
+      }
+    },
+    "Vind" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind"
+          }
+        }
+      }
+    },
+    "Vind op til %@ m/s fra %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind up to %@ m/s from %@."
+          }
+        }
+      }
+    },
+    "Vind op til %@ m/s." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind up to %@ m/s."
           }
         }
       }
@@ -2050,6 +2823,17 @@
         }
       }
     },
+    "fra %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from %@"
+          }
+        }
+      },
+      "comment" : "Which way the wind comes from, e.g. “fra Ø”."
+    },
     "i dag" : {
       "localizations" : {
         "en" : {
@@ -2089,6 +2873,17 @@
           }
         }
       }
+    },
+    "op til %@ m/s" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "up to %@ m/s"
+          }
+        }
+      },
+      "comment" : "The strongest wind of the day, on the sun card, e.g. “op til 6,8 m/s”."
     },
     "sidste dag %@" : {
       "localizations" : {
@@ -2192,6 +2987,16 @@
         }
       }
     },
+    "Åbn vejr og måne for dagen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the day's weather and moon"
+          }
+        }
+      }
+    },
     "Åbner" : {
       "localizations" : {
         "en" : {
@@ -2228,6 +3033,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opens schweiss.dk"
+          }
+        }
+      }
+    },
+    "Ø" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E"
           }
         }
       }
@@ -2281,6 +3096,39 @@
           }
         }
       }
+    },
+    "↑ Stigende" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↑ Rising"
+          }
+        }
+      },
+      "comment" : "How the barometer has moved over three hours: rising."
+    },
+    "→ Uændret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "→ Steady"
+          }
+        }
+      },
+      "comment" : "How the barometer has moved over three hours: steady."
+    },
+    "↓ Faldende" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↓ Falling"
+          }
+        }
+      },
+      "comment" : "How the barometer has moved over three hours: falling."
     }
   },
   "version" : "1.0"

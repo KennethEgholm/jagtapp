@@ -22,7 +22,7 @@ Klar til at kopiere ind i App Store Connect. Tegngrænser er tjekket.
 
 ## Reklametekst (170)
 
-Se på få sekunder, hvad der er jagtbart i dag, der hvor du er. Lokale tider, soltider, journal og biologi – også uden net.
+Se på få sekunder, hvad der er jagtbart i dag, der hvor du er. Lokale tider, soltider, vejr og måne, journal og biologi – også uden net.
 
 ## Nøgleord (100)
 
@@ -43,7 +43,10 @@ LOKALE JAGTTIDER
 Mange øer og områder har egne jagttider. JagtFokus finder dit sted ud fra din position og bruger den lokale tid, når den gælder – ø før område før region før Danmark. Du kan også selv vælge sted og dag, fx når du planlægger weekendens jagt.
 
 SOLOPGANG OG SOLNEDGANG
-Se soltider for den valgte dag og dit sted, beregnet direkte på telefonen.
+Se soltider for den valgte dag og dit sted, beregnet direkte på telefonen. Tryk på kortet og se også vejret for dagen og månefasen.
+
+VEJR OG MÅNE
+Dagens vejr fra Meteorologisk institutt (MET): skyforhold, temperatur, vind og nedbør – og månefasen, beregnet på telefonen. Vejret kræver net. Sol og måne gør det ikke.
 
 ALLE ARTER
 Slå de generelle jagttider op for alle arter med en tidslinje over jagtåret. Hver art har en side med jagttid, biologisk opslag, noter, foto og link til bekendtgørelsen.
