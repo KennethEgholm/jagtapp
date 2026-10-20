@@ -26,6 +26,10 @@ Soltider og Indstillinger (tema) er flyttet til `spec/v1.md` (2026-10-11).
   - Praktisk hjælp (plukke fugle, osv.)
   - Jagtrelaterede opskrifter
 - Nærmeste schweisshundefører i appen (navn og telefon, sted fra GPS eller manuelt). Venter på tilladelse fra Schweiss-sekretariatet. Ingen scrape. Infosiden er i v1
+- Kort: vis jordstykket, du står på (matrikelnr. og ejerlav)
+- Kort: luftfoto som baggrund
+- Kort: opdater et gemt område
+- Kort: automatisk lagring af det, du har set
 
 
 - Android / Google Play

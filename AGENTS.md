@@ -36,6 +36,7 @@ spec/v1.md                         # v1, including the journal
 spec/v2.md                         # Journal details and the unbuilt bag report
 spec/design.md                     # Design system, screens, decisions
 spec/ideas.md                      # Backlog
+spec/kort.md                       # Kort med matrikelskel
 spec/appstore/                     # App Store copy, replies, review notes, screenshots
 docs/                              # GitHub Pages: support (index.html) and privacy policy
 data/jagttider.json                # Seasons + places + local overrides
