@@ -27,6 +27,24 @@ enum MapSession {
     }()
 }
 
+/// The pinned TileJSON for `MapRequestProtocol`, which runs on URL loading threads. Read from the
+/// Kort index on disk when it is needed (once per style load), so it is there from the first
+/// request after launch, before `MapStore` has read anything.
+enum PinnedBasemap {
+    private static let downloads = OSAllocatedUnfairLock(initialState: 0)
+
+    static func beginDownload() { downloads.withLock { $0 += 1 } }
+    static func endDownload() { downloads.withLock { $0 -= 1 } }
+    static var isDownloadingPack: Bool { downloads.withLock { $0 > 0 } }
+
+    /// The pin, when there is a saved area for it to serve.
+    static func tileJSON() -> Data? {
+        guard case .known(let index) = OfflineAreaStore(folder: OfflineDisk.defaultFolder).indexState(),
+              !index.areas.isEmpty else { return nil }
+        return index.pinnedTileJSON
+    }
+}
+
 /// All of MapLibre's traffic goes through here, so OpenFreeMap sees at most
 /// `OpenFreeMap.maxParallelRequests` requests at once and the app's own User-Agent.
 final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
@@ -99,7 +117,8 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
         }
         Self.log.notice("request \(number, privacy: .public) \(Self.redacted(self.request.url), privacy: .public)")
         if Self.offline {
-            client?.urlProtocol(self, didFailWithError: URLError(.notConnectedToInternet))
+            let error = URLError(.notConnectedToInternet)
+            if !servePin(after: error) { client?.urlProtocol(self, didFailWithError: error) }
             return
         }
         #endif
@@ -122,14 +141,51 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
                     return try await Self.session.data(for: outgoing)
                 }
                 guard !Task.isCancelled, let self else { return }
-                self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+                self.client?.urlProtocol(self, didReceive: self.revalidated(response), cacheStoragePolicy: .notAllowed)
                 self.client?.urlProtocol(self, didLoad: data)
                 self.client?.urlProtocolDidFinishLoading(self)
             } catch {
                 guard !Task.isCancelled, let self else { return }
-                self.client?.urlProtocol(self, didFailWithError: error)
+                if !self.servePin(after: error) { self.client?.urlProtocol(self, didFailWithError: error) }
             }
         }
+    }
+
+    private var isTileJSON: Bool {
+        request.url.map(BasemapPin.isTileJSON) ?? false
+    }
+
+    /// The TileJSON answer while there is a pin: no freshness, so MapLibre asks again on each
+    /// style load, and offline it asks here instead of using a stored newer week. Without a saved
+    /// area the server's headers stand, and MapLibre's own cache works offline as before.
+    private func revalidated(_ response: URLResponse) -> URLResponse {
+        guard isTileJSON, let http = response as? HTTPURLResponse, let url = http.url,
+              PinnedBasemap.tileJSON() != nil else { return response }
+        var headers: [String: String] = [:]
+        for (key, value) in http.allHeaderFields {
+            if let key = key as? String, let value = value as? String { headers[key] = value }
+        }
+        return HTTPURLResponse(url: url, statusCode: http.statusCode, httpVersion: "HTTP/1.1",
+                               headerFields: BasemapPin.revalidating(headers)) ?? response
+    }
+
+    /// No network and the map asks for the TileJSON: answer with the pin, the week every saved
+    /// pack is complete for. True when it answered.
+    private func servePin(after error: Error) -> Bool {
+        guard isTileJSON, let url = request.url else { return false }
+        let pin = PinnedBasemap.tileJSON()
+        guard BasemapPin.serves(after: error, hasPin: pin != nil, isDownloadingPack: PinnedBasemap.isDownloadingPack),
+              let pin,
+              let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "HTTP/1.1",
+                                             headerFields: BasemapPin.revalidating(["Content-Type": "application/json"]))
+        else { return false }
+        #if DEBUG
+        Self.log.notice("tilejson: no network, served the pin \((try? OpenFreeMap.tilesTemplate(fromTileJSON: pin)) ?? "-", privacy: .public)")
+        #endif
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: pin)
+        client?.urlProtocolDidFinishLoading(self)
+        return true
     }
 
     override func stopLoading() {

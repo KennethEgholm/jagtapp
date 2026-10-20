@@ -66,7 +66,8 @@ actor OfflineDisk {
         box: GeoBox,
         parcels: ParcelSet,
         packBytes: Int,
-        basemapTiles: String
+        basemapTiles: String,
+        tileJSON: Data
     ) throws -> (area: OfflineArea, index: OfflineAreaIndex) {
         guard isKnown else { throw Unknown() }
         let parcelBytes = try parcels.geoJSON().count
@@ -79,16 +80,14 @@ actor OfflineDisk {
             bytes: parcelBytes + packBytes,
             basemapTiles: basemapTiles
         )
-        try store.commit(area, parcels: parcels)
+        try store.commit(area, parcels: parcels, tileJSON: tileJSON)
         return (area, store.loadIndex())
     }
 
-    /// A refreshed basemap: the same area, the new tile template. nil when the area is gone.
-    func replace(_ area: OfflineArea) throws -> OfflineAreaIndex? {
+    /// Every new pack of a refresh is complete: the areas' templates and the pin, in one write.
+    func applyRefresh(ids: Set<UUID>, tiles: String, tileJSON: Data) throws -> OfflineAreaIndex {
         guard isKnown else { throw Unknown() }
-        var index = store.loadIndex()
-        guard index.areas.contains(where: { $0.id == area.id }) else { return nil }
-        index.replace(area)
+        let index = store.loadIndex().refreshed(ids: ids, tiles: tiles, tileJSON: tileJSON)
         try store.saveIndex(index)
         return index
     }

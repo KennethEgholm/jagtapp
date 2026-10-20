@@ -3,7 +3,8 @@ import os
 import UIKit
 
 /// The basemap packs of the saved areas, inside MapLibre's own offline database. A pack's
-/// `context` is the area's id, so the index and the packs can be matched.
+/// `context` is `PackContext`: the area's id and the week's tile template it was downloaded for,
+/// so the index and the packs can be matched, and a refresh can hold an old and a new pack per area.
 ///
 /// Pack requests go through the same `MLNNetworkConfiguration` session as the map, so
 /// `MapRequestProtocol` throttles them to `OpenFreeMap.maxParallelRequests` too.
@@ -20,21 +21,33 @@ final class BasemapPacks {
     }
     private static let log = Logger(subsystem: "dk.jagtfokus.app", category: "offline")
 
-    /// The ids of the packs MapLibre holds. MapLibre loads the list on its own thread, so it is nil for a moment.
-    func ids() async -> Set<UUID> {
-        Set(await loadedPacks().compactMap(Self.id(of:)))
+    /// The packs MapLibre holds, as id and week. MapLibre loads the list on its own thread, so it is empty for a moment.
+    func records() async -> [PackRecord] {
+        await loadedPacks().compactMap(Self.record(of:))
     }
 
-    /// Downloads a pack for the box and returns its size in bytes. A pack the area already
-    /// has under this id stays until the new one is complete, then goes: a failed refresh
-    /// keeps the old basemap. A failed or cancelled download removes its half pack before it throws.
+    /// Launch: removes orphans, and per saved area every pack but one of the index's week
+    /// (`OfflineCleanup.packsToRemove`). Returns how many went.
+    func cleanUp(index: OfflineAreaIndex, indexIsKnown: Bool) async -> Int {
+        let packs = await loadedPacks().filter { Self.record(of: $0) != nil }
+        let records = packs.compactMap(Self.record(of:))
+        let remove = OfflineCleanup.packsToRemove(records, index: index, indexIsKnown: indexIsKnown)
+        for position in remove { await removePack(packs[position]) }
+        return remove.count
+    }
+
+    /// Downloads a pack for the box, tagged with the week `tiles`, and returns its size in bytes.
+    /// Other packs of the area stay: a refresh removes the old one only when every new pack is
+    /// complete. A failed or cancelled download removes its half pack before it throws.
     ///
     /// `tileJSON` is OpenFreeMap's current TileJSON. MapLibre keeps one copy per URL and a new
     /// pack reuses what is stored, so the current file is stored first: the pack then fetches
-    /// this week's tiles, the ones the area's `basemapTiles` names, and not last week's.
-    func download(_ box: GeoBox, id: UUID, tileJSON: Data, progress: @escaping (Double) -> Void) async throws -> Int {
-        await store(tileJSON)
-        let previous = await loadedPacks().filter { Self.id(of: $0) == id }
+    /// this week's tiles, the ones `tiles` names, and not last week's.
+    func download(_ box: GeoBox, id: UUID, tileJSON: Data, tiles: String, progress: @escaping (Double) -> Void) async throws -> Int {
+        // While a pack downloads, the map's TileJSON request is never answered with the pin.
+        PinnedBasemap.beginDownload()
+        defer { PinnedBasemap.endDownload() }
+        await preload(tileJSON)
         let region = MLNTilePyramidOfflineRegion(
             styleURL: OpenFreeMap.styleURL,
             bounds: MLNCoordinateBounds(
@@ -45,7 +58,7 @@ final class BasemapPacks {
             toZoomLevel: OpenFreeMap.packZoom.upperBound
         )
         region.includesIdeographicGlyphs = false
-        let pack = try await add(region, id: id)
+        let pack = try await add(region, context: PackContext.encode(id: id, tiles: tiles))
         Self.log.notice("pack started")
         #if DEBUG
         // `-holdPack 20`: wait with a half pack in the database, so a test can kill the app there.
@@ -53,12 +66,26 @@ final class BasemapPacks {
         if hold > 0 { try? await Task.sleep(for: .seconds(hold)) }
         #endif
         do {
-            let bytes = try await run(pack, progress: progress)
-            for old in previous { await removePack(old) }
-            return bytes
+            return try await run(pack, progress: progress)
         } catch {
             await removePack(pack)
             throw error
+        }
+    }
+
+    /// Stores TileJSON bytes as MapLibre's copy of `OpenFreeMap.tileJSONURL`. Already stale and
+    /// marked must-revalidate: online the map asks the server again, offline it asks the app,
+    /// which answers with the pin. After a failed refresh this puts the pinned week back.
+    func preload(_ tileJSON: Data) async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            storage.preload(
+                tileJSON,
+                for: OpenFreeMap.tileJSONURL,
+                modificationDate: Date(),
+                expirationDate: Date(),
+                eTag: nil,
+                mustRevalidate: true
+            ) { _, _ in continuation.resume() }
         }
     }
 
@@ -71,25 +98,28 @@ final class BasemapPacks {
 
     /// Every pack with this id.
     func remove(id: UUID) async {
-        for pack in await loadedPacks() where Self.id(of: pack) == id {
+        for pack in await loadedPacks() where Self.record(of: pack)?.id == id {
+            await removePack(pack)
+        }
+    }
+
+    /// The area's packs for the week `tiles`: the new packs of a refresh that failed.
+    func remove(id: UUID, tiles: String) async {
+        for pack in await loadedPacks() {
+            guard let record = Self.record(of: pack), record.id == id, record.tiles == tiles else { continue }
+            await removePack(pack)
+        }
+    }
+
+    /// The area's packs for any other week than `tiles`: the old packs once a refresh is complete.
+    func removeOthers(id: UUID, keeping tiles: String) async {
+        for pack in await loadedPacks() {
+            guard let record = Self.record(of: pack), record.id == id, record.tiles != tiles else { continue }
             await removePack(pack)
         }
     }
 
     // MARK: MapLibre
-
-    private func store(_ tileJSON: Data) async {
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            storage.preload(
-                tileJSON,
-                for: OpenFreeMap.tileJSONURL,
-                modificationDate: Date(),
-                expirationDate: Date().addingTimeInterval(3600),
-                eTag: nil,
-                mustRevalidate: false
-            ) { _, _ in continuation.resume() }
-        }
-    }
 
     private func loadedPacks() async -> [MLNOfflinePack] {
         for _ in 0..<50 {
@@ -99,14 +129,14 @@ final class BasemapPacks {
         return storage.packs ?? []
     }
 
-    private static func id(of pack: MLNOfflinePack) -> UUID? {
+    private static func record(of pack: MLNOfflinePack) -> PackRecord? {
         guard pack.state != .invalid else { return nil }
-        return String(data: pack.context, encoding: .utf8).flatMap { UUID(uuidString: $0) }
+        return PackContext.decode(pack.context)
     }
 
-    private func add(_ region: MLNTilePyramidOfflineRegion, id: UUID) async throws -> MLNOfflinePack {
+    private func add(_ region: MLNTilePyramidOfflineRegion, context: Data) async throws -> MLNOfflinePack {
         try await withCheckedThrowingContinuation { continuation in
-            storage.addPack(for: region, withContext: Data(id.uuidString.utf8)) { pack, error in
+            storage.addPack(for: region, withContext: context) { pack, error in
                 if let pack {
                     continuation.resume(returning: pack)
                 } else {

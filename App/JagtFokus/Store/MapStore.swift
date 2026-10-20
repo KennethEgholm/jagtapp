@@ -86,12 +86,12 @@ final class MapStore {
         let snapshot = await disk.launch()
         diskIsKnown = snapshot.isKnown
         setSaved(index: snapshot.index, parcels: snapshot.parcels)
-        // An index that could not be read looks empty; then no pack is removed either.
-        let found = await packs.ids()
-        let orphans = OfflineCleanup.orphanPackIDs(packIDs: Array(found), index: snapshot.index, indexIsKnown: snapshot.isKnown)
-        for id in orphans { await packs.remove(id: id) }
+        // An index that could not be read looks empty; then no pack is removed either. A refresh
+        // killed halfway leaves two packs for an area: the one of the index's week stays.
+        let found = await packs.records()
+        let removed = await packs.cleanUp(index: snapshot.index, indexIsKnown: snapshot.isKnown)
         #if DEBUG
-        Self.offlineLog.notice("launch: \(snapshot.index.areas.count, privacy: .public) areas, packs \(found.count, privacy: .public), orphan packs removed \(orphans.count, privacy: .public), index known \(snapshot.isKnown, privacy: .public)")
+        Self.offlineLog.notice("launch: \(snapshot.index.areas.count, privacy: .public) areas, packs \(found.count, privacy: .public), packs removed \(removed, privacy: .public), index known \(snapshot.isKnown, privacy: .public), pin \(snapshot.index.pinnedTiles ?? "none", privacy: .public)")
         #endif
         isReady = true
     }
@@ -335,13 +335,18 @@ extension MapStore {
                 parcels = await Self.merged(parcels, part)
                 setProgress(SaveProgress.overall(parcelsDone: done + 1, of: quadrants.count, pack: 0), generation: generation)
             }
-            let packBytes = try await packs.download(box, id: id, tileJSON: tileJSON.data) { [weak self] fraction in
+            let packBytes = try await packs.download(box, id: id, tileJSON: tileJSON.data, tiles: tileJSON.template) { [weak self] fraction in
                 self?.setProgress(SaveProgress.overall(parcelsDone: quadrants.count, of: quadrants.count, pack: fraction), generation: generation)
             }
             try Task.checkCancellation()
-            let committed = try await disk.commit(id: id, name: name, box: box, parcels: parcels, packBytes: packBytes, basemapTiles: tileJSON.template)
+            let committed = try await disk.commit(id: id, name: name, box: box, parcels: parcels, packBytes: packBytes, basemapTiles: tileJSON.template, tileJSON: tileJSON.data)
             // Cancelled in the last moment: the area is in the index, so it stays and shows in the list.
             setSaved(index: committed.index, parcels: savedParcels.merging([id: parcels]) { $1 })
+            if committed.index.pinnedTiles != tileJSON.template {
+                // Older areas are on an older week: the pin stays theirs until the refresh moves them all.
+                await restorePin()
+                Task { await self.refreshStaleBasemaps() }
+            }
             guard generation == saveGeneration else { return }
             frozenFrame = nil
             saving = .saved(name)
@@ -353,6 +358,7 @@ extension MapStore {
         } catch {
             // A pack that was added but not committed must not stay: nothing is indexed for it.
             await packs.remove(id: id)
+            await restorePin()
             guard generation == saveGeneration else { return }
             saveGeneration += 1
             frozenFrame = nil
@@ -416,9 +422,10 @@ extension MapStore {
         await packs.removeAll()
     }
 
-    /// Online: downloads the pack again for every area saved with an older week's tile URL,
-    /// one at a time and silently. A failure keeps the old pack and the old row, and the next
-    /// call tries again.
+    /// Online: when OpenFreeMap names a new week, downloads a new pack for every area saved with an
+    /// older one, silently. All or nothing: the old packs and the pin stay until every new pack is
+    /// complete; then the index (every area's template and the pin, one write) moves, and only then
+    /// do the old packs go. Any failure removes the new packs and puts the pinned week back.
     func refreshStaleBasemaps() async {
         await start()
         if let refreshTask {
@@ -433,24 +440,43 @@ extension MapStore {
     }
 
     private func runRefresh() async {
-        guard let tileJSON = try? await Self.currentTileJSON(session: session) else { return }
-        for area in index.staleBasemaps(currentTiles: tileJSON.template) {
-            guard !Task.isCancelled else { return }
-            guard index.areas.contains(where: { $0.id == area.id }) else { continue }
-            #if DEBUG
-            Self.offlineLog.notice("refreshing a stale basemap pack")
-            #endif
-            do {
-                _ = try await packs.download(area.box, id: area.id, tileJSON: tileJSON.data) { _ in }
-                var fresh = area
-                fresh.basemapTiles = tileJSON.template
-                if let updated = try await disk.replace(fresh) {
-                    setSaved(index: updated, parcels: savedParcels)
-                }
-            } catch {
-                Self.offlineLog.error("refresh failed, the old pack stays: \(Self.describe(error), privacy: .public)")
+        guard let current = try? await Self.currentTileJSON(session: session) else { return }
+        let plan = BasemapRefresh.plan(index: index, currentTiles: current.template)
+        guard plan.isNeeded else { return }
+        #if DEBUG
+        Self.offlineLog.notice("refresh: \(plan.stale.count, privacy: .public) stale areas, pin moves \(plan.movesPin, privacy: .public)")
+        #endif
+        var started: [UUID] = []
+        do {
+            for area in plan.stale {
+                try Task.checkCancellation()
+                started.append(area.id)
+                _ = try await packs.download(area.box, id: area.id, tileJSON: current.data, tiles: current.template) { _ in }
             }
+            try Task.checkCancellation()
+            #if DEBUG
+            // `-failRefresh YES`: fail after the new packs are complete, before the index moves.
+            if UserDefaults.standard.bool(forKey: "failRefresh") { throw CancellationError() }
+            #endif
+            let updated = try await disk.applyRefresh(ids: Set(started), tiles: current.template, tileJSON: current.data)
+            setSaved(index: updated, parcels: savedParcels)
+        } catch {
+            Self.offlineLog.error("refresh failed, the old packs and the pin stay: \(Self.describe(error), privacy: .public)")
+            for id in started { await packs.remove(id: id, tiles: current.template) }
+            await restorePin()
+            return
         }
+        // The index names the new week: the old packs can go. A kill before this is mended at launch.
+        for id in started { await packs.removeOthers(id: id, keeping: current.template) }
+        #if DEBUG
+        Self.offlineLog.notice("refresh complete: \(started.count, privacy: .public) packs, pin \(self.index.pinnedTiles ?? "none", privacy: .public)")
+        #endif
+    }
+
+    /// MapLibre's copy of the TileJSON becomes the pinned week again, so offline it is the one the packs hold.
+    private func restorePin() async {
+        guard let pin = index.pinnedTileJSON else { return }
+        await packs.preload(pin)
     }
 
     /// Thousands of parcels: off the main actor.

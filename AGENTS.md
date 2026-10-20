@@ -44,7 +44,7 @@ docs/                              # GitHub Pages: support (index.html) and priv
 data/jagttider.json                # Seasons + places + local overrides
 Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun and moon, MET weather decode, photos, catalog check, map geometry, matrikel GML/GeoJSON, saved areas, request gate
 
-Tests/JagtFokusCoreTests/          # 191 tests
+Tests/JagtFokusCoreTests/          # 223 tests
 .github/workflows/tests.yml        # swift test on every push to main and every PR
 .github/workflows/appstore.yml     # App Store upload, manual and off
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
@@ -100,6 +100,9 @@ assets/                            # Source icons and logo (not bundled directly
 - Red deer and fallow deer: general seasons plus a note only. Map appendices are not in v1.
 - Boundaries are display only. No logic may use them (for example “jagtbar her”).
 - OpenFreeMap downloads: ≤ 4 parallel, own User-Agent, ≤ 3,000 tiles / 50 MB per area.
+- Saved basemaps are pinned to one OpenFreeMap week. `omraader.json` holds `pinnedTileJSON`, the TileJSON every saved pack is complete for. `MapRequestProtocol` answers MapLibre's TileJSON request with it when there is no network, and while a pin exists it strips freshness from the online answer so MapLibre asks every time. A refresh (at launch, on foreground, on Kort) is all or nothing: new packs for every stale area next to the old ones, then one index write (templates + pin), then the old packs go; any failure removes the new packs and preloads the pin again. Pack contexts are `PackContext` (id + week); launch keeps the pack of the index's week (`OfflineCleanup.packsToRemove`). Decisions live in Core (`BasemapPin`, `BasemapRefresh`).
+- Live parcels are memory only. Datafordeler requests (the key is in the URL) go through `MapSession.shared`: ephemeral, no URL cache, no cookies. Paging reads `numberReturned`/`numberMatched` on the raw page (`CadastrePaging`), never `next` (Datafordeler sends it on the last page too).
+- The Kort camera's first fix is MapLibre's puck position, not the geocoded place, so it works offline.
 
 ## UI rules
 
@@ -228,7 +231,8 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-sheet saved` | Open “Gemte områder” on the Kort tab |
 | `-map 56.1629,10.2039,16` | Start the Kort camera at lat, lon, zoom (with `-tab map`) |
 | `-holdPack 20` | Kort: a save waits 20 s with its half pack in the database (to kill the app there) |
-| `-offline YES` | Kort: every request fails, as with no network |
+| `-offline YES` | Kort: every request fails, as with no network (the geocoder too); the TileJSON gets the pinned copy |
+| `-failRefresh YES` | Kort: a stale-basemap refresh fails after its new packs are complete (tests the clean-up) |
 | `-save choosing` / `alert` / `go` / `delete` / `reset` | Kort: show the save frame / the name alert / save at once / delete the newest saved area / reset all saved areas (all with `-tab map`) |
 | `-scroll ansvar` / `kort` / `privatliv` | Scroll Indstillinger to that section (with `-tab settings`) |
 | `-closed YES` | Expand “Ikke jagtbar her” |
