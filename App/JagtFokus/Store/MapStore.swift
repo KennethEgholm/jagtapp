@@ -246,6 +246,7 @@ final class MapStore {
     private static func fetch(box: GeoBox, apiKey: String, session: URLSession, strict: Bool = false) async throws -> ParcelSet {
         var all = ParcelSet(parcels: [])
         var start = 0
+        var reachedEnd = false
         for _ in 0..<maxPages {
             var request = URLRequest(url: CadastreService.requestURL(box: box, apiKey: apiKey, startIndex: start))
             request.setValue(UserAgent.app, forHTTPHeaderField: "User-Agent")
@@ -258,11 +259,28 @@ final class MapStore {
                 Self.log.error("page at \(start, privacy: .public): \(parsed.skipped, privacy: .public) of \(parsed.members, privacy: .public) members had no polygon\(strict ? " (saved area)" : "", privacy: .public)")
             }
             // From the raw page: a skipped member must not make a full page look like the last.
-            guard CadastrePaging.hasMore(parsed, startIndex: start, pageSize: CadastreService.pageSize) else { return all }
+            guard CadastrePaging.hasMore(parsed, startIndex: start, pageSize: CadastreService.pageSize) else {
+                reachedEnd = true
+                break
+            }
             start += CadastreService.pageSize
         }
-        if strict { throw TooManyParcels() }
+        if !reachedEnd, strict { throw TooManyParcels() }
+        // The name is decoration: a failed Ejerlav request must not cost the boundaries.
+        if let names = await fetchEjerlavNames(box: box, apiKey: apiKey, session: session) {
+            return all.applying(names)
+        }
         return all
+    }
+
+    /// The ejerlavsnavne for the box, one small request. Nil when it fails.
+    @concurrent
+    private static func fetchEjerlavNames(box: GeoBox, apiKey: String, session: URLSession) async -> EjerlavNames? {
+        var request = URLRequest(url: CadastreService.ejerlavRequestURL(box: box, apiKey: apiKey))
+        request.setValue(UserAgent.app, forHTTPHeaderField: "User-Agent")
+        request.timeoutInterval = 20
+        guard let data = try? await page(request, session: session, attempts: 2) else { return nil }
+        return try? EjerlavNames.decode(from: data)
     }
 
     /// One page. A 5xx gets more tries after a short wait: the service now and then fails

@@ -194,8 +194,9 @@ up in Info.plist as `DatafordelerApiKey`. Copy `App/Config/Secrets.example.xccon
 `Secrets.xcconfig` and put the key after `DATAFORDELER_API_KEY =`. Never commit or print it. Without it
 the map still shows the basemap, and the status card says the map has no access to Datafordeler.
 The key expires two years after creation. Dataforsyningen's matrikel WMS/WFS close 29 Oct–2 Nov 2026, so
-the app uses Datafordeler's WFS (`outputFormat=gml32`; it answers GML 3.2 only, and the service has no
-ejerlavsnavn, so labels are matrikelnummer only).
+the app uses Datafordeler's WFS (`outputFormat=gml32`; it answers GML 3.2 only). The parcel layer has no
+ejerlavsnavn, so labels are matrikelnummer only; the ejerlav name comes from a second request to
+`mat:Ejerlav_Gaeldende` for the same box and is filled in with `ParcelSet.applying`.
 
 CoreLocation: never read `authorizationStatus` or `locationServicesEnabled()` outside `locationManagerDidChangeAuthorization`. That blocks the main thread (runtime issue).
 

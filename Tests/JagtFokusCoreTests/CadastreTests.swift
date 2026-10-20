@@ -63,6 +63,26 @@ struct CadastreTests {
     </wfs:FeatureCollection>
     """
 
+    /// Recorded from the Ejerlav layer on 20 October 2026, trimmed to the two names and no
+    /// geometry. This is where the name behind `ejerlavskode` lives.
+    static let ejerlavFixture = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <wfs:FeatureCollection xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:mat="http://data.gov.dk/schemas/matrikel/1" xmlns:gml="http://www.opengis.net/gml/3.2">
+      <wfs:member>
+        <mat:Ejerlav_Gaeldende gml:id="Ejerlav_Gaeldende.61280">
+          <mat:ejerlavskode>2006353</mat:ejerlavskode>
+          <mat:ejerlavsnavn>Århus Markjorder</mat:ejerlavsnavn>
+        </mat:Ejerlav_Gaeldende>
+      </wfs:member>
+      <wfs:member>
+        <mat:Ejerlav_Gaeldende gml:id="Ejerlav_Gaeldende.63578">
+          <mat:ejerlavskode>2006351</mat:ejerlavskode>
+          <mat:ejerlavsnavn>Århus Bygrunde</mat:ejerlavsnavn>
+        </mat:Ejerlav_Gaeldende>
+      </wfs:member>
+    </wfs:FeatureCollection>
+    """
+
     func decode(_ xml: String) throws -> ParcelSet {
         try ParcelSet.decodeChecked(from: Data(xml.utf8))
     }
@@ -99,6 +119,51 @@ struct CadastreTests {
         #expect(query["startIndex"] == "10000")
         #expect(query["apikey"] == "test-key")
         #expect(query["propertyName"] == nil)
+    }
+
+    @Test func ejerlavRequestURLAsksForTheEjerlavLayer() {
+        let url = CadastreService.ejerlavRequestURL(box: box, apiKey: "test-key")
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        let query = Dictionary(uniqueKeysWithValues: (components.queryItems ?? []).compactMap { item in
+            item.value.map { (item.name, $0) }
+        })
+        #expect(query["typeNames"] == "mat:Ejerlav_Gaeldende")
+        #expect(query["outputFormat"] == "gml32")
+        #expect(query["bbox"] == "\(box.west),\(box.south),\(box.east),\(box.north),EPSG:4326")
+        #expect(query["count"] == "200")
+    }
+
+    @Test func decodesEjerlavNames() throws {
+        let names = try EjerlavNames.decode(from: Data(Self.ejerlavFixture.utf8))
+        #expect(names.name(for: 2_006_351) == "Århus Bygrunde")
+        #expect(names.name(for: 2_006_353) == "Århus Markjorder")
+        #expect(names.name(for: nil) == nil)
+        #expect(names.name(for: 1) == nil)
+    }
+
+    @Test func applyingFillsTheDistrictName() throws {
+        let parcels = try decode(Self.fixture)
+        let names = try EjerlavNames.decode(from: Data(Self.ejerlavFixture.utf8))
+        let filled = parcels.applying(names)
+        #expect(filled.parcels.allSatisfy { $0.district == "Århus Bygrunde" })
+
+        // A code with no name keeps the empty district.
+        let unknown = ParcelSet(parcels: [
+            Parcel(id: "x.1", number: "1", district: "", districtCode: 999, polygons: [])
+        ])
+        #expect(unknown.applying(names).parcels[0].district == "")
+    }
+
+    @Test func refusesAnEjerlavServiceException() {
+        let xml = """
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ows:ExceptionReport xmlns:ows="http://www.opengis.net/ows/1.1">
+          <ows:Exception exceptionCode="InvalidParameterValue"><ows:ExceptionText>no</ows:ExceptionText></ows:Exception>
+        </ows:ExceptionReport>
+        """
+        #expect(throws: DecodingError.self) {
+            try EjerlavNames.decode(from: Data(xml.utf8))
+        }
     }
 
     @Test func decodesRecordedFixture() throws {

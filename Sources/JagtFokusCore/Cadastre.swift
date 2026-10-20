@@ -99,6 +99,20 @@ public extension ParcelSet {
         return (try checked(parcels), raw.features.count)
     }
 
+    /// Fills in the ejerlavsnavn the parcel layer does not send. A parcel whose code is not
+    /// in the names keeps its empty district.
+    func applying(_ names: EjerlavNames) -> ParcelSet {
+        guard !names.names.isEmpty else { return self }
+        return ParcelSet(parcels: parcels.map { parcel in
+            guard parcel.district.isEmpty, let name = names.name(for: parcel.districtCode) else {
+                return parcel
+            }
+            var filled = parcel
+            filled.district = name
+            return filled
+        })
+    }
+
     /// Dedupes two pages by id, keeping the first page's parcel.
     func merging(_ other: ParcelSet) -> ParcelSet {
         var seen = Set<String>()
@@ -393,12 +407,21 @@ public enum CadastreService {
     /// GeoJSON is our own disk format, not a service format.
     static let outputFormat = "gml32"
 
-    /// Matrikelnummer in the GML. The service has no ejerlavsnavn, only ejerlavskode,
-    /// so a GML parcel's district stays empty. Compact files still use "ejerlav".
+    /// Matrikelnummer in the GML. The parcel layer has no ejerlavsnavn, only ejerlavskode;
+    /// the name comes from `ejerlavRequestURL` and is filled in with `ParcelSet.applying`.
     static let numberProperty = "matrikelnummer"
 
     /// One page of parcels for the box, GML 3.2 in EPSG:4326 (longitude, latitude).
     public static func requestURL(box: GeoBox, apiKey: String, startIndex: Int) -> URL {
+        url(typeNames: "mat:Jordstykke_Gaeldende", box: box, apiKey: apiKey, startIndex: startIndex, count: pageSize)
+    }
+
+    /// The ejerlavsnavne for a box. A view holds a handful of ejerlavs, so one page is enough.
+    public static func ejerlavRequestURL(box: GeoBox, apiKey: String) -> URL {
+        url(typeNames: "mat:Ejerlav_Gaeldende", box: box, apiKey: apiKey, startIndex: 0, count: 200)
+    }
+
+    private static func url(typeNames: String, box: GeoBox, apiKey: String, startIndex: Int, count: Int) -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = host
@@ -407,15 +430,118 @@ public enum CadastreService {
             URLQueryItem(name: "service", value: "WFS"),
             URLQueryItem(name: "version", value: "2.0.0"),
             URLQueryItem(name: "request", value: "GetFeature"),
-            URLQueryItem(name: "typeNames", value: "mat:Jordstykke_Gaeldende"),
+            URLQueryItem(name: "typeNames", value: typeNames),
             URLQueryItem(name: "outputFormat", value: outputFormat),
             URLQueryItem(name: "srsName", value: "EPSG:4326"),
             URLQueryItem(name: "bbox", value: "\(box.west),\(box.south),\(box.east),\(box.north),EPSG:4326"),
-            URLQueryItem(name: "count", value: String(pageSize)),
+            URLQueryItem(name: "count", value: String(count)),
             URLQueryItem(name: "startIndex", value: String(startIndex)),
             URLQueryItem(name: "apikey", value: apiKey),
         ]
         return components.url!
+    }
+}
+
+/// Ejerlavsnavne by code. The parcel layer sends only `ejerlavskode`; the name lives in the
+/// Ejerlav layer, which is asked for the same box.
+public struct EjerlavNames: Sendable, Equatable {
+    public var names: [Int: String]
+
+    public init(names: [Int: String]) {
+        self.names = names
+    }
+
+    public func name(for code: Int?) -> String? {
+        code.flatMap { names[$0] }
+    }
+
+    /// The service's GML. A WFS exception is a DecodingError, as for parcels.
+    public static func decode(from data: Data) throws -> EjerlavNames {
+        let parser = XMLParser(data: data)
+        let delegate = GMLEjerlavParser()
+        parser.shouldProcessNamespaces = true
+        parser.delegate = delegate
+        guard parser.parse() else {
+            throw parser.parserError ?? DecodingError.dataCorrupted(
+                .init(codingPath: [], debugDescription: "Ejerlav GML could not be parsed")
+            )
+        }
+        if delegate.sawException {
+            throw DecodingError.dataCorrupted(
+                .init(codingPath: [], debugDescription: "WFS exception")
+            )
+        }
+        return EjerlavNames(names: delegate.names)
+    }
+}
+
+/// Reads `ejerlavskode` and `ejerlavsnavn` from each `wfs:member`, local names only.
+private final class GMLEjerlavParser: NSObject, XMLParserDelegate {
+    var names: [Int: String] = [:]
+    var sawException = false
+
+    private var code: Int?
+    private var name = ""
+    private var capture: Capture?
+    private var text = ""
+
+    private enum Capture { case code, name }
+
+    func parser(
+        _ parser: XMLParser,
+        didStartElement elementName: String,
+        namespaceURI: String?,
+        qualifiedName qName: String?,
+        attributes attributeDict: [String: String] = [:]
+    ) {
+        switch local(elementName) {
+        case "Exception", "ExceptionReport":
+            sawException = true
+        case "member":
+            code = nil
+            name = ""
+        case "ejerlavskode":
+            capture = .code
+            text = ""
+        case "ejerlavsnavn":
+            capture = .name
+            text = ""
+        default:
+            break
+        }
+    }
+
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        if capture != nil { text += string }
+    }
+
+    func parser(
+        _ parser: XMLParser,
+        didEndElement elementName: String,
+        namespaceURI: String?,
+        qualifiedName qName: String?
+    ) {
+        switch local(elementName) {
+        case "ejerlavskode":
+            if capture == .code {
+                code = Int(text.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            capture = nil
+        case "ejerlavsnavn":
+            if capture == .name {
+                name = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+            capture = nil
+        case "member":
+            if let code, !name.isEmpty { names[code] = name }
+        default:
+            break
+        }
+    }
+
+    private func local(_ name: String) -> String {
+        guard let colon = name.lastIndex(of: ":") else { return name }
+        return String(name[name.index(after: colon)...])
     }
 }
 
