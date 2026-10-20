@@ -61,7 +61,7 @@ SCHWEISS-REGISTRET
 Anskudt hjortevildt: appen åbner schweiss.dk, så du kan finde en hundefører. Påkørt hjortevildt: ring 1812. Appen har ikke selv telefonlisten.
 
 PRIVAT OG OFFLINE
-Ingen konto. Ingen tracking. Ingen reklamer. Din position bliver på telefonen, og appen virker uden net.
+Ingen konto. Ingen tracking. Ingen reklamer. Din position bruges kun til sted, sol og vejr, og jagttiderne virker uden net.
 
 VIGTIGT
 JagtFokus viser jagttider ud fra bekendtgørelsen om jagttid (BEK nr. 470/2024). Listen kan være ufuldstændig eller forældet. Særlige regler (område, køn, kvote, jagtform) står i noten og i loven. Appen er ikke loven – du er selv ansvarlig for at jage lovligt.
@@ -120,6 +120,7 @@ Svar: **Data indsamles ikke** (Data Not Collected).
 Begrundelse:
 - Ingen konto, analyse, reklamer eller tredjeparts-SDK'er.
 - Position bruges på telefonen. Stednavn hentes via Apples geokodning (CLGeocoder); udvikleren modtager aldrig positionen.
+- Vejret hentes fra MET Norway (api.met.no) med positionen afrundet til to decimaler (ca. 1 km) og appens navn som User-Agent. Kun for at besvare forespørgslen. Appen gemmer svaret i hukommelsen i højst ti minutter. MET er ikke en partner, der får data til andet formål.
 - Datafilen hentes fra GitHub uden oplysninger om brugeren.
 - Jagtjournalen og artslisten gemmes kun på telefonen. Udvikleren modtager dem ikke. Ingen iCloud-synk i denne udgave.
 - `PrivacyInfo.xcprivacy`: ingen tracking, ingen indsamlede datatyper, UserDefaults med årsag `CA92.1`.
@@ -141,7 +142,7 @@ JagtFokus shows which game species may legally be hunted in Denmark on a given d
 
 No login is required.
 
-Location: used only to pick the right local hunting times (islands and areas have their own) and to show sunrise/sunset. The app works fully without location.
+Location: used to pick the right local hunting times (islands and areas have their own), to show sunrise/sunset, and to fetch the day's weather from MET Norway (api.met.no). The weather request sends the location rounded to two decimals (about 1 km) and nothing about the user. The app works fully without location.
 
 Outside Denmark the app falls back to the general Danish times ("Danmark"). To see local times: Jagtbart tab > Sted > choose e.g. "Als" or "Endelave". To change the day: Jagtbart tab > Dato.
 

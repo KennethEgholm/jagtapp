@@ -561,16 +561,6 @@
         }
       }
     },
-    "Din position bliver på telefonen" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your location stays on your phone"
-          }
-        }
-      }
-    },
     "Er der tegn på anskydning af hjortevildt, og dyret ikke er fundet, skal du senest efter seks dagtimer tilkalde en hundefører fra Schweiss-registret." : {
       "localizations" : {
         "en" : {
@@ -992,12 +982,12 @@
         }
       }
     },
-    "Ingen konto. Ingen tracking. Din position bliver på telefonen." : {
+    "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol og vejr." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No account. No tracking. Your location stays on your phone."
+            "value" : "No account. No tracking. Your location is used only for place, sun and weather."
           }
         }
       }
@@ -1189,6 +1179,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seasons by date and place"
+          }
+        }
+      }
+    },
+    "Jagttiderne virker offline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seasons work offline"
           }
         }
       }
@@ -1979,6 +1979,16 @@
         }
       }
     },
+    "Positionen bruges kun til sted, sol og vejr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location used only for place, sun and weather"
+          }
+        }
+      }
+    },
     "Posten er slettet." : {
       "localizations" : {
         "en" : {
@@ -2691,6 +2701,16 @@
         }
       }
     },
+    "Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Stednavnet slår Apple op. Vi får aldrig din position." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The weather comes from MET Norway with your location rounded to about 1 km. Apple looks up the place name. We never receive your location."
+          }
+        }
+      }
+    },
     "Vejret vises kun for de næste ti dage." : {
       "localizations" : {
         "en" : {
@@ -2767,16 +2787,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wind up to %@ m/s."
-          }
-        }
-      }
-    },
-    "Virker offline" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Works offline"
           }
         }
       }
@@ -3049,6 +3059,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open the regulation"
+          }
+        }
+      }
+    },
+    "Åbn privatlivspolitikken" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the privacy policy (in Danish)"
           }
         }
       }

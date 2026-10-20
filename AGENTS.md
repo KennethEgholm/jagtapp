@@ -78,7 +78,7 @@ assets/                            # Source icons and logo (not bundled directly
 3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
 4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter. The Om sections follow in the same list. Four tabs: Jagtbart, Journal, Alle arter, Indstillinger.
 5. **Journal** — local bag. Tab icon `book.closed`, system large title “Jagtjournal”. **Artsliste** is species taken at least once, one row each. A journal note adds the species. Deleting a journal row does not remove it.
-6. **Om** — not a tab. Sections under Indstillinger: source, responsibility, Schweiss, photos, privacy. Bottom section **Denne app**: mark, release version and data version.
+6. **Om** — not a tab. Sections under Indstillinger: source, responsibility, Schweiss, photos, privacy (with a link to `docs/privatliv.html`). Bottom section **Denne app**: mark, release version and data version.
 7. **Velkomst** — first launch. Requires “Forstået”. Always dark.
 8. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row in Indstillinger. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
 

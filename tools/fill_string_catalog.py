@@ -73,7 +73,6 @@ ENGLISH = {
     "Denne app": "This app",
     "Derefter spørger JagtFokus om din position.": "JagtFokus then asks for your location.",
     "Din position": "Your location",
-    "Din position bliver på telefonen": "Your location stays on your phone",
     "Er der tegn på anskydning af hjortevildt, og dyret ikke er fundet, skal du senest efter seks dagtimer tilkalde en hundefører fra Schweiss-registret.": (
         "If there are signs that deer has been wounded and the animal has not been found, "
         "you must call a handler from the Schweiss register no later than six daylight hours afterwards."
@@ -121,8 +120,8 @@ ENGLISH = {
     "Ingen jagttid her i jagtåret.": "No season here in the hunting year.",
     "Ingen jagttid her.": "No season here.",
     "Ingen konto": "No account",
-    "Ingen konto. Ingen tracking. Din position bliver på telefonen.": (
-        "No account. No tracking. Your location stays on your phone."
+    "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol og vejr.": (
+        "No account. No tracking. Your location is used only for place, sun and weather."
     ),
     "Ingen poster": "No entries",
     "Ingen poster.": "No entries.",
@@ -153,6 +152,7 @@ ENGLISH = {
     "Jagtjournal": "Hunting journal",
     "Jagttid i %@": "Season in %@",
     "Jagttider efter dato og sted": "Seasons by date and place",
+    "Jagttiderne virker offline": "Seasons work offline",
     "Jagtåret %@": "Hunting year %@",
     "Jagtåret vist fra 1. april til 31. marts.": "The hunting year is shown from 1 April to 31 March.",
     "Journal": "Journal",
@@ -248,6 +248,7 @@ ENGLISH = {
     "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til.": (
         "Location is off. The list shows all of Denmark. Pick a place, or turn location on."
     ),
+    "Positionen bruges kun til sted, sol og vejr": "Location used only for place, sun and weather",
     "Posten er slettet.": "The entry has been deleted.",
     "Privat og offline": "Private and offline",
     "Privatliv": "Privacy",
@@ -332,6 +333,10 @@ ENGLISH = {
     "Valgt": "Selected",
     "Velkommen til JagtFokus": "Welcome to JagtFokus",
     "Vejret": "Weather",
+    "Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Stednavnet slår Apple op. Vi får aldrig din position.": (
+        "The weather comes from MET Norway with your location rounded to about 1 km. "
+        "Apple looks up the place name. We never receive your location."
+    ),
     "Vejret vises kun for de næste ti dage.": "The weather is shown only for the next ten days.",
     "Version": "Version",
     "Vigtigt": "Important",
@@ -340,7 +345,6 @@ ENGLISH = {
     "Vind": "Wind",
     "Vind op til %@ m/s.": "Wind up to %@ m/s.",
     "Vind op til %@ m/s fra %@.": "Wind up to %@ m/s from %@.",
-    "Virker offline": "Works offline",
     "Vis arter du har nedlagt": "Show the species you have taken",
     "Vis årets poster": "Show this year's entries",
     "Viser arter uden jagttid lige nu, sorteret efter næste åbning": (
@@ -370,6 +374,7 @@ ENGLISH = {
     "Åbn Schweiss-registret": "Open the Schweiss register",
     "Åbn Wikimedia Commons": "Open Wikimedia Commons",
     "Åbn bekendtgørelsen": "Open the regulation",
+    "Åbn privatlivspolitikken": "Open the privacy policy (in Danish)",
     "Åbn sol og vejr for dagen": "Open the day's sun and weather",
     "Åbner": "Opens",
     "Åbner Naturstyrelsen": "Opens the Danish Nature Agency",

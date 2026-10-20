@@ -117,6 +117,7 @@ Kontrast er ≥ 4,5:1 mod systembaggrunde i begge tilstande (WCAG AA). Resten er
 ### Indstillinger
 - Sidste fane (gearshape), efter Alle arter. Fire faner i alt. Øverst indstillingerne, så Om i samme liste (se nedenfor).
 - Udseende: inline-picker System / Lys / Mørk med symboler. Anvendes via `overrideUserInterfaceStyle` på alle vinduer, så sheets følger med.
+- Privatlivstekst (2026-10-20): Om og Velkomst sagde “Din position bliver på telefonen”. Det passede ikke, efter vejret kom: når Jagtbart viser Sol og vejr, sendes positionen afrundet til to decimaler (ca. 1 km) til MET, og stednavnet slår Apple op. Nu siger de “Positionen bruges kun til sted, sol og vejr”, og Om-sektionens footer siger, hvem der får hvad. “Virker offline” blev til “Jagttiderne virker offline”, for vejret kræver net. Systemets positionsprompt nævner sol og vejr. Privatlivssiden sagde, at vejret først hentes ved tryk på kortet. Det hentes, når kortet vises. Privatliv-sektionen fik et link til privatlivspolitikken (Apples retningslinje 5.1.1 kræver et link i appen). Siden findes kun på dansk, og det siger den engelske linktekst.
 - Lister: **Sammenfold grupper** (standard til). Gælder Jagtbart og Alle arter. Fra: grupperne er altid åbne, uden pil. Stregtegningen bliver. “Ikke jagtbar her” foldes stadig.
 
 ### Om (i Indstillinger)

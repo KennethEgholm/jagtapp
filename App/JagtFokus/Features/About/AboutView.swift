@@ -61,11 +61,20 @@ struct AboutSections: View {
             Text("Licenser: CC0, public domain, CC BY og CC BY-SA. Fotograf og licens står under hvert billede. Billederne er beskåret og skaleret.")
         }
 
-        Section("Privatliv") {
+        Section {
             Label("Ingen konto", systemImage: "person.crop.circle.badge.xmark")
             Label("Ingen tracking", systemImage: "hand.raised")
-            Label("Din position bliver på telefonen", systemImage: "location")
-            Label("Virker offline", systemImage: "wifi.slash")
+            Label("Positionen bruges kun til sted, sol og vejr", systemImage: "location")
+            Label("Jagttiderne virker offline", systemImage: "wifi.slash")
+            if let url = URL(string: "https://kennethegholm.github.io/jagtapp/privatliv.html") {
+                Link(destination: url) {
+                    Label("Åbn privatlivspolitikken", systemImage: "arrow.up.right.square")
+                }
+            }
+        } header: {
+            Text("Privatliv")
+        } footer: {
+            Text("Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Stednavnet slår Apple op. Vi får aldrig din position.")
         }
 
         Section("Denne app") {

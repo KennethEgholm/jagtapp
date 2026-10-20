@@ -211,7 +211,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = JagtFokus;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "JagtFokus bruger din position til at vise jagttider for det sted, du er.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "JagtFokus bruger din position til at vise jagttider, sol og vejr for det sted, du er.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -246,7 +246,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = JagtFokus;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "JagtFokus bruger din position til at vise jagttider for det sted, du er.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "JagtFokus bruger din position til at vise jagttider, sol og vejr for det sted, du er.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
