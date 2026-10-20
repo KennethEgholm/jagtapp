@@ -1,10 +1,20 @@
 import MapLibre
 import SwiftUI
 
-/// MapLibre's map with the OpenFreeMap basemap. `camera` flies the map when it changes;
+/// An explicit ask to fly the map somewhere. Each ask has a new `id`; the map flies once per id.
+struct MapCameraRequest: Equatable {
+    var id: Int
+    var camera: MapCamera
+}
+
+/// MapLibre's map with the OpenFreeMap basemap. The map starts at `initialCamera` and
+/// moves only when `request` has a new id; a changed `initialCamera` is ignored.
 /// `parcels` (GeoJSON) and `saveFrame` draw on top of the basemap.
 struct ParcelMapView: UIViewRepresentable {
-    var camera: MapCamera
+    var initialCamera: MapCamera
+    var request: MapCameraRequest?
+    /// The user moved the map with a gesture.
+    var onUserMove: () -> Void
     var parcels: Data?
     var saveFrame: GeoBox?
     /// The visible bounds and the zoom, after every move.
@@ -17,29 +27,34 @@ struct ParcelMapView: UIViewRepresentable {
         map.delegate = context.coordinator
         map.showsUserLocation = true
         map.automaticallyAdjustsContentInset = false
-        map.setCenter(camera.center.clLocation, zoomLevel: camera.zoom, animated: false)
-        context.coordinator.shownCamera = camera
+        map.setCenter(initialCamera.center.clLocation, zoomLevel: initialCamera.zoom, animated: false)
+        context.coordinator.handledRequest = request?.id
         return map
     }
 
     func updateUIView(_ map: MLNMapView, context: Context) {
         let coordinator = context.coordinator
         coordinator.onRegionChange = onRegionChange
-        if camera != coordinator.shownCamera {
-            coordinator.shownCamera = camera
-            map.setCenter(camera.center.clLocation, zoomLevel: camera.zoom, animated: true)
+        coordinator.onUserMove = onUserMove
+        if let request, request.id != coordinator.handledRequest {
+            coordinator.handledRequest = request.id
+            map.setCenter(request.camera.center.clLocation, zoomLevel: request.camera.zoom, animated: true)
         }
         coordinator.parcels = parcels
         coordinator.saveFrame = saveFrame
-        coordinator.draw(on: map)
+        coordinator.drawIfChanged(on: map)
     }
 
     @MainActor
     final class Coordinator: NSObject, @preconcurrency MLNMapViewDelegate {
-        var shownCamera: MapCamera?
+        var handledRequest: Int?
+        var onUserMove: () -> Void = {}
         var onRegionChange: (GeoBox, Double) -> Void = { _, _ in }
         var parcels: Data?
         var saveFrame: GeoBox?
+        /// What is on the style now, so an unchanged update does not parse the GeoJSON again.
+        private var drawnParcels: Data?
+        private var drawnFrame: GeoBox?
 
         private static let parcelsID = "parcels"
         private static let frameID = "saveFrame"
@@ -48,7 +63,12 @@ struct ParcelMapView: UIViewRepresentable {
             draw(on: mapView)
         }
 
-        func mapView(_ mapView: MLNMapView, regionDidChangeAnimated animated: Bool) {
+        func mapView(_ mapView: MLNMapView, regionWillChangeWith reason: MLNCameraChangeReason, animated: Bool) {
+            // Anything but a call from the app is the user: a gesture or the compass.
+            if !reason.subtracting(.programmatic).isEmpty { onUserMove() }
+        }
+
+        func mapView(_ mapView: MLNMapView, regionDidChangeWith reason: MLNCameraChangeReason, animated: Bool) {
             let bounds = mapView.visibleCoordinateBounds
             onRegionChange(
                 GeoBox(south: bounds.sw.latitude, west: bounds.sw.longitude, north: bounds.ne.latitude, east: bounds.ne.longitude),
@@ -56,9 +76,16 @@ struct ParcelMapView: UIViewRepresentable {
             )
         }
 
+        func drawIfChanged(on map: MLNMapView) {
+            guard parcels != drawnParcels || saveFrame != drawnFrame else { return }
+            draw(on: map)
+        }
+
         /// Puts the parcels and the save frame on the style, or takes them off.
         func draw(on map: MLNMapView) {
             guard let style = map.style else { return }
+            drawnParcels = parcels
+            drawnFrame = saveFrame
             let tint = UIColor(named: "Brass") ?? .systemOrange
             let parcelShape = parcels.flatMap { try? MLNShape(data: $0, encoding: String.Encoding.utf8.rawValue) }
             setShape(parcelShape, id: Self.parcelsID, style: style, width: 1.5, color: tint)
