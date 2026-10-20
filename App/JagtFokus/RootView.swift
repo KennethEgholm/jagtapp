@@ -10,7 +10,7 @@ struct RootView: View {
     @State private var tab: AppTab = .today
 
     enum AppTab: Hashable {
-        case today, bag, all, settings
+        case today, map, bag, all, settings
     }
 
     var body: some View {
@@ -19,6 +19,9 @@ struct RootView: View {
                 TabView(selection: $tab) {
                     Tab(Copy.todayTab, systemImage: "scope", value: AppTab.today) {
                         TodayView()
+                    }
+                    Tab(Copy.mapTab, systemImage: "map", value: AppTab.map) {
+                        MapTab()
                     }
                     Tab(Copy.bagTab, systemImage: "book.closed", value: AppTab.bag) {
                         BagTabView()
@@ -56,10 +59,11 @@ struct RootView: View {
         }
     }
 
-    /// Debug only: `-tab bag|all|settings` for screenshots. `about` is the same tab as settings.
+    /// Debug only: `-tab map|bag|all|settings` for screenshots. `about` is the same tab as settings.
     private func applyLaunchTab() {
         #if DEBUG
         switch UserDefaults.standard.string(forKey: "tab") {
+        case "map", "kort": tab = .map
         case "bag", "nedlagt": tab = .bag
         case "all": tab = .all
         case "settings", "about": tab = .settings

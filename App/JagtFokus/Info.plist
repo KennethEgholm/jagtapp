@@ -9,6 +9,8 @@
 		<string>da</string>
 		<string>en</string>
 	</array>
+	<key>DatafordelerApiKey</key>
+	<string>$(DATAFORDELER_API_KEY)</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>

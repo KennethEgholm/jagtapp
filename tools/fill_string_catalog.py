@@ -163,6 +163,7 @@ ENGLISH = {
     ),
     "Klart": "Clear sky",
     "Klovbærende": "Cloven-hoofed game",
+    "Kort": "Map",
     "Kraftig regn": "Heavy rain",
     "Kraftig regn og torden": "Heavy rain and thunder",
     "Kraftig slud": "Heavy sleet",

@@ -16,6 +16,7 @@ enum Copy {
     static let deerNote = String(localized: "Kron- og dåvildt har store lokale forvaltningsplaner. Appen viser kun de generelle tider.")
 
     static let todayTab = String(localized: "Jagtbart")
+    static let mapTab = String(localized: "Kort")
     static let bagTab = String(localized: "Journal")
     static let bagHeading = String(localized: "Jagtjournal")
     static let bagYearRow = String(localized: "Nedlagt vildt")

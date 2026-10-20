@@ -7,3 +7,4 @@ DerivedData/
 .remember/
 .claude/
 __pycache__/
+App/Config/Secrets.xcconfig

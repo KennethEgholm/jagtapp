@@ -51,7 +51,7 @@ final class WeatherStore {
         }
         state = .loading
         var request = URLRequest(url: MetForecast.requestURL(latitude: key.latitude, longitude: key.longitude))
-        request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
+        request.setValue(UserAgent.app, forHTTPHeaderField: "User-Agent")
         do {
             let (data, _) = try await URLSession.shared.data(for: request)
             apply(data, on: date, timeZone: timeZone)
@@ -77,11 +77,5 @@ final class WeatherStore {
             return
         }
         state = .loaded(day)
-    }
-
-    /// MET rejects requests without a User-Agent that says who is asking.
-    static var userAgent: String {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
-        return "JagtFokus/\(version) +https://github.com/KennethEgholm/jagtapp"
     }
 }

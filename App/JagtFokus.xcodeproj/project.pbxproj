@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		000000000000000000000016 /* jagttider.json in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000015 /* jagttider.json */; };
+		000000000000000000000032 /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000031 /* MapLibre */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		000000000000000000000015 /* jagttider.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jagttider.json; sourceTree = "<group>"; };
 		000000000000000000000020 /* JagtFokus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JagtFokus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000033 /* JagtFokus.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = JagtFokus.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000000000000000000000032 /* MapLibre in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +70,7 @@
 				00000000000000000000001A /* JagtFokus */,
 				00000000000000000000001B /* ../Sources/JagtFokusCore */,
 				00000000000000000000001C /* data */,
+				000000000000000000000034 /* Config */,
 				00000000000000000000001E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,6 +81,14 @@
 				000000000000000000000020 /* JagtFokus.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000034 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000033 /* JagtFokus.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +111,9 @@
 				00000000000000000000001B /* ../Sources/JagtFokusCore */,
 			);
 			name = JagtFokus;
+			packageProductDependencies = (
+				000000000000000000000031 /* MapLibre */,
+			);
 			productName = JagtFokus;
 			productReference = 000000000000000000000020 /* JagtFokus.app */;
 			productType = "com.apple.product-type.application";
@@ -128,6 +143,9 @@
 			);
 			mainGroup = 00000000000000000000001D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				000000000000000000000030 /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 00000000000000000000001E /* Products */;
 			projectDirPath = "";
@@ -198,6 +216,7 @@
 		};
 		000000000000000000000028 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 000000000000000000000033 /* JagtFokus.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -233,6 +252,7 @@
 		};
 		000000000000000000000029 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 000000000000000000000033 /* JagtFokus.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -288,6 +308,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		000000000000000000000030 /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.31.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		000000000000000000000031 /* MapLibre */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000000000000000000000030 /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
+			productName = MapLibre;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 00000000000000000000002A /* Project object */;
 }

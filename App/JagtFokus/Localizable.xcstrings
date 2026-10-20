@@ -1273,6 +1273,16 @@
         }
       }
     },
+    "Kort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Map"
+          }
+        }
+      }
+    },
     "Kraftig regn" : {
       "localizations" : {
         "en" : {

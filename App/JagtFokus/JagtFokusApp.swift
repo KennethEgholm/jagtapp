@@ -5,6 +5,10 @@ struct JagtFokusApp: App {
     @State private var store = SeasonStore()
     @State private var bag = BagStore()
 
+    init() {
+        MapRequestProtocol.install()
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
