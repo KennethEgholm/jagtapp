@@ -29,9 +29,11 @@ struct AboutSections: View {
 
         Section {
             Text(Copy.disclaimer)
+                .id("ansvar")
             Label(Copy.daylight, systemImage: "sun.horizon")
             Label(Copy.deerNote, systemImage: "map")
             Label(Copy.biologyDisclaimer, systemImage: "leaf")
+            Label(Copy.parcelDisclaimer, systemImage: "square.dashed")
         } header: {
             Text("Ansvar")
         } footer: {
@@ -62,7 +64,38 @@ struct AboutSections: View {
         }
 
         Section {
+            VStack(alignment: .leading, spacing: Spacing.xxs) {
+                Text(Copy.mapParcels)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(verbatim: CadastreService.attribution)
+            }
+            .accessibilityElement(children: .combine)
+            .id("kort")
+            Link(destination: CadastreService.licenceURL) {
+                Label("Licens", systemImage: "arrow.up.right.square")
+            }
+            VStack(alignment: .leading, spacing: Spacing.xxs) {
+                Text(Copy.mapBasemap)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(verbatim: OpenFreeMap.attribution)
+            }
+            .accessibilityElement(children: .combine)
+            if let url = URL(string: "https://openfreemap.org") {
+                Link(destination: url) {
+                    Label("Åbn OpenFreeMap", systemImage: "arrow.up.right.square")
+                }
+            }
+        } header: {
+            Text("Kort")
+        } footer: {
+            Text("Kortet bruger MapLibre, som er open source.")
+        }
+
+        Section {
             Label("Ingen konto", systemImage: "person.crop.circle.badge.xmark")
+                .id("privatliv")
             Label("Ingen tracking", systemImage: "hand.raised")
             Label("Positionen bruges kun til sted, sol og vejr", systemImage: "location")
             Label("Jagttiderne virker offline", systemImage: "wifi.slash")

@@ -1448,6 +1448,16 @@
         }
       }
     },
+    "Kortet bruger MapLibre, som er open source." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The map uses MapLibre, which is open source."
+          }
+        }
+      }
+    },
     "Kortet mangler adgang til Datafordeler." : {
       "localizations" : {
         "en" : {
@@ -3347,6 +3357,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open the Settings app"
+          }
+        }
+      }
+    },
+    "Åbn OpenFreeMap" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open OpenFreeMap"
           }
         }
       }

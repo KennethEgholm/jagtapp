@@ -7,31 +7,41 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    Picker("Udseende", selection: $appearance) {
-                        ForEach(Appearance.allCases) { option in
-                            Label(option.title, systemImage: option.systemImage)
-                                .tag(option)
+            ScrollViewReader { proxy in
+                List {
+                    Section {
+                        Picker("Udseende", selection: $appearance) {
+                            ForEach(Appearance.allCases) { option in
+                                Label(option.title, systemImage: option.systemImage)
+                                    .tag(option)
+                            }
                         }
+                        .pickerStyle(.inline)
+                        .labelsHidden()
+                    } header: {
+                        Text("Udseende")
+                    } footer: {
+                        Text("System følger telefonens indstilling for lys og mørk.")
                     }
-                    .pickerStyle(.inline)
-                    .labelsHidden()
-                } header: {
-                    Text("Udseende")
-                } footer: {
-                    Text("System følger telefonens indstilling for lys og mørk.")
-                }
 
-                Section {
-                    Toggle(Copy.collapseGroupsTitle, isOn: $collapseGroups)
-                } header: {
-                    Text("Lister")
-                } footer: {
-                    Text(Copy.collapseGroupsFooter)
-                }
+                    Section {
+                        Toggle(Copy.collapseGroupsTitle, isOn: $collapseGroups)
+                    } header: {
+                        Text("Lister")
+                    } footer: {
+                        Text(Copy.collapseGroupsFooter)
+                    }
 
-                AboutSections()
+                    AboutSections()
+                }
+                #if DEBUG
+                .task {
+                    // `-scroll ansvar|kort|privatliv` for screenshots of the lower sections.
+                    guard let id = UserDefaults.standard.string(forKey: "scroll") else { return }
+                    try? await Task.sleep(for: .milliseconds(400))
+                    proxy.scrollTo(id, anchor: .top)
+                }
+                #endif
             }
             .navigationTitle("Indstillinger")
         }

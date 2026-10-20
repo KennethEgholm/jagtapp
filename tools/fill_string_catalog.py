@@ -407,6 +407,8 @@ ENGLISH = {
     "Åbn Indstillinger-appen": "Open the Settings app",
     "Åbn Schweiss-registret": "Open the Schweiss register",
     "Åbn Wikimedia Commons": "Open Wikimedia Commons",
+    "Åbn OpenFreeMap": "Open OpenFreeMap",
+    "Kortet bruger MapLibre, som er open source.": "The map uses MapLibre, which is open source.",
     "Åbn bekendtgørelsen": "Open the regulation",
     "Åbn privatlivspolitikken": "Open the privacy policy (in Danish)",
     "Åbn sol og vejr for dagen": "Open the day's sun and weather",
