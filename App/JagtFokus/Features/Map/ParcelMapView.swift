@@ -20,7 +20,7 @@ struct ParcelMapView: UIViewRepresentable {
     var followRequest = 0
     /// Bump to ask for temporary full accuracy.
     var accuracyRequest = 0
-    /// The user allows only approximate location. Tells it from MapLibre's location manager callback.
+    /// True when the user has allowed location but only approximate. From MapLibre's location manager callback.
     var onReducedAccuracy: (Bool) -> Void = { _ in }
     /// The user moved the map with a gesture.
     var onUserMove: () -> Void
@@ -36,6 +36,10 @@ struct ParcelMapView: UIViewRepresentable {
         map.delegate = context.coordinator
         map.showsUserLocation = true
         map.automaticallyAdjustsContentInset = false
+        // The status card and the tab bar cover the bottom of the map. The source credit and the
+        // logo sit at the top, where nothing covers them, in every state.
+        map.attributionButtonPosition = .topRight
+        map.logoViewPosition = .topLeft
         map.setCenter(initialCamera.center.clLocation, zoomLevel: initialCamera.zoom, animated: false)
         context.coordinator.handledRequest = request?.id
         context.coordinator.handledFollow = followRequest
@@ -91,7 +95,16 @@ struct ParcelMapView: UIViewRepresentable {
 
         /// Read from MapLibre's callback, never polled (CoreLocation's main-thread rule).
         func mapView(_ mapView: MLNMapView, didChangeLocationManagerAuthorization manager: MLNLocationManager) {
-            onReducedAccuracy(manager.accuracyAuthorization?() == .reducedAccuracy)
+            let access: LocationAccuracy.Access
+            switch manager.authorizationStatus {
+            case .authorizedWhenInUse: access = .whenInUse
+            case .authorizedAlways: access = .always
+            case .denied: access = .denied
+            case .restricted: access = .restricted
+            default: access = .notDetermined
+            }
+            let reduced = manager.accuracyAuthorization?() == .reducedAccuracy
+            onReducedAccuracy(LocationAccuracy.showsReducedNotice(access: access, isReduced: reduced))
         }
 
         func mapView(_ mapView: MLNMapView, regionWillChangeWith reason: MLNCameraChangeReason, animated: Bool) {
