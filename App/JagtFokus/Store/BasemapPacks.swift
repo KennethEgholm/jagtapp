@@ -12,7 +12,12 @@ final class BasemapPacks {
     struct TooLarge: Error {}
     struct Stalled: Error {}
 
-    private let storage = MLNOfflineStorage.shared
+    /// Not touched at init: `MapStore` is made before the app's `init` body runs, and
+    /// MapLibre's file source must not exist before `MapRequestProtocol` is installed.
+    private var storage: MLNOfflineStorage {
+        MapRequestProtocol.install()
+        return MLNOfflineStorage.shared
+    }
     private static let log = Logger(subsystem: "dk.jagtfokus.app", category: "offline")
 
     /// The ids of the packs MapLibre holds. MapLibre loads the list on its own thread, so it is nil for a moment.

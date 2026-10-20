@@ -7,6 +7,26 @@ enum OpenFreeMapTraffic {
     static let gate = RequestGate(limit: OpenFreeMap.maxParallelRequests)
 }
 
+/// The app's own requests for the map: Datafordeler pages and OpenFreeMap's TileJSON. A
+/// Datafordeler URL carries the key, so nothing is cached and nothing is stored: ephemeral,
+/// no URL cache, no cookies. Live parcels stay in memory only.
+enum MapSession {
+    static let shared: URLSession = {
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.urlCache = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        configuration.httpCookieStorage = nil
+        configuration.httpShouldSetCookies = false
+        configuration.httpCookieAcceptPolicy = .never
+        configuration.httpAdditionalHeaders = ["User-Agent": UserAgent.app]
+        #if DEBUG
+        // `-offline YES` fails these requests too, as with no network.
+        if MapRequestProtocol.offline { configuration.protocolClasses = [MapRequestProtocol.self] }
+        #endif
+        return URLSession(configuration: configuration)
+    }()
+}
+
 /// All of MapLibre's traffic goes through here, so OpenFreeMap sees at most
 /// `OpenFreeMap.maxParallelRequests` requests at once and the app's own User-Agent.
 final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
@@ -15,15 +35,22 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
     private static let session = URLSession(configuration: .ephemeral)
     private var loading: Task<Void, Never>?
 
-    /// Call before any `MLNMapView` exists.
+    /// Routes MapLibre's traffic through this protocol. Must run before MapLibre makes its file
+    /// source, which the first `MLNMapView` or `MLNOfflineStorage.shared` does. Every MapLibre
+    /// entry point in the app calls it first (`ParcelMapView`, `BasemapPacks`), so the order of
+    /// the app's initialisers does not matter. Safe to call again: it runs once.
     static func install() {
+        _ = installed
+    }
+
+    private static let installed: Void = {
         let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MapRequestProtocol.self]
         MLNNetworkConfiguration.sharedManager.sessionConfiguration = configuration
         #if DEBUG
         if offline { URLProtocol.registerClass(MapRequestProtocol.self) }
         #endif
-    }
+    }()
 
     #if DEBUG
     /// `-offline YES`: every request fails, as with no network.

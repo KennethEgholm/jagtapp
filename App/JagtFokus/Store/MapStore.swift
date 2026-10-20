@@ -62,10 +62,10 @@ final class MapStore {
     private static let debounce = Duration.milliseconds(400)
     /// A safety stop, 50,000 parcels. A 3 km square holds a few thousand.
     private nonisolated static let maxPages = 10
-    private static let log = Logger(subsystem: "dk.jagtfokus.app", category: "cadastre")
+    private nonisolated static let log = Logger(subsystem: "dk.jagtfokus.app", category: "cadastre")
     private static let offlineLog = Logger(subsystem: "dk.jagtfokus.app", category: "offline")
 
-    init(apiKey: String? = DatafordelerKey.value, session: URLSession = .shared) {
+    init(apiKey: String? = DatafordelerKey.value, session: URLSession = MapSession.shared) {
         self.apiKey = apiKey
         self.session = session
     }
@@ -229,9 +229,14 @@ final class MapStore {
             request.setValue(UserAgent.app, forHTTPHeaderField: "User-Agent")
             request.timeoutInterval = 20
             let data = try await page(request, session: session, attempts: strict ? 4 : 2)
-            let parsed = try ParcelSet.decodeChecked(from: data)
-            all = all.merging(parsed)
-            if parsed.count < CadastreService.pageSize { return all }
+            let parsed = try CadastrePage.decode(from: data)
+            all = all.merging(parsed.parcels)
+            if parsed.skipped > 0 {
+                // A member whose geometry the parser does not read. It is counted, never silently dropped.
+                Self.log.error("page at \(start, privacy: .public): \(parsed.skipped, privacy: .public) of \(parsed.members, privacy: .public) members had no polygon\(strict ? " (saved area)" : "", privacy: .public)")
+            }
+            // From the raw page: a skipped member must not make a full page look like the last.
+            guard CadastrePaging.hasMore(parsed, startIndex: start, pageSize: CadastreService.pageSize) else { return all }
             start += CadastreService.pageSize
         }
         if strict { throw TooManyParcels() }
@@ -460,6 +465,8 @@ extension MapStore {
         var request = URLRequest(url: OpenFreeMap.tileJSONURL)
         request.setValue(UserAgent.app, forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 15
+        // Always the server's answer: this decides whether the saved packs are stale.
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         // OpenFreeMap allows four requests at once, the map's and the packs' included.
         let (data, response) = try await OpenFreeMapTraffic.gate.run {
             try await session.data(for: request)

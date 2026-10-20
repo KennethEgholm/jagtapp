@@ -34,6 +34,7 @@ struct ParcelMapView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator() }
 
     func makeUIView(context: Context) -> MLNMapView {
+        MapRequestProtocol.install()
         let map = MLNMapView(frame: .zero, styleURL: OpenFreeMap.styleURL)
         map.delegate = context.coordinator
         map.showsUserLocation = true

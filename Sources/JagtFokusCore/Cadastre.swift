@@ -57,9 +57,11 @@ public extension ParcelSet {
     /// Service response (GML 3.2) or our own compact GeoJSON file.
     /// Throws ParcelsRefused or DecodingError.
     public static func decodeChecked(from data: Data) throws -> ParcelSet {
-        if Self.isXML(data) {
-            return try decodeGML(data)
-        }
+        try CadastrePage.decode(from: data).parcels
+    }
+
+    /// The compact GeoJSON, with the number of features in the file.
+    fileprivate static func decodeJSON(_ data: Data) throws -> (parcels: ParcelSet, features: Int) {
         let raw = try JSONDecoder().decode(RawCollection.self, from: data)
         var parcels: [Parcel] = []
         for feature in raw.features {
@@ -79,7 +81,7 @@ public extension ParcelSet {
                 polygons: polygons
             ))
         }
-        return try checked(parcels)
+        return (try checked(parcels), raw.features.count)
     }
 
     /// Dedupes two pages by id, keeping the first page's parcel.
@@ -121,7 +123,7 @@ public extension ParcelSet {
     }
 }
 
-private extension ParcelSet {
+fileprivate extension ParcelSet {
     /// Names in our own compact file — shorter than the service's.
     static let compactNumber = "nr"
     static let compactDistrict = "ejerlav"
@@ -133,7 +135,7 @@ private extension ParcelSet {
         return first == UInt8(ascii: "<")
     }
 
-    static func decodeGML(_ data: Data) throws -> ParcelSet {
+    static func decodeGML(_ data: Data) throws -> CadastrePage {
         let parser = XMLParser(data: data)
         let delegate = GMLParcelParser()
         parser.shouldProcessNamespaces = true
@@ -148,7 +150,13 @@ private extension ParcelSet {
                 .init(codingPath: [], debugDescription: "WFS exception or a broken posList")
             )
         }
-        return try checked(delegate.parcels)
+        return CadastrePage(
+            parcels: try checked(delegate.parcels),
+            numberReturned: delegate.numberReturned,
+            numberMatched: delegate.numberMatched,
+            members: delegate.members,
+            skipped: delegate.skipped
+        )
     }
 
     static func checked(_ parcels: [Parcel]) throws -> ParcelSet {
@@ -294,6 +302,56 @@ private extension Dictionary where Key == String, Value == JSONValue {
     }
 }
 
+/// One page from the service, with what paging needs: the counts the service put on the
+/// collection and the raw members. The parser skips a member whose geometry it does not read,
+/// so the parcels alone can make a full page look short.
+public struct CadastrePage: Sendable, Equatable {
+    public var parcels: ParcelSet
+    /// `numberReturned` on `wfs:FeatureCollection`, when the service sent a number.
+    public var numberReturned: Int?
+    /// `numberMatched`, when it is a number (WFS allows "unknown").
+    public var numberMatched: Int?
+    /// `wfs:member` elements in the page (features in a compact file).
+    public var members: Int
+    /// Members that gave no parcel: a geometry the parser does not read.
+    public var skipped: Int
+
+    public init(parcels: ParcelSet, numberReturned: Int?, numberMatched: Int?, members: Int, skipped: Int) {
+        self.parcels = parcels
+        self.numberReturned = numberReturned
+        self.numberMatched = numberMatched
+        self.members = members
+        self.skipped = skipped
+    }
+
+    /// Service GML or our compact GeoJSON. Throws as `ParcelSet.decodeChecked` does.
+    public static func decode(from data: Data) throws -> CadastrePage {
+        if ParcelSet.isXML(data) {
+            return try ParcelSet.decodeGML(data)
+        }
+        let decoded = try ParcelSet.decodeJSON(data)
+        return CadastrePage(
+            parcels: decoded.parcels,
+            numberReturned: nil,
+            numberMatched: nil,
+            members: decoded.features,
+            skipped: decoded.features - decoded.parcels.count
+        )
+    }
+}
+
+/// When to ask for the next page.
+public enum CadastrePaging {
+    /// From the raw page: `numberReturned`, else the members. A full page goes on unless
+    /// `numberMatched` says this was the last. `next` is not read: Datafordeler sends it on the last page too.
+    public static func hasMore(_ page: CadastrePage, startIndex: Int, pageSize: Int) -> Bool {
+        let returned = page.numberReturned ?? page.members
+        guard returned >= pageSize else { return false }
+        if let matched = page.numberMatched, startIndex + returned >= matched { return false }
+        return true
+    }
+}
+
 /// The Datafordeler matrikel WFS: the request the map tab sends page by page.
 public enum CadastreService {
     public static let host = "wfs.datafordeler.dk"
@@ -340,6 +398,10 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
     var parcels: [Parcel] = []
     var sawException = false
     var malformed = false
+    var members = 0
+    var skipped = 0
+    var numberReturned: Int?
+    var numberMatched: Int?
 
     private var id = ""
     private var number = ""
@@ -361,7 +423,11 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
         switch local(elementName) {
         case "Exception", "ExceptionReport":
             sawException = true
+        case "FeatureCollection":
+            numberReturned = attributeDict["numberReturned"].flatMap { Int($0) }
+            numberMatched = attributeDict["numberMatched"].flatMap { Int($0) }
         case "member":
+            members += 1
             id = ""
             number = ""
             polygons = []
@@ -372,7 +438,7 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
         case "matrikelnummer":
             capture = .number
             text = ""
-        case "Polygon":
+        case "Polygon", "PolygonPatch":
             rings = []
         case "LinearRing":
             ring = []
@@ -409,11 +475,13 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
         case "LinearRing":
             if !ring.isEmpty { rings.append(ring) }
             ring = []
-        case "Polygon":
+        case "Polygon", "PolygonPatch":
             if !rings.isEmpty { polygons.append(rings) }
             rings = []
         case "member":
-            if !polygons.isEmpty {
+            if polygons.isEmpty {
+                skipped += 1
+            } else {
                 parcels.append(Parcel(id: id, number: number, district: "", polygons: polygons))
             }
         default:
