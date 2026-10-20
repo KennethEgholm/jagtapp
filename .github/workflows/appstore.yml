@@ -47,6 +47,20 @@ jobs:
             exit 1
           fi
 
+      # The map's Datafordeler key comes from a repository secret, never from git.
+      # Without it the archived app draws no boundaries, so stop here.
+      - name: Write the Datafordeler key
+        if: inputs.upload == true
+        env:
+          DATAFORDELER_API_KEY: ${{ secrets.DATAFORDELER_API_KEY }}
+        run: |
+          if [ -z "$DATAFORDELER_API_KEY" ] || [ "$DATAFORDELER_API_KEY" = "din-nøgle" ]; then
+            echo "Missing DATAFORDELER_API_KEY secret. See spec/appstore/README.md. Nothing was uploaded."
+            exit 1
+          fi
+          umask 077
+          printf 'DATAFORDELER_API_KEY = %s\n' "$DATAFORDELER_API_KEY" > App/Config/Secrets.xcconfig
+
       - name: Archive and upload the build
         if: inputs.upload == true
         env:

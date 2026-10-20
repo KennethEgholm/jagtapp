@@ -187,13 +187,14 @@ Versionsnummeret i appen er `MARKETING_VERSION` fra Xcode-projektet. Samme tal a
 Når kontoen er godkendt:
 
 1. Opret en App Store Connect API-nøgle (Admin eller App Manager). Hent `.p8`-filen én gang.
-2. Læg tre secrets på repoet. Ikke i git.
+2. Læg fire secrets på repoet. Ikke i git.
 
 | Secret | Indhold |
 |---|---|
 | `APP_STORE_CONNECT_KEY_ID` | Nøglens id |
 | `APP_STORE_CONNECT_ISSUER_ID` | Issuer id |
 | `APP_STORE_CONNECT_API_KEY_P8` | Hele `.p8`-filen, inklusive `BEGIN` og `END` |
+| `DATAFORDELER_API_KEY` | Datafordeler-nøglen til kortet. Workflowet skriver `App/Config/Secrets.xcconfig` med den og stopper, hvis den mangler |
 
 3. Kør **App Store** under Actions, med upload slået til. Runneren er `xcode-27`.
 4. Tjek buildet i App Store Connect. Udgiv selv, når dagen er valgt.

@@ -8,13 +8,20 @@ cd "$(dirname "$0")/.."
 # Never print the key.
 SECRETS=App/Config/Secrets.xcconfig
 if [[ ! -f "$SECRETS" ]]; then
-  echo "Mangler $SECRETS. Uden Datafordeler-nøglen får buildet ingen skel. Se App/Config/." >&2
+  echo "Missing $SECRETS. Without the Datafordeler key the build draws no boundaries. See App/Config/." >&2
   exit 1
 fi
-if ! grep -Eq '^[[:space:]]*DATAFORDELER_API_KEY[[:space:]]*=[[:space:]]*[^[:space:]]+' "$SECRETS"; then
-  echo "DATAFORDELER_API_KEY er tom i $SECRETS. Uden nøglen får buildet ingen skel." >&2
+# The value after "=", trimmed. Never echoed.
+key=$(sed -nE 's/^[[:space:]]*DATAFORDELER_API_KEY[[:space:]]*=[[:space:]]*//p' "$SECRETS" | tail -n 1 | sed -E 's/[[:space:]]+$//')
+if [[ -z "$key" ]]; then
+  echo "DATAFORDELER_API_KEY is empty in $SECRETS. Without the key the build draws no boundaries." >&2
   exit 1
 fi
+if [[ "$key" == "din-nøgle" ]]; then
+  echo "DATAFORDELER_API_KEY in $SECRETS is still the placeholder from Secrets.example.xcconfig. Put the real key there." >&2
+  exit 1
+fi
+unset key
 PBX=App/JagtFokus.xcodeproj/project.pbxproj
 current=$(grep -m1 -o 'CURRENT_PROJECT_VERSION = [0-9]*' "$PBX" | grep -o '[0-9]*$')
 next=$((current + 1))
