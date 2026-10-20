@@ -25,6 +25,22 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
     static let offline = UserDefaults.standard.bool(forKey: "offline")
     private static let log = Logger(subsystem: "dk.jagtfokus.app", category: "map")
     private static let count = OSAllocatedUnfairLock(initialState: 0)
+    /// Requests running at this moment, and the most there have been at once. The gate must keep it at 4 or less.
+    private static let inFlight = OSAllocatedUnfairLock(initialState: (current: 0, peak: 0))
+
+    private static func began() {
+        let peak = inFlight.withLock { state -> Int? in
+            state.current += 1
+            guard state.current > state.peak else { return nil }
+            state.peak = state.current
+            return state.peak
+        }
+        if let peak { log.notice("in flight, new peak: \(peak, privacy: .public)") }
+    }
+
+    private static func ended() {
+        inFlight.withLock { $0.current -= 1 }
+    }
 
     /// The URL for the log, without the Datafordeler key. The cadastre fetch passes through here too under `-offline YES`.
     private static func redacted(_ url: URL?) -> String {
@@ -67,6 +83,10 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
                 let (data, response) = try await Self.gate.run {
                     // A cancelled request waited for its slot anyway; give it back at once.
                     try Task.checkCancellation()
+                    #if DEBUG
+                    Self.began()
+                    defer { Self.ended() }
+                    #endif
                     return try await Self.session.data(for: outgoing)
                 }
                 guard !Task.isCancelled, let self else { return }

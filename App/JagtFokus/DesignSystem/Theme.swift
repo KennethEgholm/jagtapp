@@ -26,6 +26,7 @@ extension ShapeStyle where Self == Color {
     static var localTime: Color { Color(.brass) }
     // Property boundaries on the map: `.boundary` (`Boundary`, #C62828, same in light and dark),
     // for SwiftUI and, as `UIColor.boundary`, for MapLibre. Xcode generates both from the asset.
+    // The 5 km save frame on the map: `UIColor.saveFrame` (`SaveFrame`, same in light and dark), generated the same way.
     /// Fixed brand green for filled tiles. Light accent is too pale behind white symbols in dark mode.
     static var forest: Color { Color(red: 0.184, green: 0.420, blue: 0.278) }
     /// Sunrise and sunset, on the sun card and the weather page. Display only, not status.

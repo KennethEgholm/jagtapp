@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Kort: the basemap full-bleed down to the tab bar, below a system navigation bar.
-/// Boundaries and the status card live here; saved areas come in a later slice.
+/// Boundaries, the status card and the saved areas live here.
 ///
 /// The camera moves only on explicit events: the start, the first exact GPS fix when
 /// the user has not touched the map, and `fly(to:)`. Later GPS fixes and a new place on
@@ -16,6 +16,9 @@ struct MapTab: View {
     @State private var accuracyRequest = 0
     @State private var reducedAccuracy = false
     @State private var showInfo = false
+    @State private var showSaved = false
+    @State private var askName = false
+    @State private var draftName = ""
 
     var body: some View {
         NavigationStack {
@@ -27,23 +30,43 @@ struct MapTab: View {
                 onReducedAccuracy: { reducedAccuracy = $0 },
                 onUserMove: { settled = true },
                 parcels: map.visibleParcels,
-                saveFrame: nil,
+                saveFrame: map.saveFrame,
+                onCentreChange: { map.centreMoved(to: $0) },
                 onRegionChange: { box, zoom in map.regionChanged(box, zoom: zoom) }
             )
             .ignoresSafeArea(edges: .bottom)
             .safeAreaInset(edge: .bottom) {
                 MapStatusCard(
                     live: map.live,
+                    saving: map.saving,
                     savedAreaText: savedAreaText,
                     reducedAccuracy: reducedAccuracy,
-                    onUsePrecise: { accuracyRequest += 1 }
+                    onUsePrecise: { accuracyRequest += 1 },
+                    onSave: {
+                        draftName = map.index.nextDefaultName(prefix: Copy.mapAreaPrefix)
+                        askName = true
+                    },
+                    onCancelSave: { map.cancelSave() }
                 )
             }
             .navigationTitle(Copy.mapTab)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showSaved = true
+                    } label: {
+                        Label(Copy.mapSavedAreas, systemImage: "square.stack.3d.down.right")
+                    }
+                }
                 ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        map.beginSave()
+                    } label: {
+                        Label(Copy.mapSaveArea, systemImage: "square.and.arrow.down")
+                    }
+                    .disabled(!map.canSave)
                     Button {
                         // The button is an explicit ask, so it ends the wait for the first fix too.
                         settled = true
@@ -59,12 +82,35 @@ struct MapTab: View {
                 }
             }
             .sheet(isPresented: $showInfo) { MapInfoSheet() }
+            .sheet(isPresented: $showSaved) {
+                SavedAreasView { area in
+                    settled = true
+                    fly(to: MapCamera(center: area.box.center, zoom: MapRules.boundaryMinZoom))
+                }
+            }
+            .alert(Copy.mapSaveArea, isPresented: $askName) {
+                TextField("Navn", text: $draftName)
+                Button("Gem") {
+                    let name = draftName
+                    Task { await map.save(name: name) }
+                }
+                Button("Annuller", role: .cancel) {}
+            }
+        }
+        .task {
+            await map.start()
+            #if DEBUG
+            await runDebugSave()
+            #endif
+            // Online: a pack saved with an older week's tile URL is downloaded again.
+            await map.refreshStaleBasemaps()
         }
         .onAppear {
             // The map has just started at the best camera there is. An exact fix or `-map` needs no flight.
             if exactFix != nil || debugCamera != nil { settled = true }
             #if DEBUG
             if UserDefaults.standard.string(forKey: "sheet") == "mapinfo" { showInfo = true }
+            if UserDefaults.standard.string(forKey: "sheet") == "saved" { showSaved = true }
             #endif
         }
         .onChange(of: exactFix) { _, fix in
@@ -74,7 +120,28 @@ struct MapTab: View {
         }
     }
 
-    /// For the buttons that come later (centre on me, a saved area).
+    #if DEBUG
+    /// DEBUG `-save choosing|alert|go|delete`: choose the frame, ask for a name, save at once, or delete the newest area.
+    private func runDebugSave() async {
+        guard let step = UserDefaults.standard.string(forKey: "save") else { return }
+        if step == "delete" {
+            if let first = map.index.areas.first { await map.delete(first.id) }
+            return
+        }
+        map.beginSave()
+        switch step {
+        case "alert":
+            draftName = map.index.nextDefaultName(prefix: Copy.mapAreaPrefix)
+            askName = true
+        case "go":
+            await map.save(name: "")
+        default:
+            break
+        }
+    }
+    #endif
+
+    /// For the saved-area rows.
     private func fly(to camera: MapCamera) {
         request = MapCameraRequest(id: (request?.id ?? 0) + 1, camera: camera)
     }

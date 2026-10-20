@@ -19,9 +19,11 @@ public enum LiveBoundaries {
         /// Zoomed in enough, but the view is wider or taller than a live fetch may be.
         case tooLarge
         case fetch
+        /// Zoomed in enough and the view would be fetched, but there is no network. Nothing is asked for.
+        case offline
     }
 
-    public static func plan(for box: GeoBox, zoom: Double, areas: [OfflineArea]) -> Plan {
+    public static func plan(for box: GeoBox, zoom: Double, areas: [OfflineArea], isOnline: Bool = true) -> Plan {
         guard zoom >= MapRules.boundaryMinZoom else { return .tooFarOut }
         if let area = areas.first(where: { $0.box.contains(box) }) {
             return .savedArea(area)
@@ -29,7 +31,7 @@ public enum LiveBoundaries {
         guard max(box.widthMeters, box.heightMeters) <= MapRules.liveFetchMaxSideMeters else {
             return .tooLarge
         }
-        return .fetch
+        return isOnline ? .fetch : .offline
     }
 
     /// The service answered, but not with a page.

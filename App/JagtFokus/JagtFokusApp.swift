@@ -16,6 +16,7 @@ struct JagtFokusApp: App {
                 .environment(store)
                 .environment(bag)
                 .environment(map)
+                .task { await map.start() }
         }
     }
 }

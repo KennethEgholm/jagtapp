@@ -12,6 +12,17 @@
       },
       "comment" : "Weekday and date on a day button, e.g. “Saturday 24 Oct”."
     },
+    "%@ er gemt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ saved"
+          }
+        }
+      },
+      "comment" : "The card when an area has been saved: the area's name."
+    },
     "%@ m/s fra %@" : {
       "localizations" : {
         "en" : {
@@ -276,6 +287,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "+1"
+          }
+        }
+      }
+    },
+    "5 × 5 km om midten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 × 5 km around the centre"
           }
         }
       }
@@ -741,6 +762,38 @@
         }
       }
     },
+    "Gem" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      },
+      "comment" : "The button that saves the map area the frame shows."
+    },
+    "Gem område" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save area"
+          }
+        }
+      }
+    },
+    "Gemmer %@ …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saving %@ …"
+          }
+        }
+      },
+      "comment" : "The card while an area is being saved: the area's name."
+    },
     "Gemt område: %@, hentet %@" : {
       "localizations" : {
         "en" : {
@@ -751,6 +804,16 @@
         }
       },
       "comment" : "The map's status inside a saved area: its name, then the date it was downloaded."
+    },
+    "Gemte områder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved areas"
+          }
+        }
+      }
     },
     "Generel jagttid" : {
       "localizations" : {
@@ -842,6 +905,17 @@
           }
         }
       }
+    },
+    "Hentet %@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloaded %@ · %@"
+          }
+        }
+      },
+      "comment" : "A saved area in the list: the date it was downloaded, then its size on disk."
     },
     "Hvad kan jeg forvente?" : {
       "localizations" : {
@@ -979,6 +1053,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No species."
+          }
+        }
+      }
+    },
+    "Ingen gemte områder." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No saved areas."
           }
         }
       }
@@ -1897,6 +1981,17 @@
         }
       }
     },
+    "Navn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      },
+      "comment" : "The placeholder of the field where a saved map area is named."
+    },
     "Nedbør" : {
       "localizations" : {
         "en" : {
@@ -2019,12 +2114,33 @@
         }
       }
     },
+    "Område" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Area"
+          }
+        }
+      },
+      "comment" : "The first word of a saved area's default name, followed by a number."
+    },
     "Områder" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Areas"
+          }
+        }
+      }
+    },
+    "Området kunne ikke gemmes. Prøv igen med net." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The area could not be saved. Try again online."
           }
         }
       }

@@ -26,6 +26,8 @@ struct ParcelMapView: UIViewRepresentable {
     var onUserMove: () -> Void
     var parcels: Data?
     var saveFrame: GeoBox?
+    /// The map's centre, while the user moves it and a save frame is drawn.
+    var onCentreChange: (Coordinate) -> Void = { _ in }
     /// The visible bounds and the zoom, after every move.
     var onRegionChange: (GeoBox, Double) -> Void
 
@@ -50,6 +52,7 @@ struct ParcelMapView: UIViewRepresentable {
     func updateUIView(_ map: MLNMapView, context: Context) {
         let coordinator = context.coordinator
         coordinator.onRegionChange = onRegionChange
+        coordinator.onCentreChange = onCentreChange
         coordinator.onUserMove = onUserMove
         coordinator.onReducedAccuracy = onReducedAccuracy
         if let request, request.id != coordinator.handledRequest {
@@ -77,11 +80,13 @@ struct ParcelMapView: UIViewRepresentable {
         var onReducedAccuracy: (Bool) -> Void = { _ in }
         var onUserMove: () -> Void = {}
         var onRegionChange: (GeoBox, Double) -> Void = { _, _ in }
+        var onCentreChange: (Coordinate) -> Void = { _ in }
         var parcels: Data?
         var saveFrame: GeoBox?
         /// What is on the style now, so an unchanged update does not parse the GeoJSON again.
         private var drawnParcels: Data?
         private var drawnFrame: GeoBox?
+        private var drawnOnce = false
 
         private static let parcelsID = "matrikel"
         private static let frameID = "saveFrame"
@@ -89,6 +94,7 @@ struct ParcelMapView: UIViewRepresentable {
         private static let labelFont = "Noto Sans Regular"
 
         func mapView(_ mapView: MLNMapView, didFinishLoading style: MLNStyle) {
+            drawnOnce = false
             draw(on: mapView)
             reportRegion(of: mapView)
         }
@@ -112,6 +118,12 @@ struct ParcelMapView: UIViewRepresentable {
             if !reason.subtracting(.programmatic).isEmpty { onUserMove() }
         }
 
+        func mapViewRegionIsChanging(_ mapView: MLNMapView) {
+            guard saveFrame != nil else { return }
+            let centre = mapView.centerCoordinate
+            onCentreChange(Coordinate(latitude: centre.latitude, longitude: centre.longitude))
+        }
+
         func mapView(_ mapView: MLNMapView, regionDidChangeWith reason: MLNCameraChangeReason, animated: Bool) {
             reportRegion(of: mapView)
         }
@@ -129,23 +141,29 @@ struct ParcelMapView: UIViewRepresentable {
             draw(on: map)
         }
 
-        /// Puts the parcels and the save frame on the style, or takes them off.
+        /// Puts the parcels and the save frame on the style, or takes them off. Each is drawn only
+        /// when it changed: the frame moves with every frame of a pan, and the parcels must not be parsed again for that.
         func draw(on map: MLNMapView) {
             guard let style = map.style else { return }
-            drawnParcels = parcels
-            drawnFrame = saveFrame
-            drawParcels(on: style)
-            let frameShape = saveFrame.map { box -> MLNShape in
-                var corners = [
-                    CLLocationCoordinate2D(latitude: box.south, longitude: box.west),
-                    CLLocationCoordinate2D(latitude: box.south, longitude: box.east),
-                    CLLocationCoordinate2D(latitude: box.north, longitude: box.east),
-                    CLLocationCoordinate2D(latitude: box.north, longitude: box.west),
-                    CLLocationCoordinate2D(latitude: box.south, longitude: box.west),
-                ]
-                return MLNPolylineFeature(coordinates: &corners, count: UInt(corners.count))
+            if parcels != drawnParcels || !drawnOnce {
+                drawnParcels = parcels
+                drawParcels(on: style)
             }
-            setFrame(frameShape, style: style)
+            if saveFrame != drawnFrame || !drawnOnce {
+                drawnFrame = saveFrame
+                let frameShape = saveFrame.map { box -> MLNShape in
+                    var corners = [
+                        CLLocationCoordinate2D(latitude: box.south, longitude: box.west),
+                        CLLocationCoordinate2D(latitude: box.south, longitude: box.east),
+                        CLLocationCoordinate2D(latitude: box.north, longitude: box.east),
+                        CLLocationCoordinate2D(latitude: box.north, longitude: box.west),
+                        CLLocationCoordinate2D(latitude: box.south, longitude: box.west),
+                    ]
+                    return MLNPolylineFeature(coordinates: &corners, count: UInt(corners.count))
+                }
+                setFrame(frameShape, style: style)
+            }
+            drawnOnce = true
         }
 
         /// The source `matrikel` with a white casing, the red boundary and the matrikelnumre.
@@ -200,12 +218,15 @@ struct ParcelMapView: UIViewRepresentable {
             style.addLayer(labels)
         }
 
+        /// The save frame: a dark line with a white casing, so it shows on the light basemap in both appearances.
         private func setFrame(_ shape: MLNShape?, style: MLNStyle) {
             if let source = style.source(withIdentifier: Self.frameID) as? MLNShapeSource {
                 if let shape {
                     source.shape = shape
                 } else {
-                    if let layer = style.layer(withIdentifier: Self.frameID) { style.removeLayer(layer) }
+                    for id in [Self.frameID, Self.frameID + "-casing"] {
+                        if let layer = style.layer(withIdentifier: id) { style.removeLayer(layer) }
+                    }
                     style.removeSource(source)
                 }
                 return
@@ -213,9 +234,14 @@ struct ParcelMapView: UIViewRepresentable {
             guard let shape else { return }
             let source = MLNShapeSource(identifier: Self.frameID, shape: shape, options: nil)
             style.addSource(source)
+            let casing = MLNLineStyleLayer(identifier: Self.frameID + "-casing", source: source)
+            casing.lineColor = NSExpression(forConstantValue: UIColor.white)
+            casing.lineOpacity = NSExpression(forConstantValue: 0.8)
+            casing.lineWidth = NSExpression(forConstantValue: 6)
+            style.addLayer(casing)
             let layer = MLNLineStyleLayer(identifier: Self.frameID, source: source)
-            layer.lineColor = NSExpression(forConstantValue: UIColor.label)
-            layer.lineWidth = NSExpression(forConstantValue: 2)
+            layer.lineColor = NSExpression(forConstantValue: UIColor.saveFrame)
+            layer.lineWidth = NSExpression(forConstantValue: 3)
             style.addLayer(layer)
         }
     }

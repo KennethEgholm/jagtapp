@@ -4,13 +4,19 @@ import SwiftUI
 /// area. A solid card, not glass: it is content. Every line has an icon and text.
 struct MapStatusCard: View {
     let live: MapStore.Live
+    /// Saving an area replaces the status with the save card.
+    var saving: MapStore.Saving = .idle
     /// "Gemt område: …", when the view lies inside a saved area.
     let savedAreaText: String?
     let reducedAccuracy: Bool
     let onUsePrecise: () -> Void
+    var onSave: () -> Void = {}
+    var onCancelSave: () -> Void = {}
 
     var body: some View {
-        if let line = statusLine {
+        if saving != .idle {
+            card { saveContent }
+        } else if let line = statusLine {
             card {
                 lineView(line)
                 if reducedAccuracy { accuracy }
@@ -31,7 +37,8 @@ struct MapStatusCard: View {
         case .tooFarOut:
             Line(text: Copy.mapTooFarOut, systemImage: "plus.magnifyingglass")
         case .idle, .loaded, .loading, .offline, .failed, .noKey:
-            if let savedAreaText, live != .loading {
+            // Offline says so first, inside a saved area too: the boundaries are the saved ones.
+            if let savedAreaText, live != .loading, live != .offline {
                 Line(text: savedAreaText, systemImage: "arrow.down.circle")
             } else {
                 switch live {
@@ -57,6 +64,40 @@ struct MapStatusCard: View {
                 ProgressView()
             }
         }
+    }
+
+    @ViewBuilder
+    private var saveContent: some View {
+        switch saving {
+        case .choosing:
+            Label(Copy.mapSaveFrame, systemImage: "square.dashed")
+            ViewThatFits(in: .horizontal) {
+                HStack { saveButton; cancelButton }
+                VStack(alignment: .leading) { saveButton; cancelButton }
+            }
+        case .downloading(let name, let progress):
+            Label(Copy.mapSaving(name: name), systemImage: "arrow.down.circle")
+            ProgressView(value: progress)
+            cancelButton
+        case .saved(let name):
+            Label(Copy.mapSaved(name: name), systemImage: "checkmark.circle")
+        case .failed:
+            Label(Copy.mapSaveFailed, systemImage: "exclamationmark.triangle")
+            Button("Luk", action: onCancelSave)
+                .buttonStyle(.bordered)
+        case .idle:
+            EmptyView()
+        }
+    }
+
+    private var saveButton: some View {
+        Button("Gem", action: onSave)
+            .buttonStyle(.borderedProminent)
+    }
+
+    private var cancelButton: some View {
+        Button("Annuller", action: onCancelSave)
+            .buttonStyle(.bordered)
     }
 
     private var accuracy: some View {

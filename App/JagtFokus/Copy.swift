@@ -32,6 +32,19 @@ enum Copy {
     static let mapReducedAccuracy = String(localized: "Præcis position er slået fra")
     static let mapUsePrecise = String(localized: "Brug præcis position")
 
+    static let mapSaveArea = String(localized: "Gem område")
+    static let mapSavedAreas = String(localized: "Gemte områder")
+    static let mapSaveFrame = String(localized: "5 × 5 km om midten")
+    static let mapSaveFailed = String(localized: "Området kunne ikke gemmes. Prøv igen med net.")
+    static let mapNoSavedAreas = String(localized: "Ingen gemte områder.")
+    static let mapAreaPrefix = String(localized: "Område")
+    static func mapSaving(name: String) -> String { String(localized: "Gemmer \(name) …") }
+    static func mapSaved(name: String) -> String { String(localized: "\(name) er gemt") }
+    /// "Hentet 20. okt 2026 · 8,4 MB".
+    static func mapDownloaded(date: String, size: String) -> String {
+        String(localized: "Hentet \(date) · \(size)")
+    }
+
     /// "Gemt område: Område 1, hentet 20. okt 2026".
     static func savedArea(name: String, downloaded: String) -> String {
         String(localized: "Gemt område: \(name), hentet \(downloaded)")
