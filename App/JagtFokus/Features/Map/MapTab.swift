@@ -4,7 +4,7 @@ import SwiftUI
 /// Boundaries, the status card and the saved areas live here.
 ///
 /// The camera moves only on explicit events: the start, the first exact GPS fix when
-/// the user has not touched the map, and `fly(to:)`. Later GPS fixes and a new place on
+/// the user has not touched the map (MapLibre's raw position, not the geocoded place), and `fly(to:)`. Later GPS fixes and a new place on
 /// Jagtbart never move it.
 struct MapTab: View {
     @Environment(SeasonStore.self) private var store
@@ -29,6 +29,7 @@ struct MapTab: View {
                 accuracyRequest: accuracyRequest,
                 onReducedAccuracy: { reducedAccuracy = $0 },
                 onUserMove: { settled = true },
+                onUserLocation: { firstFix($0) },
                 parcels: map.visibleParcels,
                 saveFrame: map.saveFrame,
                 onCentreChange: { map.centreMoved(to: $0) },
@@ -115,10 +116,17 @@ struct MapTab: View {
             #endif
         }
         .onChange(of: exactFix) { _, fix in
-            guard let fix, !settled else { return }
-            settled = true
-            fly(to: MapCamera.start(at: fix, isExact: true))
+            if let fix { firstFix(fix) }
         }
+    }
+
+    /// The first position, from the puck or from Jagtbart's fix, whichever comes first. The puck
+    /// needs no geocoding, so offline in the field the map still starts where the hunter is.
+    /// Only while the camera is not settled: no gesture, no `-map`, no earlier fix.
+    private func firstFix(_ point: Coordinate) {
+        guard !settled, debugCamera == nil else { return }
+        settled = true
+        fly(to: MapCamera.start(at: point, isExact: true))
     }
 
     #if DEBUG

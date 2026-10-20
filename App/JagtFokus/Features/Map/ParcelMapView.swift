@@ -24,6 +24,9 @@ struct ParcelMapView: UIViewRepresentable {
     var onReducedAccuracy: (Bool) -> Void = { _ in }
     /// The user moved the map with a gesture.
     var onUserMove: () -> Void
+    /// The raw GPS position from MapLibre's puck, before any geocoding. Offline the geocoder
+    /// fails, and the map must still start where the hunter is.
+    var onUserLocation: (Coordinate) -> Void = { _ in }
     var parcels: Data?
     var saveFrame: GeoBox?
     /// The map's centre, while the user moves it and a save frame is drawn.
@@ -55,6 +58,7 @@ struct ParcelMapView: UIViewRepresentable {
         coordinator.onRegionChange = onRegionChange
         coordinator.onCentreChange = onCentreChange
         coordinator.onUserMove = onUserMove
+        coordinator.onUserLocation = onUserLocation
         coordinator.onReducedAccuracy = onReducedAccuracy
         if let request, request.id != coordinator.handledRequest {
             coordinator.handledRequest = request.id
@@ -80,6 +84,7 @@ struct ParcelMapView: UIViewRepresentable {
         var handledAccuracy = 0
         var onReducedAccuracy: (Bool) -> Void = { _ in }
         var onUserMove: () -> Void = {}
+        var onUserLocation: (Coordinate) -> Void = { _ in }
         var onRegionChange: (GeoBox, Double) -> Void = { _, _ in }
         var onCentreChange: (Coordinate) -> Void = { _ in }
         var parcels: Data?
@@ -112,6 +117,11 @@ struct ParcelMapView: UIViewRepresentable {
             }
             let reduced = manager.accuracyAuthorization?() == .reducedAccuracy
             onReducedAccuracy(LocationAccuracy.showsReducedNotice(access: access, isReduced: reduced))
+        }
+
+        func mapView(_ mapView: MLNMapView, didUpdate userLocation: MLNUserLocation?) {
+            guard let location = userLocation?.location, location.horizontalAccuracy >= 0 else { return }
+            onUserLocation(Coordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
         }
 
         func mapView(_ mapView: MLNMapView, regionWillChangeWith reason: MLNCameraChangeReason, animated: Bool) {

@@ -66,6 +66,13 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
     private func reverse(_ location: CLLocation) async {
         // One geocode at a time; overlapping requests fail and could overwrite a good fix.
         guard !geocoder.isGeocoding else { return }
+        #if DEBUG
+        // `-offline YES`: the geocoder needs the network too, so it fails as it would in the field.
+        if UserDefaults.standard.bool(forKey: "offline") {
+            onUnavailable?()
+            return
+        }
+        #endif
         do {
             let marks = try await geocoder.reverseGeocodeLocation(location)
             let names = marks.flatMap { mark -> [String] in
