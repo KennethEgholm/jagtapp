@@ -25,6 +25,7 @@ v1, including the hunting journal, is in `spec/v1.md`. Journal details and the u
 | App | Swift, SwiftUI, iOS 18+ (built with the iOS 27 SDK), bundle `dk.jagtfokus.app` |
 | Core | `JagtFokusCore` (Swift package, testable on macOS). Also compiled straight into the app target |
 | Data | `data/jagttider.json` (BEK 470/2024) |
+| Map | MapLibre Native iOS (SPM), OpenFreeMap basemap, Datafordeler matrikel WFS (`apikey`) |
 | Tests | `swift test` (Swift Testing) |
 
 Language: Danish and English. No account. No tracking.
@@ -37,15 +38,17 @@ spec/v2.md                         # Journal details and the unbuilt bag report
 spec/design.md                     # Design system, screens, decisions
 spec/ideas.md                      # Backlog
 spec/kort.md                       # Kort med matrikelskel
+plans/                             # Implementation plans (not docs/: that is GitHub Pages)
 spec/appstore/                     # App Store copy, replies, review notes, screenshots
 docs/                              # GitHub Pages: support (index.html) and privacy policy
 data/jagttider.json                # Seasons + places + local overrides
-Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun and moon, MET weather decode, photos, catalog check
+Sources/JagtFokusCore/             # Models, calendar, status, timeline, Jagtbart lists, search, place resolution, sun and moon, MET weather decode, photos, catalog check, map geometry, matrikel GML/GeoJSON, saved areas, request gate
 
-Tests/JagtFokusCoreTests/          # 127 tests
+Tests/JagtFokusCoreTests/          # 191 tests
 .github/workflows/tests.yml        # swift test on every push to main and every PR
 .github/workflows/appstore.yml     # App Store upload, manual and off
 App/JagtFokus.xcodeproj            # Xcode project (synchronized folders)
+App/Config/                        # JagtFokus.xcconfig, Secrets.example.xcconfig. Secrets.xcconfig is gitignored (Datafordeler key)
 App/JagtFokus/
   JagtFokusApp.swift, RootView.swift, Copy.swift, Localization.swift
   Localizable.xcstrings            # UI copy: Danish source, English translation
@@ -54,6 +57,7 @@ App/JagtFokus/
   DesignSystem/                    # Theme (tokens), SeasonBar, StatusViews, ScrollTitle, GroupHeader, CountCard, QueryRow, WindArrow
   Features/Today/                  # Jagtbart, date/place rows, sheets
   Features/Weather/                # Sol og vejr (push from the sun card; MET Norway)
+  Features/Map/                    # Kort: MapLibre map, parcel boundaries, status card, saved areas
   Features/Species/                # SpeciesRow, SpeciesDetailView
   Features/AllSpecies/             # Alle arter
   Features/Settings/               # Indstillinger (appearance, lists), with the Om sections below
@@ -66,7 +70,7 @@ App/JagtFokus/
   Assets.xcassets                  # BrandMark, colors, SpeciesPhotos/photo-<id>
 tools/add_species_photo.py         # Fetch a species photo from Wikimedia Commons
 tools/fill_string_catalog.py       # Write the English String Catalog from the source
-tools/bump_build.sh                # Bump the build number before upload
+tools/bump_build.sh                # Bump the build number before upload (stops without the Datafordeler key)
 assets/                            # Source icons and logo (not bundled directly)
 ```
 
@@ -75,13 +79,14 @@ assets/                            # Source icons and logo (not bundled directly
 ## Screens (v1)
 
 1. **Jagtbart** — heading “Jagtbart vildt efter tid og sted”. Date and place rows, then the sun card (Sol og vejr), then the answer card (count of open species) above the groups. Open groups start collapsed, each with a line sketch. A group with a species in its last week says so under its name. Collapsed “Ikke jagtbar her”, sorted by next opening. Default: today + here (GPS).
-2. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed, each with a line sketch. Search expands hits. No date or place. No status.
-3. **Artsdetalje** — push from both lists. Status only from Jagtbart.
-4. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter. The Om sections follow in the same list. Four tabs: Jagtbart, Journal, Alle arter, Indstillinger.
-5. **Journal** — local bag. Tab icon `book.closed`, system large title “Jagtjournal”. **Artsliste** is species taken at least once, one row each. A journal note adds the species. Deleting a journal row does not remove it.
-6. **Om** — not a tab. Sections under Indstillinger: source, responsibility, Schweiss, photos, privacy (with a link to `docs/privatliv.html`). Bottom section **Denne app**: mark, release version and data version.
-7. **Velkomst** — first launch. Requires “Forstået”. Always dark.
-8. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row in Indstillinger. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
+2. **Kort** — map tab, icon `map`. Datafordeler matrikel boundaries (red, display only) over an OpenFreeMap basemap in MapLibre, with matrikelnumre from zoom 16 and your position as the puck. Boundaries are live for views up to 3 km per side; wider says “Zoom ind for at se skel”. The camera moves only on explicit events: start, the first exact GPS fix (if the user has not touched the map), the centre button, a tap on a saved area. **Gem område** saves a 5 × 5 km frame (parcels plus a MapLibre offline pack, zoom 8–14) for use without network; **Gemte områder** lists, deletes and resets them. The status card under the map says zoom in, loading, offline, error, missing key or saved area, and offers precise location when it is off. Info button “Om kortet”: disclaimer and sources. Details in `spec/kort.md` and `spec/design.md`.
+3. **Alle arter** — general seasons, searchable, SeasonBar per species. Groups start collapsed, each with a line sketch. Search expands hits. No date or place. No status.
+4. **Artsdetalje** — push from both lists. Status only from Jagtbart.
+5. **Indstillinger** — Appearance System / Lys / Mørk (`@AppStorage("udseende")`). **Sammenfold grupper** (`@AppStorage("sammenfoldGrupper")`, default on) collapses groups on Jagtbart and Alle arter. The Om sections follow in the same list. Five tabs: Jagtbart, Kort, Journal, Alle arter, Indstillinger.
+6. **Journal** — local bag. Tab icon `book.closed`, system large title “Jagtjournal”. **Artsliste** is species taken at least once, one row each. A journal note adds the species. Deleting a journal row does not remove it.
+7. **Om** — not a tab. Sections under Indstillinger: source, responsibility (with the boundary disclaimer), Schweiss, photos, Kort (sources and licences), privacy (with a link to `docs/privatliv.html`). Bottom section **Denne app**: mark, release version and data version.
+8. **Velkomst** — first launch. Requires “Forstået”. Always dark.
+9. **Schweiss-registret** — info page, not a tab. Toolbar **Anskudt** on Jagtbart (sheet) and a row in Indstillinger. Wounded game opens schweiss.dk. A traffic collision calls 1812. No handler phone list.
 
 ## Rules
 
@@ -93,6 +98,8 @@ assets/                            # Source icons and logo (not bundled directly
 - Notes are text, not logic.
 - The app is not the law.
 - Red deer and fallow deer: general seasons plus a note only. Map appendices are not in v1.
+- Boundaries are display only. No logic may use them (for example “jagtbar her”).
+- OpenFreeMap downloads: ≤ 4 parallel, own User-Agent, ≤ 3,000 tiles / 50 MB per area.
 
 ## UI rules
 
@@ -178,6 +185,15 @@ xcrun simctl spawn booted log show --last 10m --style compact \
   --predicate 'process == "JagtFokus" AND subsystem == "com.apple.runtime-issues"'
 ```
 
+Kort needs the Datafordeler key (the map shows boundaries only with it). It lives in gitignored
+`App/Config/Secrets.xcconfig`, which the committed `JagtFokus.xcconfig` includes and which ends
+up in Info.plist as `DatafordelerApiKey`. Copy `App/Config/Secrets.example.xcconfig` to
+`Secrets.xcconfig` and put the key after `DATAFORDELER_API_KEY =`. Never commit or print it. Without it
+the map still shows the basemap, and the status card says the map has no access to Datafordeler.
+The key expires two years after creation. Dataforsyningen's matrikel WMS/WFS close 29 Oct–2 Nov 2026, so
+the app uses Datafordeler's WFS (`outputFormat=gml32`; it answers GML 3.2 only, and the service has no
+ejerlavsnavn, so labels are matrikelnummer only).
+
 CoreLocation: never read `authorizationStatus` or `locationServicesEnabled()` outside `locationManagerDidChangeAuthorization`. That blocks the main thread (runtime issue).
 
 Xcode: open `App/JagtFokus.xcodeproj`, iPhone 18 Pro, Cmd-R. Xcode 27 has no Simulator app. Use **Device Hub**.
@@ -204,16 +220,17 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-harGodkendtFraskrivelse YES` | Skip welcome (`NO` shows it) |
 | `-date 2026-11-15` | Selected date |
 | `-place als` | Selected place (place id) |
-| `-tab bag` / `-tab all` / `-tab settings` | Start tab (`-tab about` is the same as settings) |
+| `-tab map` / `-tab bag` / `-tab all` / `-tab settings` | Start tab (`-tab about` is the same as settings) |
 | `-udseende dark` / `light` / `system` | Appearance, regardless of the simulator theme |
 | `-species raabuk` | Open the species page from Jagtbart |
 | `-sheet date` / `-sheet place` / `-sheet schweiss` | Open a picker, or the Schweiss page from Jagtbart |
 | `-sheet mapinfo` | Open “Om kortet” on the Kort tab (with `-tab map`) |
 | `-sheet saved` | Open “Gemte områder” on the Kort tab |
-| `-map 56.1629,10.2039,16` | Start the Kort camera at lat, lon, zoom |
+| `-map 56.1629,10.2039,16` | Start the Kort camera at lat, lon, zoom (with `-tab map`) |
 | `-holdPack 20` | Kort: a save waits 20 s with its half pack in the database (to kill the app there) |
 | `-offline YES` | Kort: every request fails, as with no network |
 | `-save choosing` / `alert` / `go` / `delete` / `reset` | Kort: show the save frame / the name alert / save at once / delete the newest saved area / reset all saved areas (all with `-tab map`) |
+| `-scroll ansvar` / `kort` / `privatliv` | Scroll Indstillinger to that section (with `-tab settings`) |
 | `-closed YES` | Expand “Ikke jagtbar her” |
 | `-open vejr` | Push Sol og vejr from Jagtbart |
 | `-search ræv` | Open search on Alle arter with that text (use with `-tab all`) |
@@ -270,6 +287,7 @@ Repo: `github.com/KennethEgholm/jagtapp` (public). Remote data: `raw.githubuserc
 - App Store: free, Denmark only, developer as a private person. Copy and checklist are in `spec/appstore/README.md`.
 - `App/JagtFokus/PrivacyInfo.xcprivacy`: no tracking, no collected data, UserDefaults (`CA92.1`). A new API on Apple's required-reason list needs a reason added.
 - The privacy policy (`docs/privatliv.html`) must match the app. New data collection, a new network call, or a new third-party SDK means update the page, the manifest, and the App Store answers in the same change.
+- The archiving Mac needs `App/Config/Secrets.xcconfig` with the Datafordeler key, or the build ships without boundaries. `tools/bump_build.sh` stops when the file or the key is missing. The key expires two years after creation. The GitHub Actions workflow does not write the file yet: add that step and a secret before turning upload on.
 - Before each upload: `tools/bump_build.sh` (or `tools/bump_build.sh 1.1` for a new version). Archive in Xcode (Product → Archive) → Distribute App → App Store Connect.
 - GitHub Actions upload is prepared in `.github/workflows/appstore.yml` and is off. The Apple developer account is not approved. Do not run it with upload on, and do not add API keys to the repo. Secrets and the later steps are in `spec/appstore/README.md`. The workflow uploads a build only. It does not submit or release. The number in the **Denne app** section (Indstillinger) is `MARKETING_VERSION` from the Xcode project, the same number the archive uses.
 - Data fixes do not need a new app version: edit `data/jagttider.json`, bump `version`, push.

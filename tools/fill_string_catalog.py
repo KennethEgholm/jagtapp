@@ -120,8 +120,8 @@ ENGLISH = {
     "Ingen jagttid her i jagtåret.": "No season here in the hunting year.",
     "Ingen jagttid her.": "No season here.",
     "Ingen konto": "No account",
-    "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol og vejr.": (
-        "No account. No tracking. Your location is used only for place, sun and weather."
+    "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol, vejr og kort.": (
+        "No account. No tracking. Your location is used only for place, sun, weather and the map."
     ),
     "Ingen poster": "No entries",
     "Ingen poster.": "No entries.",
@@ -282,7 +282,7 @@ ENGLISH = {
     "Position er slået fra. Listen viser hele Danmark. Vælg sted, eller slå position til.": (
         "Location is off. The list shows all of Denmark. Pick a place, or turn location on."
     ),
-    "Positionen bruges kun til sted, sol og vejr": "Location used only for place, sun and weather",
+    "Positionen bruges kun til sted, sol, vejr og kort": "Location used only for place, sun, weather and the map",
     "Posten er slettet.": "The entry has been deleted.",
     "Privat og offline": "Private and offline",
     "Privatliv": "Privacy",
@@ -367,8 +367,9 @@ ENGLISH = {
     "Valgt": "Selected",
     "Velkommen til JagtFokus": "Welcome to JagtFokus",
     "Vejret": "Weather",
-    "Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Stednavnet slår Apple op. Vi får aldrig din position.": (
+    "Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Kortet hentes fra OpenFreeMap og Datafordeler ud fra det udsnit, du ser. Stednavnet slår Apple op. Vi får aldrig din position.": (
         "The weather comes from MET Norway with your location rounded to about 1 km. "
+        "The map comes from OpenFreeMap and Datafordeler, based on the area you view. "
         "Apple looks up the place name. We never receive your location."
     ),
     "Vejret vises kun for de næste ti dage.": "The weather is shown only for the next ten days.",

@@ -35,7 +35,7 @@ struct WelcomeView: View {
                     Feature(
                         systemImage: "lock.shield",
                         title: String(localized: "Privat og offline"),
-                        text: String(localized: "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol og vejr.")
+                        text: String(localized: "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol, vejr og kort.")
                     )
                 }
 

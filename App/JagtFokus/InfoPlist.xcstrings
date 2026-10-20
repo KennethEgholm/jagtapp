@@ -32,13 +32,13 @@
         "da" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "JagtFokus bruger din position til at vise jagttider, sol og vejr for det sted, du er."
+            "value" : "JagtFokus bruger din position til at vise jagttider, sol og vejr for det sted, du er, og hvor du står på kortet."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "JagtFokus uses your location to show the seasons, sun and weather for the place you are in."
+            "state" : "translated",
+            "value" : "JagtFokus uses your location to show hunting seasons, sun and weather for where you are, and where you stand on the map."
           }
         }
       }

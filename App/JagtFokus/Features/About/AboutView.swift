@@ -97,7 +97,7 @@ struct AboutSections: View {
             Label("Ingen konto", systemImage: "person.crop.circle.badge.xmark")
                 .id("privatliv")
             Label("Ingen tracking", systemImage: "hand.raised")
-            Label("Positionen bruges kun til sted, sol og vejr", systemImage: "location")
+            Label("Positionen bruges kun til sted, sol, vejr og kort", systemImage: "location")
             Label("Jagttiderne virker offline", systemImage: "wifi.slash")
             if let url = URL(string: "https://kennethegholm.github.io/jagtapp/privatliv.html") {
                 Link(destination: url) {
@@ -107,7 +107,7 @@ struct AboutSections: View {
         } header: {
             Text("Privatliv")
         } footer: {
-            Text("Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Stednavnet slår Apple op. Vi får aldrig din position.")
+            Text("Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Kortet hentes fra OpenFreeMap og Datafordeler ud fra det udsnit, du ser. Stednavnet slår Apple op. Vi får aldrig din position.")
         }
 
         Section("Denne app") {

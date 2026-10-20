@@ -30,11 +30,15 @@
 <h2>Vejr</h2>
 <p>Når Jagtbart viser kortet med sol og vejr, henter appen vejret for den valgte dag fra Meteorologisk institutt (MET) i Norge, api.met.no. Der sendes et punkt og appens navn. Bruger du din position, er punktet din position afrundet til to decimaler, det vil sige omkring en kilometer. Har du valgt et sted, er det et punkt midt i stedet. Der sendes ikke din nøjagtige position og ikke noget om dig. Som ved ethvert besøg på en hjemmeside kan MET se telefonens IP-adresse. Svaret gemmes kort i telefonens hukommelse, så appen ikke spørger oftere end nødvendigt. Månefasen beregnes på telefonen. Vilkårene er <a href="https://www.met.no/en/free-meteorological-data">METs vilkår for frie meteorologiske data</a>.</p>
 
+<h2>Kort</h2>
+<p>Fanen Kort henter baggrundskortet fra OpenFreeMap (tiles.openfreemap.org) og matrikelskel fra Klimadatastyrelsens Datafordeler (wfs.datafordeler.dk). Der sendes kun det udsnit af kortet, der skal vises eller gemmes. Ikke din position og ikke noget om dig. Udsnittet ligger ofte der, hvor du er. Som ved ethvert besøg på en hjemmeside kan tjenesterne se telefonens IP-adresse. Din position vises på kortet, men bliver på telefonen. Kortet bruger MapLibre, som er open source og ikke sender data om dig. Vilkårene er <a href="https://openfreemap.org/tos/">OpenFreeMaps vilkår</a> og <a href="https://datafordeler.dk/vejledning/brugervilkaar/ejendomsoplysninger-ebr-og-mat/">Datafordelers brugervilkår</a>.</p>
+
 <h2>Det gemmer appen på telefonen</h2>
 <ul>
   <li>At du har læst ansvarsfraskrivelsen.</li>
   <li>Dit valg af udseende (System, Lys eller Mørk).</li>
   <li>Den seneste fil med jagttider, så appen virker uden net.</li>
+  <li>Kortområder, du gemmer til brug uden net, og et lille lager af kort, du har set. Et gemt område slettes, når du sletter det eller appen.</li>
   <li>Din jagtjournal og artslisten, hvis du noterer nedlagt vildt eller markerer en art. De bliver på telefonen. Appen sender dem ikke, og de synkroniseres ikke til iCloud.</li>
 </ul>
 <p>Det bliver på telefonen og slettes, når du sletter appen.</p>

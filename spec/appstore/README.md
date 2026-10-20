@@ -118,10 +118,11 @@ Prospektet laves om til PDF med Chrome:
 Svar: **Data indsamles ikke** (Data Not Collected).
 
 Begrundelse:
-- Ingen konto, analyse, reklamer eller tredjeparts-SDK'er.
+- Ingen konto, analyse eller reklamer. Kortet bruger MapLibre (open source, ingen telemetri, eget privatlivsmanifest).
 - Position bruges på telefonen. Stednavn hentes via Apples geokodning (CLGeocoder); udvikleren modtager aldrig positionen.
 - Vejret hentes fra MET Norway (api.met.no) med positionen afrundet til to decimaler (ca. 1 km) og appens navn som User-Agent. Kun for at besvare forespørgslen. Appen gemmer svaret i hukommelsen i højst ti minutter. MET er ikke en partner, der får data til andet formål.
 - Datafilen hentes fra GitHub uden oplysninger om brugeren.
+- Kortet henter fliser fra OpenFreeMap og matrikelskel fra Datafordeler for det udsnit, der vises eller gemmes. Ingen position, intet om brugeren. Gemte områder ligger på telefonen.
 - Jagtjournalen og artslisten gemmes kun på telefonen. Udvikleren modtager dem ikke. Ingen iCloud-synk i denne udgave.
 - `PrivacyInfo.xcprivacy`: ingen tracking, ingen indsamlede datatyper, UserDefaults med årsag `CA92.1`.
 
@@ -146,6 +147,8 @@ Location: used to pick the right local hunting times (islands and areas have the
 
 Outside Denmark the app falls back to the general Danish times ("Danmark"). To see local times: Jagtbart tab > Sted > choose e.g. "Als" or "Endelave". To change the day: Jagtbart tab > Dato.
 
+Map tab (Kort): shows Danish property boundaries (cadastral parcels) from the Danish Agency for Climate Data's Datafordeler (wfs.datafordeler.dk, CC BY 4.0) on an OpenFreeMap basemap (tiles.openfreemap.org). Only the map box that is shown or saved is requested. The user's location is never sent. The position is drawn on the map on the device only. Areas can be saved for use without network (Kort > Gem område) and are kept on the phone. Boundaries are indicative and the app says so. No account. MapLibre Native is the only third-party SDK: open source, no telemetry, its own privacy manifest. To see boundaries, open the Map tab and zoom in to a few hundred metres (for example around Aarhus, 56.16, 10.20).
+
 Journal tab: a local hunting bag only. Nothing is submitted to the authorities, and nothing is synced to iCloud. No account.
 
 Each species page has a short biology note (whether it breeds in Denmark, where it migrates, litter or clutch size). Birds are from the Danish Ornithological Society. Mammals are from the Danish Environmental Protection Agency via arter.dk. Display only. Not hunting law.
@@ -162,7 +165,9 @@ Species photos are from Wikimedia Commons under CC0 / public domain / CC BY / CC
 - [ ] Jagttider tjekket mod Retsinformation (er der en nyere bekendtgørelse end BEK 470/2024?)
 - [ ] `data/jagttider.json` pushet til GitHub, og `version` er mindst den indbyggede
 - [ ] GitHub Pages slået til (Settings > Pages > main, `/docs`), siderne svarer
+- [ ] `App/Config/Secrets.xcconfig` med Datafordeler-nøglen findes på den Mac, der arkiverer. Nøglen udløber 2 år efter oprettelsen (`tools/bump_build.sh` stopper uden den)
 - [ ] Team sat i Xcode, build-nummer talt op (`tools/bump_build.sh`)
+- [ ] Privatrapport fra arkivet (Xcode > Organizer > Generate Privacy Report): ingen nye required-reason API'er ud over `CA92.1`, og MapLibre har sit eget manifest
 - [ ] TestFlight på egen iPhone: position udendørs, et par steder, lyst og mørkt tema, stor tekst
 - [ ] EU-erhvervsdrivende-status angivet i App Store Connect
 - [ ] Privatliv og aldersgrænse besvaret

@@ -1147,12 +1147,12 @@
         }
       }
     },
-    "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol og vejr." : {
+    "Ingen konto. Ingen tracking. Din position bruges kun til sted, sol, vejr og kort." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No account. No tracking. Your location is used only for place, sun and weather."
+            "value" : "No account. No tracking. Your location is used only for place, sun, weather and the map."
           }
         }
       }
@@ -2257,12 +2257,12 @@
         }
       }
     },
-    "Positionen bruges kun til sted, sol og vejr" : {
+    "Positionen bruges kun til sted, sol, vejr og kort" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Location used only for place, sun and weather"
+            "value" : "Location used only for place, sun, weather and the map"
           }
         }
       }
@@ -3019,12 +3019,12 @@
         }
       }
     },
-    "Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Stednavnet slår Apple op. Vi får aldrig din position." : {
+    "Vejret hentes fra MET i Norge med din position afrundet til omkring en kilometer. Kortet hentes fra OpenFreeMap og Datafordeler ud fra det udsnit, du ser. Stednavnet slår Apple op. Vi får aldrig din position." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The weather comes from MET Norway with your location rounded to about 1 km. Apple looks up the place name. We never receive your location."
+            "value" : "The weather comes from MET Norway with your location rounded to about 1 km. The map comes from OpenFreeMap and Datafordeler, based on the area you view. Apple looks up the place name. We never receive your location."
           }
         }
       }
