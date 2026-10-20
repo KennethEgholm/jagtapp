@@ -56,16 +56,31 @@ struct LiveBoundariesTests {
         #expect(LiveBoundaries.plan(for: view, zoom: 16, areas: [saved]) == .fetch)
     }
 
-    @Test func aBoxOverTheSideLimitIsNotFetched() {
-        let limit = MapRules.liveFetchMaxSideMeters
-        #expect(LiveBoundaries.plan(for: GeoBox.around(aarhus, sideMeters: limit - 50), zoom: 14, areas: []) == .fetch)
-        #expect(LiveBoundaries.plan(for: GeoBox.around(aarhus, sideMeters: limit + 100), zoom: 14, areas: []) == .tooLarge)
-        // Tall and narrow counts by its longer side.
-        let tall = GeoBox(
-            south: aarhus.latitude, west: aarhus.longitude,
-            north: aarhus.latitude + (limit + 200) / 111_320, east: aarhus.longitude + 0.002
+    /// A box `width` × `height` metres around the point.
+    func box(width: Double, height: Double, at center: Coordinate) -> GeoBox {
+        let halfHeight = height / 2 / 111_320
+        let halfWidth = width / 2 / (111_320 * cos(center.latitude * .pi / 180))
+        return GeoBox(
+            south: center.latitude - halfHeight, west: center.longitude - halfWidth,
+            north: center.latitude + halfHeight, east: center.longitude + halfWidth
         )
-        #expect(LiveBoundaries.plan(for: tall, zoom: 14, areas: []) == .tooLarge)
+    }
+
+    @Test func theLiveCapIsAnAreaOfNineSquareKilometres() {
+        #expect(MapRules.liveFetchMaxAreaSquareMeters == 9_000_000)
+        #expect(LiveBoundaries.plan(for: GeoBox.around(aarhus, sideMeters: 2_950), zoom: 14, areas: []) == .fetch)
+        #expect(LiveBoundaries.plan(for: GeoBox.around(aarhus, sideMeters: 3_050), zoom: 14, areas: []) == .tooLarge)
+    }
+
+    @Test func aPortraitPhoneAtZoom13Fetches() {
+        // iPhone 18 Pro, portrait, below the navigation bar: about 402 × 770 points.
+        // At zoom 13 by Aarhus a point is about 5.3 m: 2.1 × 4.1 km, taller than 3 km but under 9 km².
+        let portrait = box(width: 2_140, height: 4_100, at: aarhus)
+        #expect(portrait.heightMeters > 3_000)
+        #expect(LiveBoundaries.plan(for: portrait, zoom: 13, areas: []) == .fetch)
+        // Tall and narrow counts by its area, not its longer side.
+        #expect(LiveBoundaries.plan(for: box(width: 500, height: 8_000, at: aarhus), zoom: 13, areas: []) == .fetch)
+        #expect(LiveBoundaries.plan(for: box(width: 2_500, height: 4_000, at: aarhus), zoom: 13, areas: []) == .tooLarge)
     }
 
     @Test func aBigViewInsideASavedAreaStillNeedsNoFetch() {

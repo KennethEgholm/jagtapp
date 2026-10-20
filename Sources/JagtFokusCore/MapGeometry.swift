@@ -106,6 +106,7 @@ public enum MapRules {
     public static let boundaryMinZoom: Double = 13
     /// Matrikelnumre on the parcels from this zoom.
     public static let labelMinZoom: Double = 16
-    /// Live fetches for the view stay under the agency's 10 km² viewer cap.
-    public static let liveFetchMaxSideMeters: Double = 3_000
+    /// Live fetches for the view stay under the agency's 10 km² viewer cap. By area, not by side:
+    /// a portrait phone at zoom 13 shows about 2 × 4 km, taller than 3 km but under 9 km².
+    public static let liveFetchMaxAreaSquareMeters: Double = 9_000_000
 }

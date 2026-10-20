@@ -16,7 +16,7 @@ public enum LiveBoundaries {
         case tooFarOut
         /// The view lies wholly inside one saved area. Its parcels are on disk.
         case savedArea(OfflineArea)
-        /// Zoomed in enough, but the view is wider or taller than a live fetch may be.
+        /// Zoomed in enough, but the view covers more ground than a live fetch may.
         case tooLarge
         case fetch
         /// Zoomed in enough and the view would be fetched, but there is no network. Nothing is asked for.
@@ -28,7 +28,7 @@ public enum LiveBoundaries {
         if let area = areas.first(where: { $0.box.contains(box) }) {
             return .savedArea(area)
         }
-        guard max(box.widthMeters, box.heightMeters) <= MapRules.liveFetchMaxSideMeters else {
+        guard box.widthMeters * box.heightMeters <= MapRules.liveFetchMaxAreaSquareMeters else {
             return .tooLarge
         }
         return isOnline ? .fetch : .offline
