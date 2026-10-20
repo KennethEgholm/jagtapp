@@ -18,9 +18,9 @@ struct MapStatusCard: View {
     var body: some View {
         if saving != .idle {
             card { saveContent }
-        } else if statusLine != nil || savedUnreadable || reducedAccuracy {
+        } else if !statusLines.isEmpty || savedUnreadable || reducedAccuracy {
             card {
-                if let line = statusLine { lineView(line) }
+                ForEach(statusLines, id: \.text) { lineView($0) }
                 if savedUnreadable { Label(Copy.mapSavedUnreadable, systemImage: "exclamationmark.triangle") }
                 if reducedAccuracy { accuracy }
             }
@@ -32,23 +32,23 @@ struct MapStatusCard: View {
         var systemImage: String?
     }
 
-    /// Zoom first: below it nothing is drawn, saved areas included.
-    private var statusLine: Line? {
+    /// Zoom first: below it nothing is drawn, saved areas included. Offline inside a saved
+    /// area says both: that there is no network, and which area it is and when it was downloaded.
+    private var statusLines: [Line] {
+        let saved = savedAreaText.map { Line(text: $0, systemImage: "arrow.down.circle") }
         switch live {
         case .tooFarOut:
-            Line(text: Copy.mapTooFarOut, systemImage: "plus.magnifyingglass")
-        case .idle, .loaded, .loading, .offline, .failed, .noKey:
-            // Offline says so first, inside a saved area too: the boundaries are the saved ones.
-            if let savedAreaText, live != .loading, live != .offline {
-                Line(text: savedAreaText, systemImage: "arrow.down.circle")
-            } else {
-                switch live {
-                case .loading: Line(text: Copy.mapLoading, systemImage: nil)
-                case .offline: Line(text: Copy.mapOffline, systemImage: "wifi.slash")
-                case .failed: Line(text: Copy.mapFailed, systemImage: "exclamationmark.triangle")
-                case .noKey: Line(text: Copy.mapNoKey, systemImage: "lock.slash")
-                case .idle, .loaded, .tooFarOut: nil
-                }
+            return [Line(text: Copy.mapTooFarOut, systemImage: "plus.magnifyingglass")]
+        case .offline:
+            return [Line(text: Copy.mapOffline, systemImage: "wifi.slash")] + (saved.map { [$0] } ?? [])
+        case .loading:
+            return [Line(text: Copy.mapLoading, systemImage: nil)]
+        case .idle, .loaded, .failed, .noKey:
+            if let saved { return [saved] }
+            switch live {
+            case .failed: return [Line(text: Copy.mapFailed, systemImage: "exclamationmark.triangle")]
+            case .noKey: return [Line(text: Copy.mapNoKey, systemImage: "lock.slash")]
+            default: return []
             }
         }
     }

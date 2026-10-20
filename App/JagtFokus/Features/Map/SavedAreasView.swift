@@ -32,7 +32,8 @@ struct SavedAreasView: View {
                                 row(area)
                             }
                             .tint(.primary)
-                            .swipeActions(edge: .trailing) {
+                            // No full swipe: a saved area is the hunter's map without a network, and it is gone at once.
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                                 Button(role: .destructive) {
                                     Task { await map.delete(area.id) }
                                 } label: {
