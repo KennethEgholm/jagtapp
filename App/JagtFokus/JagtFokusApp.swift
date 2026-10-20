@@ -4,6 +4,7 @@ import SwiftUI
 struct JagtFokusApp: App {
     @State private var store = SeasonStore()
     @State private var bag = BagStore()
+    @State private var map = MapStore()
 
     init() {
         MapRequestProtocol.install()
@@ -14,6 +15,7 @@ struct JagtFokusApp: App {
             RootView()
                 .environment(store)
                 .environment(bag)
+                .environment(map)
         }
     }
 }

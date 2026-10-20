@@ -25,6 +25,15 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
     static let offline = UserDefaults.standard.bool(forKey: "offline")
     private static let log = Logger(subsystem: "dk.jagtfokus.app", category: "map")
     private static let count = OSAllocatedUnfairLock(initialState: 0)
+
+    /// The URL for the log, without the Datafordeler key. The cadastre fetch passes through here too under `-offline YES`.
+    private static func redacted(_ url: URL?) -> String {
+        guard let url, var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return "-" }
+        components.queryItems = components.queryItems?.map { item in
+            item.name.lowercased() == "apikey" ? URLQueryItem(name: item.name, value: "…") : item
+        }
+        return components.string ?? "-"
+    }
     #endif
 
     override class func canInit(with request: URLRequest) -> Bool {
@@ -40,7 +49,7 @@ final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
             count += 1
             return count
         }
-        Self.log.notice("request \(number, privacy: .public) \(self.request.url?.absoluteString ?? "-", privacy: .public)")
+        Self.log.notice("request \(number, privacy: .public) \(Self.redacted(self.request.url), privacy: .public)")
         if Self.offline {
             client?.urlProtocol(self, didFailWithError: URLError(.notConnectedToInternet))
             return

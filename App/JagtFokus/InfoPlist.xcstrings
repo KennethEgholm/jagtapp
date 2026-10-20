@@ -42,6 +42,24 @@
           }
         }
       }
+    },
+    "Skel" : {
+      "comment" : "Purpose key for temporary full accuracy. Asked from the map tab when precise location is off.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Præcis position viser, hvilken side af skellet du står på."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precise location shows which side of the boundary you are on."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

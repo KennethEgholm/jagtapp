@@ -17,6 +17,25 @@ enum Copy {
 
     static let todayTab = String(localized: "Jagtbart")
     static let mapTab = String(localized: "Kort")
+
+    /// Kort. The reminder that boundaries on the map are not a survey.
+    static let parcelDisclaimer = String(localized: "Skel på kortet er fra matrikelkortet og er vejledende. De afviger typisk 0,1–4 m og nogle steder mere. Kun en praktiserende landinspektør kan fastlægge et skel.")
+    static let mapInfoTitle = String(localized: "Om kortet")
+    static let mapCenterOnMe = String(localized: "Centrér på din position")
+    static let mapParcels = String(localized: "Matrikelskel")
+    static let mapBasemap = String(localized: "Baggrundskort")
+    static let mapTooFarOut = String(localized: "Zoom ind for at se skel")
+    static let mapLoading = String(localized: "Henter skel …")
+    static let mapOffline = String(localized: "Uden net. Viser gemte områder.")
+    static let mapFailed = String(localized: "Skel kunne ikke hentes.")
+    static let mapNoKey = String(localized: "Kortet mangler adgang til Datafordeler.")
+    static let mapReducedAccuracy = String(localized: "Præcis position er slået fra")
+    static let mapUsePrecise = String(localized: "Brug præcis position")
+
+    /// "Gemt område: Område 1, hentet 20. okt 2026".
+    static func savedArea(name: String, downloaded: String) -> String {
+        String(localized: "Gemt område: \(name), hentet \(downloaded)")
+    }
     static let bagTab = String(localized: "Journal")
     static let bagHeading = String(localized: "Jagtjournal")
     static let bagYearRow = String(localized: "Nedlagt vildt")

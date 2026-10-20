@@ -164,6 +164,23 @@ ENGLISH = {
     "Klart": "Clear sky",
     "Klovbærende": "Cloven-hoofed game",
     "Kort": "Map",
+    "Baggrundskort": "Basemap",
+    "Brug præcis position": "Use precise location",
+    "Centrér på din position": "Centre on your location",
+    "Gemt område: %@, hentet %@": "Saved area: %@, downloaded %@",
+    "Henter skel …": "Loading boundaries …",
+    "Kortet mangler adgang til Datafordeler.": "The map has no access to Datafordeler.",
+    "Licens": "Licence",
+    "Matrikelskel": "Property boundaries",
+    "Om kortet": "About the map",
+    "Præcis position er slået fra": "Precise location is off",
+    "Skel kunne ikke hentes.": "Boundaries could not be loaded.",
+    "Skel på kortet er fra matrikelkortet og er vejledende. De afviger typisk 0,1–4 m og nogle steder mere. Kun en praktiserende landinspektør kan fastlægge et skel.": (
+        "Boundaries on the map come from the cadastral map and are indicative. "
+        "They typically differ by 0.1–4 m, in places more. Only a practising land surveyor can determine a boundary."
+    ),
+    "Uden net. Viser gemte områder.": "Offline. Showing saved areas.",
+    "Zoom ind for at se skel": "Zoom in to see boundaries",
     "Kraftig regn": "Heavy rain",
     "Kraftig regn og torden": "Heavy rain and thunder",
     "Kraftig slud": "Heavy sleet",
@@ -440,6 +457,8 @@ COMMENTS = {
     "Jagtbart": "The first tab, and the word for a species with an open season.",
     "Note": "A short note from the hunting regulations, shown as plain text.",
     "Data": "A section about where the season data comes from.",
+    "Gemt område: %@, hentet %@": "The map's status inside a saved area: its name, then the date it was downloaded.",
+    "Licens": "A link to the licence terms of the cadastral data.",
 }
 
 

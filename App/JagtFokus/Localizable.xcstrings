@@ -430,6 +430,16 @@
         }
       }
     },
+    "Baggrundskort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basemap"
+          }
+        }
+      }
+    },
     "Biologi" : {
       "localizations" : {
         "en" : {
@@ -460,12 +470,32 @@
         }
       }
     },
+    "Brug præcis position" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use precise location"
+          }
+        }
+      }
+    },
     "Bruger indbygget data" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Using built-in data"
+          }
+        }
+      }
+    },
+    "Centrér på din position" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centre on your location"
           }
         }
       }
@@ -711,6 +741,17 @@
         }
       }
     },
+    "Gemt område: %@, hentet %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved area: %@, downloaded %@"
+          }
+        }
+      },
+      "comment" : "The map's status inside a saved area: its name, then the date it was downloaded."
+    },
     "Generel jagttid" : {
       "localizations" : {
         "en" : {
@@ -778,6 +819,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All of Denmark"
+          }
+        }
+      }
+    },
+    "Henter skel …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading boundaries …"
           }
         }
       }
@@ -1283,6 +1334,16 @@
         }
       }
     },
+    "Kortet mangler adgang til Datafordeler." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The map has no access to Datafordeler."
+          }
+        }
+      }
+    },
     "Kraftig regn" : {
       "localizations" : {
         "en" : {
@@ -1603,6 +1664,17 @@
         }
       }
     },
+    "Licens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licence"
+          }
+        }
+      },
+      "comment" : "A link to the licence terms of the cadastral data."
+    },
     "Licenser: CC0, public domain, CC BY og CC BY-SA. Fotograf og licens står under hvert billede. Billederne er beskåret og skaleret." : {
       "localizations" : {
         "en" : {
@@ -1739,6 +1811,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selected"
+          }
+        }
+      }
+    },
+    "Matrikelskel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Property boundaries"
           }
         }
       }
@@ -1917,6 +1999,16 @@
         }
       }
     },
+    "Om kortet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About the map"
+          }
+        }
+      }
+    },
     "Om registret" : {
       "localizations" : {
         "en" : {
@@ -2025,6 +2117,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy"
+          }
+        }
+      }
+    },
+    "Præcis position er slået fra" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precise location is off"
           }
         }
       }
@@ -2296,6 +2398,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Last quarter"
+          }
+        }
+      }
+    },
+    "Skel kunne ikke hentes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boundaries could not be loaded."
+          }
+        }
+      }
+    },
+    "Skel på kortet er fra matrikelkortet og er vejledende. De afviger typisk 0,1–4 m og nogle steder mere. Kun en praktiserende landinspektør kan fastlægge et skel." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Boundaries on the map come from the cadastral map and are indicative. They typically differ by 0.1–4 m, in places more. Only a practising land surveyor can determine a boundary."
           }
         }
       }
@@ -2661,6 +2783,16 @@
         }
       }
     },
+    "Uden net. Viser gemte områder." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offline. Showing saved areas."
+          }
+        }
+      }
+    },
     "Udseende" : {
       "localizations" : {
         "en" : {
@@ -2907,6 +3039,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choose place"
+          }
+        }
+      }
+    },
+    "Zoom ind for at se skel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom in to see boundaries"
           }
         }
       }

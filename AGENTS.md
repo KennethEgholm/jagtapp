@@ -208,6 +208,7 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-udseende dark` / `light` / `system` | Appearance, regardless of the simulator theme |
 | `-species raabuk` | Open the species page from Jagtbart |
 | `-sheet date` / `-sheet place` / `-sheet schweiss` | Open a picker, or the Schweiss page from Jagtbart |
+| `-sheet mapinfo` | Open “Om kortet” on the Kort tab (with `-tab map`) |
 | `-closed YES` | Expand “Ikke jagtbar her” |
 | `-open vejr` | Push Sol og vejr from Jagtbart |
 | `-search ræv` | Open search on Alle arter with that text (use with `-tab all`) |

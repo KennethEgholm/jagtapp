@@ -11,6 +11,11 @@
 	</array>
 	<key>DatafordelerApiKey</key>
 	<string>$(DATAFORDELER_API_KEY)</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>Skel</key>
+		<string>Præcis position viser, hvilken side af skellet du står på.</string>
+	</dict>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>
