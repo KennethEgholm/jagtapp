@@ -421,6 +421,16 @@
         }
       }
     },
+    "Areal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Area"
+          }
+        }
+      }
+    },
     "Art" : {
       "localizations" : {
         "en" : {
@@ -618,6 +628,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your location"
+          }
+        }
+      }
+    },
+    "Ejer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Owner"
+          }
+        }
+      }
+    },
+    "Ejerlavskode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadastral district code"
+          }
+        }
+      }
+    },
+    "Ejeroplysninger vises ikke. De kræver adgang til EJF hos Datafordeler." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Owner information is not shown. It requires access to EJF at Datafordeler."
           }
         }
       }
@@ -1378,6 +1418,16 @@
         }
       }
     },
+    "Jordstykke" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parcel"
+          }
+        }
+      }
+    },
     "Journal" : {
       "localizations" : {
         "en" : {
@@ -1935,6 +1985,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selected"
+          }
+        }
+      }
+    },
+    "Matrikelnummer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cadastral number"
           }
         }
       }

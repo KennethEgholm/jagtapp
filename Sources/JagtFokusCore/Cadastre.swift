@@ -8,15 +8,28 @@ public struct Parcel: Sendable, Equatable, Identifiable {
     public var id: String
     /// Matrikelnummer, for example "12a".
     public var number: String
-    /// Ejerlavsnavn.
+    /// Ejerlavsnavn. Empty from the service, which sends only the code.
     public var district: String
+    /// Ejerlavskode, when the service sent one.
+    public var districtCode: Int?
+    /// Registreret areal in square metres, when the service sent one.
+    public var area: Int?
     /// Polygon → ring → point. A MultiPolygon becomes several polygons, a Polygon one.
     public var polygons: [[[Coordinate]]]
 
-    public init(id: String, number: String, district: String, polygons: [[[Coordinate]]]) {
+    public init(
+        id: String,
+        number: String,
+        district: String,
+        districtCode: Int? = nil,
+        area: Int? = nil,
+        polygons: [[[Coordinate]]]
+    ) {
         self.id = id
         self.number = number
         self.district = district
+        self.districtCode = districtCode
+        self.area = area
         self.polygons = polygons
     }
 }
@@ -56,7 +69,7 @@ public struct ParcelSet: Sendable, Equatable {
 public extension ParcelSet {
     /// Service response (GML 3.2) or our own compact GeoJSON file.
     /// Throws ParcelsRefused or DecodingError.
-    public static func decodeChecked(from data: Data) throws -> ParcelSet {
+    static func decodeChecked(from data: Data) throws -> ParcelSet {
         try CadastrePage.decode(from: data).parcels
     }
 
@@ -78,6 +91,8 @@ public extension ParcelSet {
                     ?? properties.string(Self.compactNumber) ?? "",
                 district: properties.string("ejerlavsnavn")
                     ?? properties.string(Self.compactDistrict) ?? "",
+                districtCode: properties.int(Self.compactDistrictCode),
+                area: properties.int(Self.compactArea),
                 polygons: polygons
             ))
         }
@@ -85,7 +100,7 @@ public extension ParcelSet {
     }
 
     /// Dedupes two pages by id, keeping the first page's parcel.
-    public func merging(_ other: ParcelSet) -> ParcelSet {
+    func merging(_ other: ParcelSet) -> ParcelSet {
         var seen = Set<String>()
         var merged: [Parcel] = []
         for parcel in parcels + other.parcels {
@@ -98,15 +113,19 @@ public extension ParcelSet {
 
     /// Compact FeatureCollection for MapLibre and disk: properties "nr" and "ejerlav"
     /// only, coordinates rounded to 6 decimals (~0.1 m). decodeChecked reads it back.
-    public func geoJSON() throws -> Data {
+    func geoJSON() throws -> Data {
         let features: [[String: Any]] = parcels.map { parcel in
-            [
+            var properties: [String: Any] = [
+                Self.compactNumber: parcel.number,
+                Self.compactDistrict: parcel.district,
+            ]
+            // Older files have neither, and a tap then shows the number alone.
+            if let code = parcel.districtCode { properties[Self.compactDistrictCode] = code }
+            if let area = parcel.area { properties[Self.compactArea] = area }
+            return [
                 "type": "Feature",
                 "id": parcel.id,
-                "properties": [
-                    Self.compactNumber: parcel.number,
-                    Self.compactDistrict: parcel.district,
-                ],
+                "properties": properties,
                 "geometry": [
                     "type": "MultiPolygon",
                     "coordinates": parcel.polygons.map { polygon in
@@ -127,6 +146,8 @@ fileprivate extension ParcelSet {
     /// Names in our own compact file — shorter than the service's.
     static let compactNumber = "nr"
     static let compactDistrict = "ejerlav"
+    static let compactDistrictCode = "ejerlavskode"
+    static let compactArea = "areal"
 
     static func isXML(_ data: Data) -> Bool {
         guard let first = data.first(where: { byte in
@@ -268,7 +289,7 @@ private enum JSONValue: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if try container.decodeNil() {
+        if container.decodeNil() {
             self = .null
         } else if let number = try? container.decode(Double.self) {
             self = .number(number)
@@ -299,6 +320,12 @@ private enum JSONValue: Decodable {
 private extension Dictionary where Key == String, Value == JSONValue {
     func string(_ key: String) -> String? {
         self[key]?.stringValue
+    }
+
+    /// A whole number, written as a JSON number or as text.
+    func int(_ key: String) -> Int? {
+        if let number = self[key]?.doubleValue { return Int(number) }
+        return self[key]?.stringValue.flatMap { Int($0) }
     }
 }
 
@@ -405,13 +432,15 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
 
     private var id = ""
     private var number = ""
+    private var districtCode: Int?
+    private var area: Int?
     private var polygons: [[[Coordinate]]] = []
     private var rings: [[Coordinate]] = []
     private var ring: [Coordinate] = []
     private var capture: Capture?
     private var text = ""
 
-    private enum Capture { case number, pos }
+    private enum Capture { case number, districtCode, area, pos }
 
     func parser(
         _ parser: XMLParser,
@@ -430,6 +459,8 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
             members += 1
             id = ""
             number = ""
+            districtCode = nil
+            area = nil
             polygons = []
             rings = []
             ring = []
@@ -437,6 +468,12 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
             id = attributeDict["id"] ?? attributeDict["gml:id"] ?? ""
         case "matrikelnummer":
             capture = .number
+            text = ""
+        case "ejerlavskode":
+            capture = .districtCode
+            text = ""
+        case "registreretAreal":
+            capture = .area
             text = ""
         case "Polygon", "PolygonPatch":
             rings = []
@@ -466,6 +503,17 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
                 number = text.trimmingCharacters(in: .whitespacesAndNewlines)
             }
             capture = nil
+        case "ejerlavskode":
+            if capture == .districtCode {
+                districtCode = Int(text.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            capture = nil
+        case "registreretAreal":
+            if capture == .area {
+                // The service writes "287.0"; the m² unit is an attribute.
+                area = Double(text.trimmingCharacters(in: .whitespacesAndNewlines)).map { Int($0.rounded()) }
+            }
+            capture = nil
         case "posList":
             ring = points(text)
             capture = nil
@@ -482,7 +530,14 @@ private final class GMLParcelParser: NSObject, XMLParserDelegate {
             if polygons.isEmpty {
                 skipped += 1
             } else {
-                parcels.append(Parcel(id: id, number: number, district: "", polygons: polygons))
+                parcels.append(Parcel(
+                    id: id,
+                    number: number,
+                    district: "",
+                    districtCode: districtCode,
+                    area: area,
+                    polygons: polygons
+                ))
             }
         default:
             break

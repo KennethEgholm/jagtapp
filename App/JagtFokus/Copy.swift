@@ -20,6 +20,12 @@ enum Copy {
 
     /// Kort. The reminder that boundaries on the map are not a survey.
     static let parcelDisclaimer = String(localized: "Skel på kortet er fra matrikelkortet og er vejledende. De afviger typisk 0,1–4 m og nogle steder mere. Kun en praktiserende landinspektør kan fastlægge et skel.")
+    static let parcelTitle = String(localized: "Jordstykke")
+    static let parcelNumber = String(localized: "Matrikelnummer")
+    static let parcelDistrictCode = String(localized: "Ejerlavskode")
+    static let parcelArea = String(localized: "Areal")
+    static let parcelOwner = String(localized: "Ejer")
+    static let parcelOwnerUnavailable = String(localized: "Ejeroplysninger vises ikke. De kræver adgang til EJF hos Datafordeler.")
     static let mapInfoTitle = String(localized: "Om kortet")
     static let mapCenterOnMe = String(localized: "Centrér på din position")
     static let mapParcels = String(localized: "Matrikelskel")

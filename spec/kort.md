@@ -9,6 +9,7 @@ Jægeren skal kunne se, hvor skellet går, der hvor jagten er. Jagtretten følge
 - Fane **Kort** (`map`), nummer to: Jagtbart, Kort, Journal, Alle arter, Indstillinger
 - Baggrundskort fra OpenFreeMap. Matrikelskel fra Datafordeler (Klimadatastyrelsen) som linjer
 - Matrikelnummer på jordstykket ved tæt zoom
+- Tryk på et jordstykke: matrikelnummer, ejerlavskode og areal. Ejer vises ikke (kræver EJF-adgang)
 - Din position på kortet. Kortet starter, hvor du er. Uden position: Jagtbarts valgte sted, ellers hele Danmark
 - **Gem område**: et felt på 5 × 5 km om kortets midte vises på kortet. Gem henter skel og baggrundskort til telefonen
 - **Gemte områder**: navn, dato for hentning, størrelse. Slet med swipe. Tryk viser området
@@ -18,7 +19,7 @@ Jægeren skal kunne se, hvor skellet går, der hvor jagten er. Jagtretten følge
 
 ## Ikke med
 
-Hvilket jordstykke du står på, ejer, luftfoto, opdatering af et gemt område, automatisk lagring af det, du har set, kortbilag for kron- og dåvildt.
+Ejer og ejendomsadministrator, luftfoto, opdatering af et gemt område, automatisk lagring af det, du har set, kortbilag for kron- og dåvildt.
 
 ## Regler
 

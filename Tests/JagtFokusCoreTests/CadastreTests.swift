@@ -16,6 +16,7 @@ struct CadastreTests {
         <mat:Jordstykke_Gaeldende gml:id="Jordstykke_Gaeldende.2505326">
           <mat:matrikelnummer>1924</mat:matrikelnummer>
           <mat:ejerlavskode>2006351</mat:ejerlavskode>
+          <mat:registreretAreal gml:uom="m2">287.0</mat:registreretAreal>
           <mat:geometri>
             <gml:Polygon srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
               <gml:exterior>
@@ -31,6 +32,7 @@ struct CadastreTests {
         <mat:Jordstykke_Gaeldende gml:id="Jordstykke_Gaeldende.2915646">
           <mat:matrikelnummer>1244a</mat:matrikelnummer>
           <mat:ejerlavskode>2006351</mat:ejerlavskode>
+          <mat:registreretAreal gml:uom="m2">426.0</mat:registreretAreal>
           <mat:geometri>
             <gml:Polygon srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
               <gml:exterior>
@@ -46,6 +48,7 @@ struct CadastreTests {
         <mat:Jordstykke_Gaeldende gml:id="Jordstykke_Gaeldende.2917261">
           <mat:matrikelnummer>1259h</mat:matrikelnummer>
           <mat:ejerlavskode>2006351</mat:ejerlavskode>
+          <mat:registreretAreal gml:uom="m2">140.0</mat:registreretAreal>
           <mat:geometri>
             <gml:Polygon srsDimension="2" srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">
               <gml:exterior>
@@ -107,6 +110,8 @@ struct CadastreTests {
         #expect(first.number == "1924")
         // The service sends ejerlavskode, not a name. The name stays empty.
         #expect(first.district == "")
+        #expect(first.districtCode == 2_006_351)
+        #expect(first.area == 287)
         #expect(first.polygons.count == 1)
         #expect(first.polygons[0].count == 1)
         #expect(first.polygons[0][0].count == 6)
@@ -279,6 +284,8 @@ struct CadastreTests {
                 id: parcel.id,
                 number: parcel.number,
                 district: parcel.district,
+                districtCode: parcel.districtCode,
+                area: parcel.area,
                 polygons: parcel.polygons.map { polygon in
                     polygon.map { ring in
                         ring.map {
@@ -299,9 +306,12 @@ struct CadastreTests {
         let features = try #require((object as? [String: Any])?["features"] as? [[String: Any]])
         #expect(features.count == 3)
         for feature in features {
-            let properties = try #require(feature["properties"] as? [String: String])
-            #expect(properties.keys.sorted() == ["ejerlav", "nr"])
-            #expect(properties["ejerlav"] == "")
+            let properties = try #require(feature["properties"] as? [String: Any])
+            #expect(properties.keys.sorted() == ["areal", "ejerlav", "ejerlavskode", "nr"])
+            #expect(properties["ejerlav"] as? String == "")
+            #expect(properties["ejerlavskode"] as? Int == 2_006_351)
         }
+        let first = try #require(features.first?["properties"] as? [String: Any])
+        #expect(first["areal"] as? Int == 287)
     }
 }

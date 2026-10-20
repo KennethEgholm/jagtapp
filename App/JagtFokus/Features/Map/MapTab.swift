@@ -19,6 +19,7 @@ struct MapTab: View {
     @State private var showSaved = false
     @State private var askName = false
     @State private var draftName = ""
+    @State private var tappedParcel: Parcel?
 
     var body: some View {
         NavigationStack {
@@ -33,7 +34,8 @@ struct MapTab: View {
                 parcels: map.visibleParcels,
                 saveFrame: map.saveFrame,
                 onCentreChange: { map.centreMoved(to: $0) },
-                onRegionChange: { box, zoom in map.regionChanged(box, zoom: zoom) }
+                onRegionChange: { box, zoom in map.regionChanged(box, zoom: zoom) },
+                onParcelTap: { id in tappedParcel = map.parcel(withId: id) }
             )
             .ignoresSafeArea(edges: .bottom)
             .safeAreaInset(edge: .bottom) {
@@ -84,6 +86,7 @@ struct MapTab: View {
                 }
             }
             .sheet(isPresented: $showInfo) { MapInfoSheet() }
+            .sheet(item: $tappedParcel) { ParcelDetailsView(parcel: $0) }
             .sheet(isPresented: $showSaved) {
                 SavedAreasView { area in
                     settled = true
@@ -106,6 +109,9 @@ struct MapTab: View {
             #endif
             // Online: a pack saved with an older week's tile URL is downloaded again.
             await map.refreshStaleBasemaps()
+            #if DEBUG
+            await runDebugParcel()
+            #endif
         }
         .onAppear {
             // The map has just started at the best camera there is. An exact fix or `-map` needs no flight.
@@ -150,6 +156,20 @@ struct MapTab: View {
             await map.save(name: "")
         default:
             break
+        }
+    }
+    #endif
+
+    #if DEBUG
+    /// DEBUG `-parcel <matrikelnummer>`: open the parcel sheet once the view has its parcels.
+    private func runDebugParcel() async {
+        guard let number = UserDefaults.standard.string(forKey: "parcel") else { return }
+        for _ in 0..<50 {
+            if let parcel = map.parcel(number: number) {
+                tappedParcel = parcel
+                return
+            }
+            try? await Task.sleep(for: .milliseconds(200))
         }
     }
     #endif

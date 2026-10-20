@@ -33,6 +33,8 @@ struct ParcelMapView: UIViewRepresentable {
     var onCentreChange: (Coordinate) -> Void = { _ in }
     /// The visible bounds and the zoom, after every move.
     var onRegionChange: (GeoBox, Double) -> Void
+    /// The id of the parcel under a tap, when the tap hits one.
+    var onParcelTap: (String) -> Void = { _ in }
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -50,6 +52,12 @@ struct ParcelMapView: UIViewRepresentable {
         context.coordinator.handledRequest = request?.id
         context.coordinator.handledFollow = followRequest
         context.coordinator.handledAccuracy = accuracyRequest
+        let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap(_:)))
+        // The documented pattern: wait for the map's own taps, so a double tap still zooms.
+        for recognizer in map.gestureRecognizers ?? [] where recognizer is UITapGestureRecognizer {
+            tap.require(toFail: recognizer)
+        }
+        map.addGestureRecognizer(tap)
         return map
     }
 
@@ -60,6 +68,7 @@ struct ParcelMapView: UIViewRepresentable {
         coordinator.onUserMove = onUserMove
         coordinator.onUserLocation = onUserLocation
         coordinator.onReducedAccuracy = onReducedAccuracy
+        coordinator.onParcelTap = onParcelTap
         if let request, request.id != coordinator.handledRequest {
             coordinator.handledRequest = request.id
             map.setCenter(request.camera.center.clLocation, zoomLevel: request.camera.zoom, animated: true)
@@ -87,6 +96,7 @@ struct ParcelMapView: UIViewRepresentable {
         var onUserLocation: (Coordinate) -> Void = { _ in }
         var onRegionChange: (GeoBox, Double) -> Void = { _, _ in }
         var onCentreChange: (Coordinate) -> Void = { _ in }
+        var onParcelTap: (String) -> Void = { _ in }
         var parcels: Data?
         var saveFrame: GeoBox?
         /// What is on the style now, so an unchanged update does not parse the GeoJSON again.
@@ -95,6 +105,8 @@ struct ParcelMapView: UIViewRepresentable {
         private var drawnOnce = false
 
         private static let parcelsID = "matrikel"
+        /// An invisible fill, so the whole parcel answers a tap and not only its thin edge.
+        private static let fillID = "matrikel-fill"
         private static let frameID = "saveFrame"
         /// A font the liberty style's glyph server has.
         private static let labelFont = "Noto Sans Regular"
@@ -117,6 +129,17 @@ struct ParcelMapView: UIViewRepresentable {
             }
             let reduced = manager.accuracyAuthorization?() == .reducedAccuracy
             onReducedAccuracy(LocationAccuracy.showsReducedNotice(access: access, isReduced: reduced))
+        }
+
+        /// The whole parcel is tappable through the invisible fill layer.
+        @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+            guard let map = gesture.view as? MLNMapView else { return }
+            let features = map.visibleFeatures(
+                at: gesture.location(in: map),
+                styleLayerIdentifiers: [Self.fillID]
+            )
+            guard let id = features.first?.identifier as? String, !id.isEmpty else { return }
+            onParcelTap(id)
         }
 
         func mapView(_ mapView: MLNMapView, didUpdate userLocation: MLNUserLocation?) {
@@ -198,6 +221,13 @@ struct ParcelMapView: UIViewRepresentable {
                 )
             }
 
+            // A hair of white, not fully transparent: a layer with zero opacity can fall out
+            // of MapLibre's own hit test, and the tap would miss.
+            let fill = MLNFillStyleLayer(identifier: Self.fillID, source: source)
+            fill.minimumZoomLevel = Float(MapRules.boundaryMinZoom)
+            fill.fillColor = NSExpression(forConstantValue: UIColor.white.withAlphaComponent(0.01))
+            style.addLayer(fill)
+
             let casing = MLNLineStyleLayer(identifier: "matrikel-casing", source: source)
             casing.minimumZoomLevel = Float(MapRules.boundaryMinZoom)
             casing.lineColor = NSExpression(forConstantValue: UIColor.white)
@@ -221,11 +251,11 @@ struct ParcelMapView: UIViewRepresentable {
                 forMLNInterpolating: .zoomLevelVariable,
                 curveType: .linear,
                 parameters: nil,
-                stops: NSExpression(forConstantValue: [MapRules.labelMinZoom: 11, 19: 14])
+                stops: NSExpression(forConstantValue: [MapRules.labelMinZoom: 13, 19: 18])
             )
             labels.textColor = NSExpression(forConstantValue: UIColor.boundary)
             labels.textHaloColor = NSExpression(forConstantValue: UIColor.white)
-            labels.textHaloWidth = NSExpression(forConstantValue: 1.5)
+            labels.textHaloWidth = NSExpression(forConstantValue: 2)
             style.addLayer(labels)
         }
 

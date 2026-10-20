@@ -116,6 +116,28 @@ final class MapStore {
         if let lastView { regionChanged(lastView.box, zoom: lastView.zoom, immediately: true) }
     }
 
+    /// The parcel under a tap: in a saved area, or in the live fetch. Nil when the id is gone.
+    func parcel(withId id: String) -> Parcel? {
+        for area in index.areas {
+            if let found = savedParcels[area.id]?.parcels.first(where: { $0.id == id }) {
+                return found
+            }
+        }
+        return liveParcels?.parcels.first(where: { $0.id == id })
+    }
+
+    #if DEBUG
+    /// DEBUG `-parcel <matrikelnummer>`: a parcel to open the sheet with, for screenshots.
+    func parcel(number: String) -> Parcel? {
+        for area in index.areas {
+            if let found = savedParcels[area.id]?.parcels.first(where: { $0.number == number }) {
+                return found
+            }
+        }
+        return liveParcels?.parcels.first(where: { $0.number == number })
+    }
+    #endif
+
     /// Saved areas with their parcels. The map redraws at once.
     func setSaved(index: OfflineAreaIndex, parcels: [UUID: ParcelSet]) {
         self.index = index
