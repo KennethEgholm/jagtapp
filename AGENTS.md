@@ -213,7 +213,7 @@ Debug launch arguments (DEBUG only) for screenshots and manual checks:
 | `-map 56.1629,10.2039,16` | Start the Kort camera at lat, lon, zoom |
 | `-holdPack 20` | Kort: a save waits 20 s with its half pack in the database (to kill the app there) |
 | `-offline YES` | Kort: every request fails, as with no network |
-| `-save choosing` / `alert` / `go` / `delete` | Kort: show the save frame / the name alert / save at once / delete the newest saved area (all with `-tab map`) |
+| `-save choosing` / `alert` / `go` / `delete` / `reset` | Kort: show the save frame / the name alert / save at once / delete the newest saved area / reset all saved areas (all with `-tab map`) |
 | `-closed YES` | Expand “Ikke jagtbar her” |
 | `-open vejr` | Push Sol og vejr from Jagtbart |
 | `-search ræv` | Open search on Alle arter with that text (use with `-tab all`) |

@@ -26,25 +26,37 @@ actor OfflineDisk {
         URL.applicationSupportDirectory.appending(path: "Kort", directoryHint: .isDirectory)
     }
 
-    /// Orphan parcel files go; then the index and every area's parcels are read.
+    /// Reads the index by decoding it: no file is an empty index, a file that cannot be decoded
+    /// is unknown (and nothing writes). Orphan parcel files go; failing to remove one is only logged.
     func launch() -> Snapshot {
-        do {
-            try store.removeOrphans()
-            isKnown = true
-        } catch {
+        switch store.indexState() {
+        case .unreadable:
             isKnown = false
             Self.log.error("omraader.json cannot be read; saved areas are left alone")
-        }
-        let index = store.loadIndex()
-        var parcels: [UUID: ParcelSet] = [:]
-        for area in index.areas {
-            if let set = store.parcels(for: area.id) {
-                parcels[area.id] = set
-            } else {
-                Self.log.error("parcels file for an indexed area is missing or broken")
+            return Snapshot(index: OfflineAreaIndex(), parcels: [:], isKnown: false)
+        case .known(let index):
+            isKnown = true
+            do {
+                try store.removeOrphans()
+            } catch {
+                Self.log.error("orphan files could not be removed")
             }
+            var parcels: [UUID: ParcelSet] = [:]
+            for area in index.areas {
+                if let set = store.parcels(for: area.id) {
+                    parcels[area.id] = set
+                } else {
+                    Self.log.error("parcels file for an indexed area is missing or broken")
+                }
+            }
+            return Snapshot(index: index, parcels: parcels, isKnown: true)
         }
-        return Snapshot(index: index, parcels: parcels, isKnown: isKnown)
+    }
+
+    /// Everything in the Kort folder goes, and the index is known and empty again.
+    func reset() throws {
+        try store.reset()
+        isKnown = true
     }
 
     /// Parcels file, then the index. The pack must be complete before this is called.

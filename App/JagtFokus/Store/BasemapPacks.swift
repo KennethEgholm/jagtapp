@@ -1,5 +1,6 @@
 @preconcurrency import MapLibre
 import os
+import UIKit
 
 /// The basemap packs of the saved areas, inside MapLibre's own offline database. A pack's
 /// `context` is the area's id, so the index and the packs can be matched.
@@ -53,6 +54,13 @@ final class BasemapPacks {
         } catch {
             await removePack(pack)
             throw error
+        }
+    }
+
+    /// Every pack there is: the reset of saved areas. The app makes no other packs.
+    func removeAll() async {
+        for pack in await loadedPacks() {
+            await removePack(pack)
         }
     }
 
@@ -130,11 +138,11 @@ private final class PackWatcher {
     private var continuation: CheckedContinuation<Int, Error>?
     private var observers: [NSObjectProtocol] = []
     private var watchdog: Task<Void, Never>?
-    private var lastChange = ContinuousClock.now
+    /// Counts quiet time only while the app is active (see `StallWatch`).
+    private var stall = StallWatch(limitSeconds: 60)
     private var best = 0.0
     private var cancelledEarly = false
     private var errors = 0
-    private static let stallLimit = Duration.seconds(60)
     private static let log = Logger(subsystem: "dk.jagtfokus.app", category: "offline")
 
     init(pack: MLNOfflinePack, progress: @escaping (Double) -> Void) {
@@ -152,11 +160,15 @@ private final class PackWatcher {
         observers.append(center.addObserver(forName: .MLNOfflinePackError, object: pack, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated { self?.errors += 1 }
         })
+        // Coming back to the foreground starts the count again.
+        observers.append(center.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.stall.becameActive() }
+        })
         watchdog = Task { [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(5))
                 guard let self else { return }
-                if ContinuousClock.now - self.lastChange > Self.stallLimit {
+                if self.stall.tick(seconds: 5, isActive: UIApplication.shared.applicationState == .active) {
                     self.finish(.failure(BasemapPacks.Stalled()))
                     return
                 }
@@ -175,7 +187,7 @@ private final class PackWatcher {
 
     private func changed() {
         guard continuation != nil else { return }
-        lastChange = .now
+        stall.progress()
         let progress = pack.progress
         let tiles = Int(progress.countOfTilesCompleted)
         let bytes = Int(progress.countOfBytesCompleted)

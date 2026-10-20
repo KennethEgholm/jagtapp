@@ -7,11 +7,20 @@ struct SavedAreasView: View {
     @Environment(\.dismiss) private var dismiss
     /// Called after the sheet has closed.
     let onSelect: (OfflineArea) -> Void
+    @State private var confirmReset = false
 
     var body: some View {
+        @Bindable var map = map
         NavigationStack {
             Group {
-                if map.index.areas.isEmpty {
+                if map.savedAreasUnreadable {
+                    List {
+                        Section {
+                            Label(Copy.mapSavedUnreadable, systemImage: "exclamationmark.triangle")
+                            Button(Copy.mapResetSaved, role: .destructive) { confirmReset = true }
+                        }
+                    }
+                } else if map.index.areas.isEmpty {
                     ContentUnavailableView(Copy.mapNoSavedAreas, systemImage: "square.stack.3d.down.right")
                 } else {
                     List {
@@ -34,6 +43,14 @@ struct SavedAreasView: View {
                     }
                 }
             }
+            .confirmationDialog(Copy.mapResetWarning, isPresented: $confirmReset, titleVisibility: .visible) {
+                Button(Copy.mapResetSaved, role: .destructive) {
+                    Task { await map.resetSavedAreas() }
+                }
+                Button("Annuller", role: .cancel) {}
+            }
+            .alert(Copy.mapDeleteFailed, isPresented: $map.deleteFailed) {}
+            .alert(Copy.mapResetFailed, isPresented: $map.resetFailed) {}
             .navigationTitle(Copy.mapSavedAreas)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

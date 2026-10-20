@@ -42,6 +42,10 @@ final class MapStore {
     private var task: Task<Void, Never>?
 
     private var diskIsKnown = false
+    /// Set when a delete fails, until the user has seen it.
+    var deleteFailed = false
+    /// Set when the reset fails, until the user has seen it.
+    var resetFailed = false
     private var saveCentre: Coordinate?
     private var frozenFrame: GeoBox?
     private var saveTask: Task<Void, Never>?
@@ -261,6 +265,9 @@ extension MapStore {
         }
     }
 
+    /// `omraader.json` is there but cannot be read. Saved areas may exist on disk; only a reset gets out of this.
+    var savedAreasUnreadable: Bool { isReady && !diskIsKnown }
+
     /// The 5 km square drawn on the map: around the centre while choosing, fixed while downloading.
     var saveFrame: GeoBox? {
         switch saving {
@@ -366,7 +373,10 @@ extension MapStore {
     func delete(_ id: UUID) async {
         refreshTask?.cancel()
         await refreshTask?.value
-        guard diskIsKnown else { return }
+        guard diskIsKnown else {
+            deleteFailed = true
+            return
+        }
         do {
             let updated = try await disk.delete(id: id)
             var parcels = savedParcels
@@ -374,9 +384,31 @@ extension MapStore {
             setSaved(index: updated, parcels: parcels)
         } catch {
             Self.offlineLog.error("delete failed: \(Self.describe(error), privacy: .public)")
+            deleteFailed = true
             return
         }
         await packs.remove(id: id)
+    }
+
+    /// The way out of an unreadable index: every file in the Kort folder and every basemap pack
+    /// goes, and saving works again with nothing saved.
+    func resetSavedAreas() async {
+        saveTask?.cancel()
+        refreshTask?.cancel()
+        await refreshTask?.value
+        saveGeneration += 1
+        frozenFrame = nil
+        saving = .idle
+        do {
+            try await disk.reset()
+        } catch {
+            Self.offlineLog.error("reset failed: \(Self.describe(error), privacy: .public)")
+            resetFailed = true
+            return
+        }
+        diskIsKnown = true
+        setSaved(index: OfflineAreaIndex(), parcels: [:])
+        await packs.removeAll()
     }
 
     /// Online: downloads the pack again for every area saved with an older week's tile URL,
@@ -428,7 +460,10 @@ extension MapStore {
         var request = URLRequest(url: OpenFreeMap.tileJSONURL)
         request.setValue(UserAgent.app, forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 15
-        let (data, response) = try await session.data(for: request)
+        // OpenFreeMap allows four requests at once, the map's and the packs' included.
+        let (data, response) = try await OpenFreeMapTraffic.gate.run {
+            try await session.data(for: request)
+        }
         if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
             throw LiveBoundaries.BadStatus(code: http.statusCode)
         }

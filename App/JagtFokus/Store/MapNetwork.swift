@@ -2,11 +2,16 @@ import Foundation
 import MapLibre
 import os
 
+/// The one gate for OpenFreeMap: the map, the offline packs and the TileJSON fetch share its slots.
+enum OpenFreeMapTraffic {
+    static let gate = RequestGate(limit: OpenFreeMap.maxParallelRequests)
+}
+
 /// All of MapLibre's traffic goes through here, so OpenFreeMap sees at most
 /// `OpenFreeMap.maxParallelRequests` requests at once and the app's own User-Agent.
 final class MapRequestProtocol: URLProtocol, @unchecked Sendable {
     private static let marker = "dk.jagtfokus.map-request"
-    private static let gate = RequestGate(limit: OpenFreeMap.maxParallelRequests)
+    private static let gate = OpenFreeMapTraffic.gate
     private static let session = URLSession(configuration: .ephemeral)
     private var loading: Task<Void, Never>?
 

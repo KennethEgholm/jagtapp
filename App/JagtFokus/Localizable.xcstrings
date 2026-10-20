@@ -331,6 +331,16 @@
         }
       }
     },
+    "Alle gemte områder slettes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All saved areas will be deleted."
+          }
+        }
+      }
+    },
     "Andefugle" : {
       "localizations" : {
         "en" : {
@@ -811,6 +821,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saved areas"
+          }
+        }
+      }
+    },
+    "Gemte områder kunne ikke læses." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved areas could not be read."
+          }
+        }
+      }
+    },
+    "Gemte områder kunne ikke nulstilles." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved areas could not be reset."
           }
         }
       }
@@ -2054,6 +2084,16 @@
       },
       "comment" : "Weather page section: the forecast hour nearest now."
     },
+    "Nulstil gemte områder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset saved areas"
+          }
+        }
+      }
+    },
     "Nymåne" : {
       "localizations" : {
         "en" : {
@@ -2141,6 +2181,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The area could not be saved. Try again online."
+          }
+        }
+      }
+    },
+    "Området kunne ikke slettes." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The area could not be deleted."
           }
         }
       }

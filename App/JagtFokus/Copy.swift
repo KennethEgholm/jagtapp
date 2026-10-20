@@ -36,6 +36,11 @@ enum Copy {
     static let mapSavedAreas = String(localized: "Gemte områder")
     static let mapSaveFrame = String(localized: "5 × 5 km om midten")
     static let mapSaveFailed = String(localized: "Området kunne ikke gemmes. Prøv igen med net.")
+    static let mapSavedUnreadable = String(localized: "Gemte områder kunne ikke læses.")
+    static let mapResetSaved = String(localized: "Nulstil gemte områder")
+    static let mapResetWarning = String(localized: "Alle gemte områder slettes.")
+    static let mapDeleteFailed = String(localized: "Området kunne ikke slettes.")
+    static let mapResetFailed = String(localized: "Gemte områder kunne ikke nulstilles.")
     static let mapNoSavedAreas = String(localized: "Ingen gemte områder.")
     static let mapAreaPrefix = String(localized: "Område")
     static func mapSaving(name: String) -> String { String(localized: "Gemmer \(name) …") }

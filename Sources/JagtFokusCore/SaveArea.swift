@@ -35,3 +35,31 @@ public enum SaveProgress {
         return min(1, parcels + min(1, max(0, pack)) * (1 - parcelShare))
     }
 }
+
+/// Tells a download that has stopped from one that waited. Only time the app was active counts:
+/// in the background the app is suspended, and a download that waited is not a download that stalled.
+public struct StallWatch: Sendable {
+    public let limitSeconds: Int
+    private var quietSeconds = 0
+
+    public init(limitSeconds: Int) {
+        self.limitSeconds = limitSeconds
+    }
+
+    /// True when the active quiet time has reached the limit.
+    public mutating func tick(seconds: Int, isActive: Bool) -> Bool {
+        guard isActive else { return false }
+        quietSeconds += seconds
+        return quietSeconds >= limitSeconds
+    }
+
+    /// The download moved.
+    public mutating func progress() {
+        quietSeconds = 0
+    }
+
+    /// The app came to the foreground: count from zero.
+    public mutating func becameActive() {
+        quietSeconds = 0
+    }
+}

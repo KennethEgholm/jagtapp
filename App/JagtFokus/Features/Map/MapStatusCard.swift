@@ -9,6 +9,8 @@ struct MapStatusCard: View {
     /// "Gemt område: …", when the view lies inside a saved area.
     let savedAreaText: String?
     let reducedAccuracy: Bool
+    /// The index of saved areas cannot be read: saving is off, and Gemte områder offers a reset.
+    var savedUnreadable = false
     let onUsePrecise: () -> Void
     var onSave: () -> Void = {}
     var onCancelSave: () -> Void = {}
@@ -16,13 +18,12 @@ struct MapStatusCard: View {
     var body: some View {
         if saving != .idle {
             card { saveContent }
-        } else if let line = statusLine {
+        } else if statusLine != nil || savedUnreadable || reducedAccuracy {
             card {
-                lineView(line)
+                if let line = statusLine { lineView(line) }
+                if savedUnreadable { Label(Copy.mapSavedUnreadable, systemImage: "exclamationmark.triangle") }
                 if reducedAccuracy { accuracy }
             }
-        } else if reducedAccuracy {
-            card { accuracy }
         }
     }
 

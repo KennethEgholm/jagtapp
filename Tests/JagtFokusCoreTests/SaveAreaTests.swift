@@ -85,3 +85,105 @@ struct SaveAreaTests {
         #expect(LiveBoundaries.plan(for: wide, zoom: 14, areas: [], isOnline: false) == .tooLarge)
     }
 }
+
+// MARK: - Index readability and reset
+
+struct IndexStateTests {
+    func temporaryStore() -> (OfflineAreaStore, URL) {
+        let dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        return (OfflineAreaStore(folder: dir), dir)
+    }
+
+    func area() -> OfflineArea {
+        OfflineArea(
+            id: UUID(),
+            name: "Område 1",
+            box: .around(Coordinate(latitude: 56.16, longitude: 10.20), sideMeters: 5_000),
+            savedAt: Date(timeIntervalSince1970: 0),
+            parcelCount: 0,
+            bytes: 1,
+            basemapTiles: "t"
+        )
+    }
+
+    @Test func noFolderAndNoFileIsKnownAndEmpty() {
+        let (store, _) = temporaryStore()
+        #expect(store.indexState() == .known(OfflineAreaIndex()))
+    }
+
+    @Test func aReadableIndexIsKnown() throws {
+        let (store, dir) = temporaryStore()
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let saved = area()
+        try store.commit(saved, parcels: ParcelSet(parcels: []))
+        #expect(store.indexState() == .known(OfflineAreaIndex(areas: [saved])))
+    }
+
+    @Test func aFileThatCannotBeDecodedIsUnreadableNotEmpty() throws {
+        let (store, dir) = temporaryStore()
+        defer { try? FileManager.default.removeItem(at: dir) }
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try Data("{ not json".utf8).write(to: dir.appending(path: "omraader.json"))
+        #expect(store.indexState() == .unreadable)
+    }
+
+    @Test func resetRemovesEverythingAndLeavesAKnownEmptyIndex() throws {
+        let (store, dir) = temporaryStore()
+        defer { try? FileManager.default.removeItem(at: dir) }
+        try store.commit(area(), parcels: ParcelSet(parcels: []))
+        try Data("{ not json".utf8).write(to: dir.appending(path: "omraader.json"))
+        try Data("x".utf8).write(to: dir.appending(path: "stray.geojson"))
+        try store.reset()
+        #expect(store.indexState() == .known(OfflineAreaIndex()))
+        let left = try FileManager.default.contentsOfDirectory(atPath: dir.path)
+        #expect(left.isEmpty)
+    }
+
+    @Test func resetWithoutAFolderIsFine() throws {
+        let (store, _) = temporaryStore()
+        try store.reset()
+        #expect(store.indexState() == .known(OfflineAreaIndex()))
+    }
+}
+
+// MARK: - Stall watch
+
+struct StallWatchTests {
+    @Test func stallsAfterTheLimitOfActiveQuietTime() {
+        var watch = StallWatch(limitSeconds: 60)
+        for _ in 0..<11 {
+            let stalled = watch.tick(seconds: 5, isActive: true)
+            #expect(!stalled)
+        }
+        let stalled = watch.tick(seconds: 5, isActive: true)
+        #expect(stalled)
+    }
+
+    @Test func timeInTheBackgroundDoesNotCount() {
+        var watch = StallWatch(limitSeconds: 60)
+        // Ten minutes of ticks while suspended, then back.
+        for _ in 0..<120 {
+            let stalled = watch.tick(seconds: 5, isActive: false)
+            #expect(!stalled)
+        }
+        let stalled = watch.tick(seconds: 5, isActive: true)
+        #expect(!stalled)
+    }
+
+    @Test func progressAndComingBackStartTheCountAgain() {
+        var watch = StallWatch(limitSeconds: 60)
+        for _ in 0..<11 { _ = watch.tick(seconds: 5, isActive: true) }
+        watch.progress()
+        for _ in 0..<11 {
+            let stalled = watch.tick(seconds: 5, isActive: true)
+            #expect(!stalled)
+        }
+        watch.becameActive()
+        for _ in 0..<11 {
+            let stalled = watch.tick(seconds: 5, isActive: true)
+            #expect(!stalled)
+        }
+        let stalled = watch.tick(seconds: 5, isActive: true)
+        #expect(stalled)
+    }
+}

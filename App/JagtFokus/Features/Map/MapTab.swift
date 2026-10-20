@@ -41,6 +41,7 @@ struct MapTab: View {
                     saving: map.saving,
                     savedAreaText: savedAreaText,
                     reducedAccuracy: reducedAccuracy,
+                    savedUnreadable: map.savedAreasUnreadable,
                     onUsePrecise: { accuracyRequest += 1 },
                     onSave: {
                         draftName = map.index.nextDefaultName(prefix: Copy.mapAreaPrefix)
@@ -121,9 +122,13 @@ struct MapTab: View {
     }
 
     #if DEBUG
-    /// DEBUG `-save choosing|alert|go|delete`: choose the frame, ask for a name, save at once, or delete the newest area.
+    /// DEBUG `-save choosing|alert|go|delete|reset`: choose the frame, ask for a name, save at once, delete the newest area, or reset all saved areas.
     private func runDebugSave() async {
         guard let step = UserDefaults.standard.string(forKey: "save") else { return }
+        if step == "reset" {
+            await map.resetSavedAreas()
+            return
+        }
         if step == "delete" {
             if let first = map.index.areas.first { await map.delete(first.id) }
             return

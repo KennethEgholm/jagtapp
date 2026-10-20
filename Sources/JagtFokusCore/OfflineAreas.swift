@@ -108,6 +108,33 @@ public struct OfflineAreaStore: Sendable {
         folder.appending(path: "\(id.uuidString).geojson")
     }
 
+    /// Whether the index can be trusted.
+    public enum IndexState: Equatable, Sendable {
+        /// Read, or not there yet (nothing saved): safe to write to.
+        case known(OfflineAreaIndex)
+        /// The file is there but cannot be decoded. It looks empty, and writing would orphan every area.
+        case unreadable
+    }
+
+    /// No file is a known, empty index. A file that cannot be decoded is `.unreadable`.
+    public func indexState() -> IndexState {
+        guard FileManager.default.fileExists(atPath: indexURL.path) else { return .known(OfflineAreaIndex()) }
+        guard let data = try? Data(contentsOf: indexURL),
+              let index = try? OfflineAreaIndex.decode(from: data) else {
+            return .unreadable
+        }
+        return .known(index)
+    }
+
+    /// Removes everything in the folder: the way out of an unreadable index.
+    public func reset() throws {
+        let fm = FileManager.default
+        guard fm.fileExists(atPath: folder.path) else { return }
+        for url in try fm.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil) {
+            try fm.removeItem(at: url)
+        }
+    }
+
     /// A missing or broken file gives an empty index.
     public func loadIndex() -> OfflineAreaIndex {
         guard let data = try? Data(contentsOf: indexURL),
