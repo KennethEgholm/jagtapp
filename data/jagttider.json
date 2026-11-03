@@ -1,0 +1,1272 @@
+{
+  "version": 6,
+  "updated": "2026-10-16",
+  "source_name": "BEK nr. 470/2024 om jagttid. SGAV jagttabel gældende fra 1. juli 2024",
+  "source_url": "https://www.retsinformation.dk/eli/lta/2024/470",
+  "groups": [
+    {
+      "id": "klovbaerende",
+      "title": "Klovbærende",
+      "species": [
+        {
+          "id": "kronspidshjort",
+          "name": "Kronspidshjort",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Store lokale variationer. Tjek bekendtgørelsen."
+        },
+        {
+          "id": "kronhjort",
+          "name": "Kronhjort (større end spidshjort)",
+          "periods": [
+            {
+              "from": "10-16",
+              "to": "12-31"
+            }
+          ],
+          "note": "Store lokale variationer. Tjek bekendtgørelsen."
+        },
+        {
+          "id": "kronhind",
+          "name": "Kronhind",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Store lokale variationer. Tjek bekendtgørelsen."
+        },
+        {
+          "id": "kronkalv",
+          "name": "Kronkalv",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "02-29"
+            }
+          ],
+          "note": "Store lokale variationer. Tjek bekendtgørelsen."
+        },
+        {
+          "id": "daahjort",
+          "name": "Dåhjort",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Store lokale variationer. Tjek bekendtgørelsen."
+        },
+        {
+          "id": "daa_og_kalv",
+          "name": "Då og -kalv",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Store lokale variationer. Tjek bekendtgørelsen."
+        },
+        {
+          "id": "sikahjort",
+          "name": "Sikahjort",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Primært Djursland."
+        },
+        {
+          "id": "sikahind_kalv",
+          "name": "Sikahind og -kalv",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Primært Djursland."
+        },
+        {
+          "id": "raabuk",
+          "name": "Råbuk",
+          "periods": [
+            {
+              "from": "05-16",
+              "to": "07-15"
+            },
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "raa_og_lam",
+          "name": "Rå og -lam",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "muflonvaedder",
+          "name": "Muflonvædder",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "muflonfaar_lam",
+          "name": "Muflonfår og -lam",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "vildsvin_orne",
+          "name": "Vildsvin, orne",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "vildsvin_so_grise",
+          "name": "Vildsvin, so og grise",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Regulering kan være tilladt hele året."
+        }
+      ]
+    },
+    {
+      "id": "rovdyr",
+      "title": "Rovdyr",
+      "species": [
+        {
+          "id": "raev",
+          "name": "Ræv",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider. Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "maarhund",
+          "name": "Mårhund",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Invasiv art. Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "mink",
+          "name": "Mink",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Invasiv art. Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "vaskebjoern",
+          "name": "Vaskebjørn",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Invasiv art. Regulering kan være tilladt hele året."
+        }
+      ]
+    },
+    {
+      "id": "ovrige_pattedyr",
+      "title": "Øvrige pattedyr",
+      "species": [
+        {
+          "id": "hare",
+          "name": "Hare",
+          "periods": [
+            {
+              "from": "11-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "vildkanin",
+          "name": "Vildkanin",
+          "periods": [
+            {
+              "from": "11-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "bisamrotte",
+          "name": "Bisamrotte",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Invasiv art. Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "sumpbaever",
+          "name": "Sumpbæver",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Invasiv art. Regulering kan være tilladt hele året."
+        }
+      ]
+    },
+    {
+      "id": "andefugle",
+      "title": "Andefugle",
+      "species": [
+        {
+          "id": "graaand",
+          "name": "Gråand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "atlingand",
+          "name": "Atlingand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "krikand",
+          "name": "Krikand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "spidsand",
+          "name": "Spidsand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "pibeand",
+          "name": "Pibeand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "skeand",
+          "name": "Skeand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "knarand",
+          "name": "Knarand",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": "På fiskeriterritoriet desuden 1. jan–31. jan."
+        },
+        {
+          "id": "troldand",
+          "name": "Troldand",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "bjergand",
+          "name": "Bjergand",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "hvinand",
+          "name": "Hvinand",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "sortand",
+          "name": "Sortand",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "edderfugl_han",
+          "name": "Edderfugl, han",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Ingen jagt i visse fuglebeskyttelsesområder. Kun han."
+        }
+      ]
+    },
+    {
+      "id": "gaes",
+      "title": "Gæs",
+      "species": [
+        {
+          "id": "graagaas",
+          "name": "Grågås",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "graagaas_omdrift",
+          "name": "Grågås på omdriftsarealer",
+          "periods": [
+            {
+              "from": "08-01",
+              "to": "08-31"
+            }
+          ],
+          "note": "Kun på dyrkningsfladen m.m. Ikke inden for 300 m fra hav, fjord og søer over 3 ha."
+        },
+        {
+          "id": "canadagaas",
+          "name": "Canadagås",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "canadagaas_omdrift",
+          "name": "Canadagås på omdriftsarealer",
+          "periods": [
+            {
+              "from": "08-01",
+              "to": "08-31"
+            }
+          ],
+          "note": "Kun på dyrkningsfladen m.m. Ikke inden for 300 m fra hav, fjord og søer over 3 ha."
+        },
+        {
+          "id": "blisgaas",
+          "name": "Blisgås",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "kortnaebbet_gaas",
+          "name": "Kortnæbbet gås",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "nilgaas",
+          "name": "Nilgås",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Invasiv art."
+        },
+        {
+          "id": "saedgaas",
+          "name": "Sædgås",
+          "periods": [],
+          "note": "Ingen generel jagttid."
+        }
+      ]
+    },
+    {
+      "id": "honsefugle",
+      "title": "Hønsefugle",
+      "species": [
+        {
+          "id": "agerhoene",
+          "name": "Agerhøne",
+          "periods": [
+            {
+              "from": "09-16",
+              "to": "10-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "fasan",
+          "name": "Fasan",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        }
+      ]
+    },
+    {
+      "id": "ovrige_fugle",
+      "title": "Øvrige fugle",
+      "species": [
+        {
+          "id": "dobbeltbekkasin",
+          "name": "Dobbeltbekkasin",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "12-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "skovsneppe",
+          "name": "Skovsneppe",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "husskade",
+          "name": "Husskade",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "krage",
+          "name": "Krage (gråkrage og sortkrage)",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Regulering kan være tilladt hele året."
+        },
+        {
+          "id": "blishoene",
+          "name": "Blishøne",
+          "periods": [
+            {
+              "from": "10-01",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        },
+        {
+          "id": "soelvmage",
+          "name": "Sølvmåge",
+          "periods": [
+            {
+              "from": "09-01",
+              "to": "01-31"
+            }
+          ],
+          "note": "Der findes lokale jagttider."
+        },
+        {
+          "id": "ringdue",
+          "name": "Ringdue",
+          "periods": [
+            {
+              "from": "11-11",
+              "to": "01-31"
+            }
+          ],
+          "note": null
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "dk",
+      "name": "Danmark",
+      "kind": "country",
+      "parent_id": null,
+      "match_names": [
+        "Danmark",
+        "Denmark"
+      ],
+      "lat": 55.95,
+      "lon": 9.95
+    },
+    {
+      "id": "hovedstaden",
+      "name": "Hovedstaden",
+      "kind": "region",
+      "parent_id": "dk",
+      "match_names": [
+        "Region Hovedstaden",
+        "Hovedstaden",
+        "Capital Region of Denmark"
+      ],
+      "lat": 55.75,
+      "lon": 12.35
+    },
+    {
+      "id": "sjaelland",
+      "name": "Sjælland",
+      "kind": "region",
+      "parent_id": "dk",
+      "match_names": [
+        "Region Sjælland",
+        "Sjælland",
+        "Zealand"
+      ],
+      "lat": 55.45,
+      "lon": 11.8
+    },
+    {
+      "id": "syddanmark",
+      "name": "Syddanmark",
+      "kind": "region",
+      "parent_id": "dk",
+      "match_names": [
+        "Region Syddanmark",
+        "Syddanmark"
+      ],
+      "lat": 55.4,
+      "lon": 9.75
+    },
+    {
+      "id": "midtjylland",
+      "name": "Midtjylland",
+      "kind": "region",
+      "parent_id": "dk",
+      "match_names": [
+        "Region Midtjylland",
+        "Midtjylland",
+        "Central Denmark Region"
+      ],
+      "lat": 56.17,
+      "lon": 9.55
+    },
+    {
+      "id": "nordjylland",
+      "name": "Nordjylland",
+      "kind": "region",
+      "parent_id": "dk",
+      "match_names": [
+        "Region Nordjylland",
+        "Nordjylland",
+        "North Denmark Region"
+      ],
+      "lat": 57.05,
+      "lon": 9.92
+    },
+    {
+      "id": "hovedstaden_kyst",
+      "name": "København og omegn",
+      "kind": "area",
+      "parent_id": "hovedstaden",
+      "match_names": [
+        "København",
+        "Copenhagen",
+        "Dragør",
+        "Tårnby",
+        "Hvidovre",
+        "Vallensbæk",
+        "Brøndby",
+        "Ishøj",
+        "Frederiksberg",
+        "Kastrup",
+        "Amager"
+      ],
+      "lat": 55.68,
+      "lon": 12.57
+    },
+    {
+      "id": "lolland_falster",
+      "name": "Lolland, Falster og Møn",
+      "kind": "area",
+      "parent_id": "sjaelland",
+      "match_names": [
+        "Lolland",
+        "Guldborgsund",
+        "Vordingborg",
+        "Nykøbing Falster",
+        "Nakskov",
+        "Maribo",
+        "Stege",
+        "Nykøbing",
+        "Falster",
+        "Møn"
+      ],
+      "lat": 54.78,
+      "lon": 11.55
+    },
+    {
+      "id": "sejero",
+      "name": "Sejerø",
+      "kind": "island",
+      "parent_id": "sjaelland",
+      "match_names": [
+        "Sejerø"
+      ],
+      "lat": 55.88,
+      "lon": 11.15
+    },
+    {
+      "id": "femoe",
+      "name": "Femø",
+      "kind": "island",
+      "parent_id": "sjaelland",
+      "match_names": [
+        "Femø"
+      ],
+      "lat": 54.97,
+      "lon": 11.53
+    },
+    {
+      "id": "syddanmark_vest",
+      "name": "Syddanmark vest for Lillebælt",
+      "kind": "area",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Esbjerg",
+        "Varde",
+        "Billund",
+        "Vejen",
+        "Kolding",
+        "Haderslev",
+        "Tønder",
+        "Aabenraa",
+        "Fanø",
+        "Fredericia",
+        "Ribe",
+        "Grindsted",
+        "Aabenraa Kommune"
+      ],
+      "lat": 55.4,
+      "lon": 9.1
+    },
+    {
+      "id": "als",
+      "name": "Als",
+      "kind": "island",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Als",
+        "Nordborg",
+        "Augustenborg",
+        "Guderup",
+        "Høruphav",
+        "Mommark"
+      ],
+      "lat": 54.98,
+      "lon": 9.85
+    },
+    {
+      "id": "kegnaes",
+      "name": "Kegnæs",
+      "kind": "island",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Kegnæs"
+      ],
+      "lat": 54.86,
+      "lon": 9.99
+    },
+    {
+      "id": "mando",
+      "name": "Mandø",
+      "kind": "island",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Mandø"
+      ],
+      "lat": 55.28,
+      "lon": 8.56
+    },
+    {
+      "id": "lyo",
+      "name": "Lyø",
+      "kind": "island",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Lyø"
+      ],
+      "lat": 55.04,
+      "lon": 10.15
+    },
+    {
+      "id": "stryno",
+      "name": "Strynø",
+      "kind": "island",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Strynø"
+      ],
+      "lat": 54.9,
+      "lon": 10.62
+    },
+    {
+      "id": "aero",
+      "name": "Ærø",
+      "kind": "island",
+      "parent_id": "syddanmark",
+      "match_names": [
+        "Ærø",
+        "Ærøskøbing",
+        "Marstal"
+      ],
+      "lat": 54.88,
+      "lon": 10.37
+    },
+    {
+      "id": "endelave",
+      "name": "Endelave",
+      "kind": "island",
+      "parent_id": "midtjylland",
+      "match_names": [
+        "Endelave"
+      ],
+      "lat": 55.76,
+      "lon": 10.27
+    }
+  ],
+  "overrides": [
+    {
+      "species_id": "soelvmage",
+      "place_id": "hovedstaden_kyst",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "saedgaas",
+      "place_id": "lolland_falster",
+      "periods": [
+        {
+          "from": "09-01",
+          "to": "11-30"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "soelvmage",
+      "place_id": "lolland_falster",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "sejero",
+      "periods": [
+        {
+          "from": "05-16",
+          "to": "06-15"
+        },
+        {
+          "from": "12-01",
+          "to": "01-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "sejero",
+      "periods": [
+        {
+          "from": "12-01",
+          "to": "01-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "sejero",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "sejero",
+      "periods": [
+        {
+          "from": "10-01",
+          "to": "10-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "fasan",
+      "place_id": "sejero",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-31"
+        }
+      ],
+      "note": "Hane 1. nov–31. jan. Høne kun 16. nov–30. nov."
+    },
+    {
+      "species_id": "hare",
+      "place_id": "femoe",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "femoe",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "fasan",
+      "place_id": "femoe",
+      "periods": [
+        {
+          "from": "10-16",
+          "to": "12-31"
+        }
+      ],
+      "note": "Hane 16. okt–31. dec. Høne kun 1.–2. nov."
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "syddanmark",
+      "periods": [
+        {
+          "from": "09-16",
+          "to": "10-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "syddanmark_vest",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "als",
+      "periods": [
+        {
+          "from": "05-16",
+          "to": "07-15"
+        },
+        {
+          "from": "11-01",
+          "to": "12-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "als",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "als",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "fasan",
+      "place_id": "als",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "skovsneppe",
+      "place_id": "als",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "kegnaes",
+      "periods": [
+        {
+          "from": "12-01",
+          "to": "12-07"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "kegnaes",
+      "periods": [
+        {
+          "from": "12-01",
+          "to": "12-07"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "kegnaes",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "fasan",
+      "place_id": "kegnaes",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "skovsneppe",
+      "place_id": "kegnaes",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "12-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "mando",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "mando",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "mando",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "lyo",
+      "periods": [
+        {
+          "from": "10-01",
+          "to": "10-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "lyo",
+      "periods": [
+        {
+          "from": "10-01",
+          "to": "10-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "stryno",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "fasan",
+      "place_id": "stryno",
+      "periods": [],
+      "note": "Kun visse lørdage. Tjek bekendtgørelsen."
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "aero",
+      "periods": [
+        {
+          "from": "06-16",
+          "to": "07-15"
+        },
+        {
+          "from": "11-01",
+          "to": "11-30"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "aero",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "11-30"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "midtjylland",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "midtjylland",
+      "periods": [
+        {
+          "from": "09-16",
+          "to": "10-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raabuk",
+      "place_id": "endelave",
+      "periods": [
+        {
+          "from": "10-01",
+          "to": "10-08"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "raa_og_lam",
+      "place_id": "endelave",
+      "periods": [
+        {
+          "from": "10-01",
+          "to": "10-08"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "endelave",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "endelave",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "hare",
+      "place_id": "nordjylland",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "nordjylland",
+      "periods": [
+        {
+          "from": "09-16",
+          "to": "10-15"
+        }
+      ],
+      "note": null
+    }
+  ]
+}
