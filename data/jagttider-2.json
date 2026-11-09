@@ -1,6 +1,6 @@
 {
   "format": 2,
-  "version": 9,
+  "version": 10,
   "updated": "2026-11-09",
   "source_name": "BEK nr. 470/2024 om jagttid. SGAV jagttabel gældende fra 1. juli 2024",
   "source_url": "https://www.retsinformation.dk/eli/lta/2024/470",
@@ -947,7 +947,7 @@
       "id": "kegnaes",
       "name": "Kegnæs",
       "kind": "island",
-      "parent_id": "syddanmark_vest",
+      "parent_id": "als",
       "match_names": [
         "Kegnæs"
       ],
