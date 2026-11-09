@@ -1,7 +1,7 @@
 {
   "format": 2,
-  "version": 7,
-  "updated": "2026-11-04",
+  "version": 8,
+  "updated": "2026-11-09",
   "source_name": "BEK nr. 470/2024 om jagttid. SGAV jagttabel gældende fra 1. juli 2024",
   "source_url": "https://www.retsinformation.dk/eli/lta/2024/470",
   "regulation_source_url": "https://www.retsinformation.dk/eli/lta/2026/708",
@@ -845,7 +845,7 @@
       "id": "femoe",
       "name": "Femø",
       "kind": "island",
-      "parent_id": "sjaelland",
+      "parent_id": "lolland_falster",
       "match_names": [
         "Femø"
       ],
@@ -906,7 +906,7 @@
       "id": "mando",
       "name": "Mandø",
       "kind": "island",
-      "parent_id": "syddanmark",
+      "parent_id": "syddanmark_vest",
       "match_names": [
         "Mandø"
       ],
