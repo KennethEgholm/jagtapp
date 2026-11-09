@@ -1,6 +1,6 @@
 {
   "format": 2,
-  "version": 8,
+  "version": 9,
   "updated": "2026-11-09",
   "source_name": "BEK nr. 470/2024 om jagttid. SGAV jagttabel gældende fra 1. juli 2024",
   "source_url": "https://www.retsinformation.dk/eli/lta/2024/470",
@@ -752,6 +752,29 @@
       "lon": 11.8
     },
     {
+      "id": "sjaelland_syd",
+      "name": "Sjælland syd for Roskilde, Holbæk og Kalundborg",
+      "kind": "area",
+      "parent_id": "sjaelland",
+      "match_names": [
+        "Greve",
+        "Solrød",
+        "Køge",
+        "Ringsted",
+        "Sorø",
+        "Slagelse",
+        "Næstved",
+        "Faxe",
+        "Stevns",
+        "Korsør",
+        "Skælskør",
+        "Haslev",
+        "Store Heddinge"
+      ],
+      "lat": 55.35,
+      "lon": 11.85
+    },
+    {
       "id": "syddanmark",
       "name": "Syddanmark",
       "kind": "region",
@@ -803,7 +826,6 @@
         "Vallensbæk",
         "Brøndby",
         "Ishøj",
-        "Frederiksberg",
         "Kastrup",
         "Amager"
       ],
@@ -811,10 +833,29 @@
       "lon": 12.57
     },
     {
+      "id": "bornholm",
+      "name": "Bornholm",
+      "kind": "area",
+      "parent_id": "hovedstaden",
+      "match_names": [
+        "Bornholm",
+        "Rønne",
+        "Nexø",
+        "Aakirkeby",
+        "Hasle",
+        "Svaneke",
+        "Gudhjem",
+        "Allinge",
+        "Allinge-Gudhjem"
+      ],
+      "lat": 55.143,
+      "lon": 14.923
+    },
+    {
       "id": "lolland_falster",
       "name": "Lolland, Falster og Møn",
       "kind": "area",
-      "parent_id": "sjaelland",
+      "parent_id": "sjaelland_syd",
       "match_names": [
         "Lolland",
         "Guldborgsund",
@@ -853,6 +894,17 @@
       "lon": 11.53
     },
     {
+      "id": "fejoe",
+      "name": "Fejø",
+      "kind": "island",
+      "parent_id": "lolland_falster",
+      "match_names": [
+        "Fejø"
+      ],
+      "lat": 54.945,
+      "lon": 11.401
+    },
+    {
       "id": "syddanmark_vest",
       "name": "Syddanmark vest for Lillebælt",
       "kind": "area",
@@ -879,7 +931,7 @@
       "id": "als",
       "name": "Als",
       "kind": "island",
-      "parent_id": "syddanmark",
+      "parent_id": "syddanmark_vest",
       "match_names": [
         "Als",
         "Nordborg",
@@ -895,7 +947,7 @@
       "id": "kegnaes",
       "name": "Kegnæs",
       "kind": "island",
-      "parent_id": "syddanmark",
+      "parent_id": "syddanmark_vest",
       "match_names": [
         "Kegnæs"
       ],
@@ -973,6 +1025,34 @@
       "note": null
     },
     {
+      "species_id": "raev",
+      "place_id": "bornholm",
+      "periods": [],
+      "note": null
+    },
+    {
+      "species_id": "agerhoene",
+      "place_id": "bornholm",
+      "periods": [
+        {
+          "from": "10-01",
+          "to": "10-31"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "soelvmage",
+      "place_id": "bornholm",
+      "periods": [
+        {
+          "from": "11-01",
+          "to": "01-31"
+        }
+      ],
+      "note": null
+    },
+    {
       "species_id": "saedgaas",
       "place_id": "lolland_falster",
       "periods": [
@@ -985,7 +1065,7 @@
     },
     {
       "species_id": "soelvmage",
-      "place_id": "lolland_falster",
+      "place_id": "sjaelland_syd",
       "periods": [
         {
           "from": "11-01",
@@ -1080,6 +1160,28 @@
         }
       ],
       "note": "Hane 16. okt–31. dec. Høne kun 1.–2. nov."
+    },
+    {
+      "species_id": "hare",
+      "place_id": "fejoe",
+      "periods": [
+        {
+          "from": "11-16",
+          "to": "01-15"
+        }
+      ],
+      "note": null
+    },
+    {
+      "species_id": "fasan",
+      "place_id": "fejoe",
+      "periods": [
+        {
+          "from": "10-16",
+          "to": "11-30"
+        }
+      ],
+      "note": "Hane 16. okt–30. nov. Høne ingen jagttid."
     },
     {
       "species_id": "agerhoene",
